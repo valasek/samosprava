@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base lang="sk" title="Stránka sa nenašla / Page not found">
+  <section class="not-found" aria-labelledby="not-found-title">
+    <p class="not-found-code" aria-hidden="true">404</p>
+    <h1 id="not-found-title">Stránka sa nenašla <span lang="en">Page not found</span></h1>
+    <p class="lead">
+      Odkaz môže byť neaktuálny alebo stránka už neexistuje.
+      <span lang="en">The link may be outdated or the page may no longer exist.</span>
+    </p>
+
+    <div class="not-found-languages">
+      <section lang="sk" aria-labelledby="not-found-sk">
+        <h2 id="not-found-sk">Slovensky</h2>
+        <p>Vráťte sa na sprievodcu voľbami do samosprávy v Bratislave.</p>
+        <a class="button" href="/sk/">Späť na úvod</a>
+      </section>
+      <section lang="en" aria-labelledby="not-found-en">
+        <h2 id="not-found-en">English</h2>
+        <p>Return to the Bratislava self-government elections guide.</p>
+        <a class="button" href="/en/">Back to home</a>
+      </section>
+    </div>
+  </section>
+</Base>

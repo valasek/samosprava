@@ -168,6 +168,39 @@ button {
   font-size: 1.1rem;
 }
 
+.not-found {
+  max-width: 46rem;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.not-found-code {
+  margin: 0;
+  color: var(--accent);
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.not-found h1 span {
+  display: block;
+}
+
+.not-found-languages {
+  display: grid;
+  gap: 1rem;
+  margin-block: 2rem;
+  text-align: start;
+}
+
+.not-found-languages section {
+  margin: 0;
+}
+
+.not-found-languages h2 {
+  margin-top: 0;
+}
+
 h2 {
   font-size: 1.3rem;
   line-height: 1.25;
@@ -494,6 +527,14 @@ select {
   }
   .envelopes {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .not-found-languages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  .not-found-languages section + section {
+    border-left: 1px solid #c4c7cc;
+    padding-left: 1.5rem;
   }
   .filters {
     grid-template-columns: repeat(2, 1fr);
