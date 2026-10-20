@@ -142,9 +142,13 @@ const moreHref = (c: Candidate) =>
       <ul class="cands">
         {b.candidates.map((c) => (
           <li class:list={['cand', { withdrawn: c.withdrawn }]} data-p={partyAttr(c)} data-q={searchAttr(c)}>
-            <span class="avatar" style={`--h:${hue(c)}`} aria-hidden="true">
-              {initials(c)}
-            </span>
+            {c.photo ? (
+              <img class="avatar photo" src={c.photo.src} alt={fullName(c)} width="240" height="240" loading="lazy" />
+            ) : (
+              <span class="avatar" style={`--h:${hue(c)}`} aria-hidden="true">
+                {initials(c)}
+              </span>
+            )}
             <div class="cand-body">
               <p class="cand-name">
                 <span class="cand-num">{c.number}</span> {fullName(c)}
@@ -159,9 +163,22 @@ const moreHref = (c: Candidate) =>
                   {t(lang, 'cand.residence')}: {c.residence}
                 </p>
               )}
-              <a class="cand-more small" href={moreHref(c)} rel="noopener nofollow" target="_blank">
-                {t(lang, 'cand.more')} ↗
-              </a>
+              <p class="cand-links small">
+                {c.web && (
+                  <a href={c.web} rel="noopener nofollow" target="_blank">
+                    {t(lang, 'cand.web')} ↗
+                  </a>
+                )}
+                <a href={moreHref(c)} rel="noopener nofollow" target="_blank">
+                  {t(lang, 'cand.more')} ↗
+                </a>
+              </p>
+              {c.photo && (
+                <p class="photo-credit">
+                  {t(lang, 'photo.credit')}: <a href={c.photo.source} rel="noopener" target="_blank">{c.photo.author}</a>,{' '}
+                  <a href={c.photo.licenseUrl} rel="license noopener" target="_blank">{c.photo.license}</a>, {t(lang, 'photo.cropped')}
+                </p>
+              )}
             </div>
           </li>
         ))}
@@ -171,6 +188,7 @@ const moreHref = (c: Candidate) =>
 }
 
 <p class="muted small">{t(lang, 'cand.source')}</p>
+<p class="muted small">{t(lang, 'photo.note')}</p>
 
 <script type="application/json" id="streets-data" set:html={JSON.stringify(streetData)} />
 <script type="application/json" id="streets-i18n" set:html={JSON.stringify(streetI18n)} />

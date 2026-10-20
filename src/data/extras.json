@@ -1,0 +1,21 @@
+{
+ "primator-3": {
+  "web": "https://jozefraz.sk",
+  "photo": { "src": "/photos/primator-3.jpg", "author": "TV JOJ", "license": "CC BY 3.0", "licenseUrl": "https://creativecommons.org/licenses/by/3.0/", "source": "https://commons.wikimedia.org/wiki/File:Jozef_R%C3%A1%C5%BE,_Jr._(2025-11-26).jpg" }
+ },
+ "primator-4": {
+  "web": "https://zuzanasubova.sk",
+  "photo": { "src": "/photos/primator-4.jpg", "author": "Zuzana Šubová", "license": "CC BY-SA 4.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/", "source": "https://commons.wikimedia.org/wiki/File:Zuzana_%C5%A0ubov%C3%A1.jpg" }
+ },
+ "primator-5": {
+  "web": "https://teamba.sk",
+  "photo": { "src": "/photos/primator-5.jpg", "author": "Andrej Shadura", "license": "CC BY 4.0", "licenseUrl": "https://creativecommons.org/licenses/by/4.0/", "source": "https://commons.wikimedia.org/wiki/File:Mat%C3%BA%C5%A1_Vallo,_Pod_lampou_(november_2023).jpg" }
+ },
+ "primator-6": { "web": "https://martinwinkler.sk" },
+ "primator-1": { "web": "https://myslovensko.sk/kandidati" },
+ "predseda-bsk-1": {
+  "web": "https://droba.sk",
+  "photo": { "src": "/photos/predseda-bsk-1.jpg", "author": "Pavol Frešo", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "source": "https://commons.wikimedia.org/wiki/File:Juraj_Droba_2.jpg" }
+ },
+ "predseda-bsk-4": { "web": "https://pravonapravdu.sk/kandidati" }
+}

@@ -38,7 +38,7 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 | Topic | Decision |
 |---|---|
 | Elections covered | Primátor, MsZ, 17 starostovia, predseda BSK, zastupiteľstvo BSK (Bratislava constituencies). Miestne zastupiteľstvo **only for Staré Mesto**. |
-| Photos | Only primátor, predseda BSK and starostovia (with source credit). Councillor candidates get initials avatars. **Deferred:** launch Phase 4 with initials avatars for everyone; add photos afterwards. |
+| Photos | Only freely licensed photos (Wikimedia Commons, identity verified) with author, licence link and "cropped" note; everyone else keeps initials avatars. Citing a source alone does not grant rights (zákon 185/2015), campaign sites are "All rights reserved" and offer no press kits. Current: Ráž (CC BY 3.0, TV JOJ), Šubová (CC BY-SA 4.0), Vallo (CC BY 4.0, A. Shadura), Droba (CC BY 2.0, P. Frešo). Data in `src/data/extras.json` (also verified candidate websites), images in `public/photos/`. |
 | Tech stack | Astro (static output) + JSON data + small vanilla JS filter. |
 | Languages | Slovak + English only. |
 | Domain | `samosprava.stanislavvalasek.com` (overrides the originally proposed `komunalne-volby-2026.stanislavvalasek.com`). |

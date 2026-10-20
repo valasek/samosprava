@@ -446,6 +446,28 @@ select {
   font-size: 0.9rem;
 }
 
+.avatar.photo {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  background: var(--surface);
+}
+
+.cand-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+}
+
+.photo-credit {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.photo-credit a {
+  color: inherit;
+}
+
 .cand.withdrawn {
   opacity: 0.75;
   border: 2px dashed #b3261e;

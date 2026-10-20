@@ -3,6 +3,16 @@ import districtsJson from '../data/districts.json';
 import obvodyJson from '../data/obvody.json';
 import withdrawnJson from '../data/withdrawn.json';
 import streetsJson from '../data/streets.json';
+import extrasJson from '../data/extras.json';
+
+export interface Photo {
+  src: string;
+  author: string;
+  license: string;
+  licenseUrl: string;
+  source: string;
+}
+const extras = extrasJson as Record<string, { web?: string; photo?: Photo }>;
 
 // District id -> streets as [name, house numbers or null for whole street, okrsok] and polling place per okrsok.
 export const streets = streetsJson as Record<string, { okrsky: Record<string, string>; streets: [string, string | null, number][] }>;
@@ -25,6 +35,8 @@ export interface Candidate {
   independent: boolean;
   residence?: string;
   withdrawn?: boolean;
+  web?: string;
+  photo?: Photo;
 }
 
 export interface District {
@@ -49,7 +61,7 @@ export interface Ballot {
 
 // Candidate ids that withdrew after registration (law 180/2014 §142(4)); still printed on ballots.
 const withdrawn = new Set(withdrawnJson as string[]);
-export const candidates = (candidatesJson as Candidate[]).map((c) => ({ ...c, withdrawn: withdrawn.has(c.id) }));
+export const candidates = (candidatesJson as Candidate[]).map((c) => ({ ...c, ...extras[c.id], withdrawn: withdrawn.has(c.id) }));
 export const districts = districtsJson as District[];
 const obvody = obvodyJson as Record<'msz' | 'zastupitelstvo-bsk', { obvod: number; seats: number; districts: string[] }[]>;
 
