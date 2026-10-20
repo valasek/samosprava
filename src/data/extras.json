@@ -13,15 +13,125 @@
  },
  "primator-6": {
   "web": "https://martinwinkler.sk",
-    "photo": { "src": "/photos/primator-6.jpg", "author": "Tím Martina Winklera", "permission": true, "source": "https://martinwinkler.sk/" }
+  "photo": { "src": "/photos/primator-6.jpg", "author": "Tím Martina Winklera", "permission": true, "source": "https://martinwinkler.sk/" }
  },
  "primator-1": {
   "web": "https://myslovensko.sk/kandidati",
-    "photo": { "src": "/photos/primator-1.jpg", "author": "MySlovensko", "permission": true, "source": "https://myslovensko.sk/kandidati/lubomir-geci" }
+  "photo": { "src": "/photos/primator-1.jpg", "author": "MySlovensko", "permission": true, "source": "https://myslovensko.sk/kandidati/lubomir-geci" }
  },
  "predseda-bsk-1": {
   "web": "https://droba.sk",
   "photo": { "src": "/photos/predseda-bsk-1.jpg", "author": "Pavol Frešo", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "source": "https://commons.wikimedia.org/wiki/File:Juraj_Droba_2.jpg" }
  },
- "predseda-bsk-4": { "web": "https://pravonapravdu.sk/kandidati" }
+ "predseda-bsk-4": { "web": "https://pravonapravdu.sk/kandidati" },
+ "starosta-stare-mesto-1": {
+  "photo": { "src": "/photos/starosta-stare-mesto-1.jpg", "author": "M.stevove", "license": "CC BY-SA 4.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/", "source": "https://commons.wikimedia.org/wiki/File:Aufrichtova_portret.jpg" }
+ },
+ "starosta-stare-mesto-2": {
+  "photo": { "src": "/photos/starosta-stare-mesto-2.jpg", "author": "Bratislavský samosprávny kraj", "permission": true, "source": "https://bratislavskykraj.sk/novymi-vicezupanmi-sa-stali-petra-hitkova-a-martin-kuklovsky/" }
+ },
+ "starosta-stare-mesto-3": {
+  "photo": { "src": "/photos/starosta-stare-mesto-3.jpg", "author": "Bratislavský kraj (BSK)", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "source": "https://commons.wikimedia.org/wiki/File:Matej_Vaga%C4%8D.jpg" }
+ },
+ "starosta-stare-mesto-4": {
+  "web": "https://vetrik.sk",
+  "photo": { "src": "/photos/starosta-stare-mesto-4.jpg", "author": "Miroslav Vetrík", "permission": true, "source": "https://vetrik.sk/" }
+ },
+ "starosta-podunajske-biskupice-1": {
+  "web": "https://cinovska.sk",
+  "photo": { "src": "/photos/starosta-podunajske-biskupice-1.jpg", "author": "Martina Frőhlich Činovská", "permission": true, "source": "https://cinovska.sk/" }
+ },
+ "starosta-podunajske-biskupice-2": {
+  "photo": { "src": "/photos/starosta-podunajske-biskupice-2.jpg", "author": "Team Bratislava", "permission": true, "source": "https://teamba.sk/kandidati/" }
+ },
+ "starosta-podunajske-biskupice-3": {
+  "web": "https://ladislavmery.sk",
+  "photo": { "src": "/photos/starosta-podunajske-biskupice-3.jpg", "author": "Ladislav Méry", "permission": true, "source": "https://ladislavmery.sk/" }
+ },
+ "starosta-ruzinov-1": {
+  "photo": { "src": "/photos/starosta-ruzinov-1.jpg", "author": "MČ Bratislava-Ružinov", "permission": true, "source": "https://www.ruzinov.sk/sk/starosta" }
+ },
+ "starosta-ruzinov-2": {
+  "photo": { "src": "/photos/starosta-ruzinov-2.jpg", "author": "MČ Bratislava-Ružinov", "permission": true, "source": "https://zastupitelstvo.egov.sk/" }
+ },
+ "starosta-vrakuna-2": {
+  "photo": { "src": "/photos/starosta-vrakuna-2.jpg", "author": "Team Bratislava", "permission": true, "source": "https://teamba.sk/kandidati/" }
+ },
+ "starosta-nove-mesto-1": {
+  "web": "https://tomascajda.sk",
+  "photo": { "src": "/photos/starosta-nove-mesto-1.jpg", "author": "Tomáš Čajda", "permission": true, "source": "https://tomascajda.sk/o-mne/" }
+ },
+ "starosta-nove-mesto-2": {
+  "photo": { "src": "/photos/starosta-nove-mesto-2.jpg", "author": "Team Bratislava", "permission": true, "source": "https://teamba.sk/kandidati/" }
+ },
+ "starosta-nove-mesto-3": {
+  "web": "https://rudolfkusy.online",
+  "photo": { "src": "/photos/starosta-nove-mesto-3.jpg", "author": "Rudolf Kusý", "permission": true, "source": "https://rudolfkusy.online/" }
+ },
+ "starosta-raca-1": {
+  "photo": { "src": "/photos/starosta-raca-1.jpg", "author": "MČ Bratislava-Rača", "permission": true, "source": "https://www.raca.sk/samosprava/vedenie-mestskej-casti/starosta-mc-ba-raca/" }
+ },
+ "starosta-raca-2": {
+  "web": "https://spolocnyciel.sk",
+  "photo": { "src": "/photos/starosta-raca-2.jpg", "author": "Spoločný cieľ", "permission": true, "source": "https://spolocnyciel.sk/" }
+ },
+ "starosta-vajnory-1": {
+  "web": "https://ondruska.sk",
+  "photo": { "src": "/photos/starosta-vajnory-1.jpg", "author": "Juraj Ondruška", "permission": true, "source": "https://ondruska.sk/" }
+ },
+ "starosta-vajnory-2": {
+  "photo": { "src": "/photos/starosta-vajnory-2.jpg", "author": "MČ Bratislava-Vajnory", "permission": true, "source": "https://www.vajnory.sk/starosta" }
+ },
+ "starosta-devin-1": {
+  "photo": { "src": "/photos/starosta-devin-1.jpg", "author": "MČ Bratislava-Devín", "permission": true, "source": "https://www.devin.sk/18228/zastupca-starostu" }
+ },
+ "starosta-devinska-nova-ves-1": {
+  "photo": { "src": "/photos/starosta-devinska-nova-ves-1.jpg", "author": "MČ Bratislava-Devínska Nová Ves", "permission": true, "source": "https://www.devinskanovaves.sk/4000/starosta" }
+ },
+ "starosta-devinska-nova-ves-2": {
+  "web": "https://luboskrajcir.sk",
+  "photo": { "src": "/photos/starosta-devinska-nova-ves-2.jpg", "author": "Ľuboš Krajčír", "permission": true, "source": "https://luboskrajcir.sk/" }
+ },
+ "starosta-dubravka-1": {
+  "photo": { "src": "/photos/starosta-dubravka-1.jpg", "author": "MČ Bratislava-Dúbravka", "permission": true, "source": "https://www.dubravka.sk/sk/Samosprava/Voleni-zastupcovia/Starosta.html" }
+ },
+ "starosta-karlova-ves-1": {
+  "photo": { "src": "/photos/starosta-karlova-ves-1.jpg", "author": "Team Bratislava", "permission": true, "source": "https://teamba.sk/kandidati/" }
+ },
+ "starosta-karlova-ves-2": {
+  "photo": { "src": "/photos/starosta-karlova-ves-2.jpg", "author": "MČ Bratislava-Karlova Ves", "permission": true, "source": "https://www.karlovaves.sk/zastupca-starostky" }
+ },
+ "starosta-lamac-1": {
+  "photo": { "src": "/photos/starosta-lamac-1.jpg", "author": "Team Bratislava", "permission": true, "source": "https://teamba.sk/kandidati/" }
+ },
+ "starosta-zahorska-bystrica-1": {
+  "photo": { "src": "/photos/starosta-zahorska-bystrica-1.jpg", "author": "MČ Bratislava-Záhorská Bystrica", "permission": true, "source": "https://zahorskabystrica.sk/samosprava/starosta/" }
+ },
+ "starosta-cunovo-2": {
+  "photo": { "src": "/photos/starosta-cunovo-2.jpg", "author": "MČ Bratislava-Čunovo", "permission": true, "source": "https://www.cunovo.eu/samosprava/starostka-mestskej-casti" }
+ },
+ "starosta-jarovce-1": {
+  "photo": { "src": "/photos/starosta-jarovce-1.jpg", "author": "MČ Bratislava-Jarovce", "permission": true, "source": "http://www.jarovce.sk/?page=starosta" }
+ },
+ "starosta-petrzalka-1": {
+  "photo": { "src": "/photos/starosta-petrzalka-1.jpg", "author": "MČ Bratislava-Petržalka", "permission": true, "source": "https://www.petrzalka.sk/2025-09-23-jan-hrcka-zlozil-slub/" }
+ },
+ "starosta-petrzalka-2": {
+  "photo": { "src": "/photos/starosta-petrzalka-2.jpg", "author": "Team Bratislava", "permission": true, "source": "https://teamba.sk/kandidati/" }
+ },
+ "starosta-rusovce-1": {
+  "photo": { "src": "/photos/starosta-rusovce-1.jpg", "author": "MČ Bratislava-Rusovce", "permission": true, "source": "https://www.bratislava-rusovce.sk/starosta" }
+ },
+ "predseda-bsk-2": {
+  "web": "https://www.rasto-gajarsky.sk",
+  "photo": { "src": "/photos/predseda-bsk-2.jpg", "author": "Rastislav Gajarský", "permission": true, "source": "https://www.rasto-gajarsky.sk/" }
+ },
+ "predseda-bsk-6": {
+  "web": "https://peterpolacek.sk",
+  "photo": { "src": "/photos/predseda-bsk-6.jpg", "author": "Peter Poláček", "permission": true, "source": "https://peterpolacek.sk/" }
+ },
+ "predseda-bsk-7": {
+  "web": "https://staruch.eu",
+  "photo": { "src": "/photos/predseda-bsk-7.jpg", "author": "Dávid Staruch", "permission": true, "source": "https://staruch.eu/" }
+ }
 }
