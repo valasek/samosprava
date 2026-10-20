@@ -49,13 +49,14 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 | BSK constituencies | Obvody 1–11 cover Bratislava (24 in total in the region); obvody 12–24 are excluded. |
 | Staré Mesto council | 8 obvody defined by okrsky (polling districts); voter finds their okrsok number on the notice mailed to households. |
 | Ballot validity | Per law 180/2014 §152 (VÚC) and §184 (obce): a ballot is invalid if no candidate or more than allowed are circled. |
-| Withdrawn candidates | Per §142(4) they stay on the ballot but are disregarded. None found as of 2026-10-20; add candidate ids to `src/data/withdrawn.json` to mark them. |
+| Withdrawn candidates | Per §142(4) they stay on the ballot but are disregarded. Marked via candidate ids in `src/data/withdrawn.json`. 2026-10-20: Miroslav Heredoš withdrew as primátor candidate (`primator-2`); his MsZ candidacy (obvod 10) stays. |
+| Street lookup | Staré Mesto only (the only district whose council constituencies are in scope): street + house number → okrsok → MZ obvod + polling place, parsed from the district notice into `src/data/streets.json`. MsZ and BSK obvody cover whole districts, so no lookup is needed there. |
 
 ## Status (2026-10-20)
 
 - Phases 1–4 done and deployed; Lighthouse mobile 100/100/100/100.
 - Election-day banner switches automatically (before / 24. 10. 7:00–20:00 / after → results link).
-- Remaining: candidate photos (deferred); optional Staré Mesto street → okrsok lookup; refresh data on 23. 10. (`scripts/download.sh` + `scripts/extract.py`) and check withdrawals.
+- Remaining: candidate photos (deferred); refresh data on 23. 10. (`scripts/download.sh` + `scripts/extract.py`) and check withdrawals.
 
 ## Data pipeline
 

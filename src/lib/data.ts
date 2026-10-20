@@ -2,6 +2,10 @@ import candidatesJson from '../data/candidates.json';
 import districtsJson from '../data/districts.json';
 import obvodyJson from '../data/obvody.json';
 import withdrawnJson from '../data/withdrawn.json';
+import streetsJson from '../data/streets.json';
+
+// District id -> streets as [name, house numbers or null for whole street, okrsok] and polling place per okrsok.
+export const streets = streetsJson as Record<string, { okrsky: Record<string, string>; streets: [string, string | null, number][] }>;
 
 export type BodyId = 'primator' | 'msz' | 'starosta' | 'mz' | 'predseda-bsk' | 'zastupitelstvo-bsk';
 

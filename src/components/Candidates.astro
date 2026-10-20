@@ -11,6 +11,7 @@ import {
   initials,
   normalize,
   parties,
+  streets,
   type Ballot,
   type Candidate,
 } from '../lib/data';
@@ -22,6 +23,24 @@ interface Props {
 const { lang } = Astro.props;
 const ballots = buildBallots();
 const partyIndex = new Map(parties.map((p, i) => [p, String(i)]));
+// Per district: streets [name, houses|null, okrsok], polling places, okrsok -> district-council obvod.
+const streetData = Object.fromEntries(
+  Object.entries(streets).map(([id, s]) => [
+    id,
+    {
+      ...s,
+      obvodByOkrsok: Object.fromEntries((districtById[id].mzObvody ?? []).flatMap((o) => o.okrsky.map((k) => [k, o.obvod]))),
+    },
+  ]),
+);
+const streetI18n = {
+  okrsok: t(lang, 'street.okrsok'),
+  obvod: t(lang, 'street.obvod'),
+  houses: t(lang, 'street.houses'),
+  whole: t(lang, 'street.whole'),
+  pickHouse: t(lang, 'street.pickHouse'),
+  notFound: t(lang, 'street.notFound'),
+};
 
 function title(b: Ballot): string {
   const name = t(lang, `body.${b.body}`);
@@ -50,6 +69,25 @@ const moreHref = (c: Candidate) =>
 
 <form id="filters" class="filters card" role="search">
   <DistrictPicker lang={lang} />
+  {
+    Object.entries(streets).map(([id, s]) => (
+      <fieldset class="street-lookup" data-streets-for={id} hidden>
+        <legend>{t(lang, 'street.legend')}</legend>
+        <label>
+          {t(lang, 'filter.street')}
+          <input name="ul" list={`dl-${id}`} autocomplete="off" />
+          <datalist id={`dl-${id}`}>
+            {[...new Set(s.streets.map((r) => r[0]))].sort((a, b) => a.localeCompare(b, 'sk')).map((n) => <option value={n} />)}
+          </datalist>
+        </label>
+        <label>
+          {t(lang, 'filter.house')}
+          <input name="cd" inputmode="text" autocomplete="off" size="6" />
+        </label>
+        <div class="street-result" aria-live="polite" />
+      </fieldset>
+    ))
+  }
   <label>
     {t(lang, 'filter.body')}
     <select name="v">
@@ -89,7 +127,7 @@ const moreHref = (c: Candidate) =>
 
 {
   ballots.map((b) => (
-    <section class={`ballot envelope-${envelope[b.body]}`} data-body={b.body} data-districts={b.districts.join(' ')}>
+    <section class={`ballot envelope-${envelope[b.body]}`} data-body={b.body} data-districts={b.districts.join(' ')} data-obvod={b.body === 'mz' ? b.obvod : undefined}>
       <h2>{title(b)}</h2>
       <p class="ballot-meta">
         <strong>{b.seats === 1 ? t(lang, 'ballot.circleOne') : `${t(lang, 'ballot.circleMax')} ${b.seats}`}</strong>
@@ -134,12 +172,16 @@ const moreHref = (c: Candidate) =>
 
 <p class="muted small">{t(lang, 'cand.source')}</p>
 
+<script type="application/json" id="streets-data" set:html={JSON.stringify(streetData)} />
+<script type="application/json" id="streets-i18n" set:html={JSON.stringify(streetI18n)} />
+
 <script>
   const norm = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   const form = document.getElementById('filters') as HTMLFormElement;
   const groups = [...document.querySelectorAll<HTMLElement>('.ballot')].map((el) => ({
     el,
     body: el.dataset.body!,
+    obvod: Number(el.dataset.obvod ?? 0),
     districts: el.dataset.districts!.split(' '),
     cards: [...el.querySelectorAll<HTMLElement>('.cand')].map((c) => ({
       el: c,
@@ -150,17 +192,53 @@ const moreHref = (c: Candidate) =>
   const notes = [...document.querySelectorAll<HTMLElement>('[data-note]')];
   const countEl = document.getElementById('shown-count')!;
   const noResults = document.getElementById('no-results')!;
-  const fields = ['mc', 'v', 'p', 'q'] as const;
+  const fields = ['mc', 'ul', 'cd', 'v', 'p', 'q'] as const;
+  type StreetDistrict = {
+    okrsky: Record<string, string>;
+    streets: [string, string | null, number][];
+    obvodByOkrsok: Record<string, number>;
+  };
+  const streetData: Record<string, StreetDistrict> = JSON.parse(document.getElementById('streets-data')!.textContent!);
+  const si18n: Record<string, string> = JSON.parse(document.getElementById('streets-i18n')!.textContent!);
+  const lookups = [...document.querySelectorAll<HTMLFieldSetElement>('[data-streets-for]')];
+
+  function lookup(mc: string, ul: string, cd: string): { obvody: Set<number> | null; lines: string[] } {
+    const d = streetData[mc];
+    if (!d || !ul.trim()) return { obvody: null, lines: [] };
+    const rows = d.streets.filter((r) => norm(r[0]) === norm(ul));
+    if (!rows.length) return { obvody: null, lines: [si18n.notFound] };
+    const house = cd.toUpperCase().replace(/\s/g, '');
+    const byHouse = house ? rows.filter((r) => !r[1] || r[1].split(',').includes(house)) : rows;
+    const match = byHouse.length ? byHouse : rows;
+    const lines = match.map((r) => {
+      const where = `${si18n.okrsok} ${r[2]} · ${si18n.obvod} ${d.obvodByOkrsok[r[2]]} – ${d.okrsky[r[2]]}`;
+      return r[1] ? `${where} (${si18n.houses}: ${r[1].replaceAll(',', ', ')})` : `${where} (${si18n.whole})`;
+    });
+    if (new Set(match.map((r) => r[2])).size > 1) lines.unshift(si18n.pickHouse);
+    return { obvody: new Set(match.map((r) => d.obvodByOkrsok[r[2]])), lines };
+  }
 
   function apply() {
+    const mcNow = (form.elements.namedItem('mc') as HTMLSelectElement).value;
+    for (const fs of lookups) fs.hidden = fs.disabled = fs.dataset.streetsFor !== mcNow;
     const f = new FormData(form);
     const mc = String(f.get('mc') ?? '');
     const body = String(f.get('v') ?? '');
     const party = String(f.get('p') ?? '');
     const q = norm(String(f.get('q') ?? ''));
+    const street = lookup(mc, String(f.get('ul') ?? ''), String(f.get('cd') ?? ''));
+    for (const fs of lookups) {
+      const out = fs.querySelector('.street-result')!;
+      out.replaceChildren(
+        ...(fs.disabled ? [] : street.lines).map((l) => Object.assign(document.createElement('p'), { textContent: l })),
+      );
+    }
     let shown = 0;
     for (const g of groups) {
-      const groupOk = (!mc || g.districts.includes(mc)) && (!body || g.body === body);
+      const groupOk =
+        (!mc || g.districts.includes(mc)) &&
+        (!body || g.body === body) &&
+        !(street.obvody && g.body === 'mz' && !street.obvody.has(g.obvod));
       let n = 0;
       for (const c of g.cards) {
         const ok = groupOk && (!party || c.parties.includes(party)) && (!q || c.q.includes(q));
@@ -187,9 +265,8 @@ const moreHref = (c: Candidate) =>
   const params = new URLSearchParams(location.search);
   if (!params.has('mc') && localStorage.getItem('mc')) params.set('mc', localStorage.getItem('mc')!);
   for (const k of fields) {
-    const el = form.elements.namedItem(k) as HTMLInputElement | HTMLSelectElement | null;
     const v = params.get(k);
-    if (el && v) el.value = v;
+    if (v) form.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[name="${k}"]`).forEach((el) => (el.value = v));
   }
 
   form.addEventListener('input', apply);

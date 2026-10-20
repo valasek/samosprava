@@ -336,6 +336,40 @@ select {
   margin-top: var(--space);
 }
 
+.street-lookup {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 7rem;
+  gap: 0.5rem;
+  border: 1px solid #c4c7cc;
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem 0.75rem;
+  margin: 0;
+}
+
+.street-lookup legend {
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0 0.25rem;
+}
+
+.street-lookup input {
+  width: 100%;
+}
+
+.street-result {
+  grid-column: 1 / -1;
+  font-size: 0.9rem;
+}
+
+.street-result p {
+  margin: 0.25rem 0;
+}
+
+.street-result p:first-child {
+  font-weight: 600;
+}
+
 .ballot {
   border-left: 4px solid #c4c7cc;
   padding-left: 0.75rem;

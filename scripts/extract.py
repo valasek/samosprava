@@ -99,6 +99,39 @@ def person(first, last, before, after, age, job, party_raw, sep, **extra) -> dic
     }
 
 
+def parse_okrsky(path: Path) -> dict:
+    """Parse a district notice (pdftotext -layout) listing streets/houses per polling district."""
+    okrsky: dict[int, str] = {}
+    streets: list[list] = []
+    okrsok, expect_place = None, False
+    houses_re = r"\d[\dA-Za-z/]*(?:,\s*[\dA-Za-z/]+)*,?"
+    line_re = re.compile(rf"^(.+?)\s+(cel[áéý]|{houses_re})$")
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if line.startswith("3. Informácia"):
+            break
+        if m := re.match(r"Miestom konania volieb okrsku č\. (\d+)", line):
+            okrsok, expect_place = int(m.group(1)), True
+            continue
+        if not okrsok or not line or line.startswith("Strana č."):
+            continue
+        if line.startswith("pre oprávnených"):
+            expect_place = False
+            continue
+        if expect_place:
+            okrsky[okrsok] = clean(f"{okrsky.get(okrsok, '')} {line}")
+            continue
+        if streets and streets[-1][1] and streets[-1][1].endswith(",") and re.fullmatch(houses_re, line):
+            streets[-1][1] += re.sub(r"\s", "", line)
+            continue
+        if m := line_re.match(line):
+            houses = None if m.group(2).startswith("cel") else re.sub(r"\s", "", m.group(2))
+            streets.append([clean(m.group(1)), houses, okrsok])
+        else:
+            raise ValueError(f"Unparsed line in {path.name}: {line!r}")
+    return {"okrsky": okrsky, "streets": streets}
+
+
 def main() -> None:
     by_name = {f"Bratislava - {d[1]}": d[0] for d in DISTRICTS}
     candidates: list[dict] = []
@@ -155,7 +188,8 @@ def main() -> None:
     }
 
     OUT.mkdir(parents=True, exist_ok=True)
-    for name, data in (("candidates", candidates), ("districts", districts), ("obvody", obvody)):
+    streets = {"stare-mesto": parse_okrsky(SRC / "sm-okrsky.txt")}
+    for name, data in (("candidates", candidates), ("districts", districts), ("obvody", obvody), ("streets", streets)):
         (OUT / f"{name}.json").write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
     summary: dict[str, int] = {}
