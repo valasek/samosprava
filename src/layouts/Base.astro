@@ -41,6 +41,9 @@ const path = Astro.url.pathname;
     <meta property="og:locale" content={lang === 'sk' ? 'sk_SK' : 'en_GB'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#0b5cad" />
+    {import.meta.env.PROD && (
+      <script is:inline type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "d6d6d30418fd4aa3b9a7f80f3ad75ff3"}'></script>
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">{t(lang, 'nav.skip')}</a>
