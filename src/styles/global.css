@@ -259,9 +259,31 @@ section {
   font-weight: 700;
 }
 
+.cta {
+  background: #eef4fd;
+  border: 2px solid var(--accent);
+  border-left-width: 6px;
+  box-shadow: 0 4px 14px rgba(11, 92, 173, 0.15);
+  padding: calc(var(--space) * 1.25);
+}
+
 .cta form {
   display: grid;
   gap: 0.75rem;
+}
+
+.cta label {
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.cta select {
+  border-color: var(--accent);
+  background: var(--bg);
+}
+
+.cta button {
+  font-size: 1.05rem;
 }
 
 .envelopes {
