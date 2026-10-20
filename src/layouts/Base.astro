@@ -1,0 +1,64 @@
+---
+import { languages, langs, t, type Lang } from '../i18n/ui';
+import { slugs } from '../i18n/ui';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  // Path of the same page in each language, for the language switcher.
+  alternates?: Partial<Record<Lang, string>>;
+}
+
+const { lang, title, alternates = {} } = Astro.props;
+const pageTitle = title ? `${title} | ${t(lang, 'site.title')}` : t(lang, 'site.title');
+const altLinks = langs.map((l) => ({ lang: l, href: alternates[l] ?? `/${l}/` }));
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={t(lang, 'site.description')} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    {altLinks.map((a) => <link rel="alternate" hreflang={a.lang} href={new URL(a.href, Astro.site)} />)}
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={t(lang, 'site.description')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href={`/${lang}/`}>{t(lang, 'site.title')}</a>
+      <nav class="lang-switch" aria-label="Language">
+        {
+          altLinks.map((a) =>
+            a.lang === lang ? (
+              <span aria-current="true">{a.lang.toUpperCase()}</span>
+            ) : (
+              <a href={a.href} hreflang={a.lang} lang={a.lang} title={languages[a.lang]}>
+                {a.lang.toUpperCase()}
+              </a>
+            ),
+          )
+        }
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        {t(lang, 'footer.credit')}
+        <a href="https://stanislavvalasek.com" rel="author">Stanislav Valasek</a>
+        · <a href={`/${lang}/${slugs.feedback[lang]}/`}>{t(lang, 'footer.feedback')}</a>
+      </p>
+      <p class="muted">{t(lang, 'footer.disclaimer')}</p>
+    </footer>
+  </body>
+</html>

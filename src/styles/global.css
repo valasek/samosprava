@@ -1,0 +1,140 @@
+:root {
+  --fg: #1a1a1a;
+  --muted: #5c5c5c;
+  --bg: #ffffff;
+  --surface: #f4f5f7;
+  --accent: #0b5cad;
+  --accent-fg: #ffffff;
+  --radius: 10px;
+  --space: 1rem;
+  --maxw: 60rem;
+  color-scheme: light;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--fg);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+}
+
+.site-header,
+main,
+.site-footer {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: var(--space);
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space);
+  border-bottom: 1px solid var(--surface);
+}
+
+.brand {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--fg);
+  font-size: 0.95rem;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.lang-switch a,
+.lang-switch span {
+  padding: 0.5rem;
+  min-width: 2.75rem;
+  text-align: center;
+}
+
+main {
+  flex: 1;
+}
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.site-footer {
+  font-size: 0.9rem;
+  border-top: 1px solid var(--surface);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: var(--space);
+}
+
+form {
+  display: grid;
+  gap: var(--space);
+}
+
+label {
+  display: grid;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  border: 1px solid #c4c7cc;
+}
+
+button {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (min-width: 48rem) {
+  h1 {
+    font-size: 2.25rem;
+  }
+  .brand {
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import { langs, slugs, t, type Lang } from '../../i18n/ui';
+
+type Page = keyof typeof slugs;
+
+export function getStaticPaths() {
+  return langs.flatMap((lang) =>
+    (Object.keys(slugs) as Page[]).map((page) => ({
+      params: { lang, slug: slugs[page][lang] },
+      props: { page },
+    })),
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const { page } = Astro.props as { page: Page };
+const alternates = Object.fromEntries(langs.map((l) => [l, `/${l}/${slugs[page][l]}/`]));
+const thanksUrl = `/${lang}/${slugs.thanks[lang]}/`;
+---
+
+{
+  page === 'feedback' ? (
+    <Base lang={lang} title={t(lang, 'feedback.title')} alternates={alternates}>
+      <h1>{t(lang, 'feedback.title')}</h1>
+      <p>{t(lang, 'feedback.intro')}</p>
+      <form
+        name="feedback"
+        method="POST"
+        action={thanksUrl}
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="feedback" />
+        <input type="hidden" name="lang" value={lang} />
+        <p class="visually-hidden">
+          <label>
+            Do not fill <input name="bot-field" tabindex="-1" autocomplete="off" />
+          </label>
+        </p>
+        <label>
+          {t(lang, 'feedback.message')}
+          <textarea name="message" rows="6" required maxlength="5000" />
+        </label>
+        <label>
+          {t(lang, 'feedback.email')}
+          <input type="email" name="email" autocomplete="email" maxlength="200" />
+        </label>
+        <button type="submit">{t(lang, 'feedback.submit')}</button>
+      </form>
+    </Base>
+  ) : (
+    <Base lang={lang} title={t(lang, 'thanks.title')} alternates={alternates}>
+      <h1>{t(lang, 'thanks.title')}</h1>
+      <p>{t(lang, 'thanks.text')}</p>
+      <p>
+        <a href={`/${lang}/`}>{t(lang, 'thanks.back')}</a>
+      </p>
+    </Base>
+  )
+}
