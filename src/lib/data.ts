@@ -8,14 +8,39 @@ import extrasJson from '../data/extras.json';
 export interface Photo {
   src: string;
   author: string;
-  license: string;
-  licenseUrl: string;
+  license?: string;
+  licenseUrl?: string;
+  permission?: boolean;
   source: string;
 }
 const extras = extrasJson as Record<string, { web?: string; photo?: Photo }>;
 
+type StreetRow = [string, string | null, number];
+type StreetDistrict = { okrsky: Record<string, string>; streets: StreetRow[] };
+
+function parseStreetRow(row: unknown, districtId: string, index: number): StreetRow {
+  if (
+    !Array.isArray(row) ||
+    row.length !== 3 ||
+    typeof row[0] !== 'string' ||
+    (typeof row[1] !== 'string' && row[1] !== null) ||
+    typeof row[2] !== 'number'
+  ) {
+    throw new TypeError(`Invalid street row ${index} for district ${districtId}`);
+  }
+  return [row[0], row[1], row[2]];
+}
+
 // District id -> streets as [name, house numbers or null for whole street, okrsok] and polling place per okrsok.
-export const streets = streetsJson as Record<string, { okrsky: Record<string, string>; streets: [string, string | null, number][] }>;
+export const streets: Record<string, StreetDistrict> = Object.fromEntries(
+  Object.entries(streetsJson).map(([id, data]) => [
+    id,
+    {
+      okrsky: data.okrsky,
+      streets: data.streets.map((row, index) => parseStreetRow(row, id, index)),
+    },
+  ] as const),
+);
 
 export type BodyId = 'primator' | 'msz' | 'starosta' | 'mz' | 'predseda-bsk' | 'zastupitelstvo-bsk';
 

@@ -176,7 +176,11 @@ const moreHref = (c: Candidate) =>
               {c.photo && (
                 <p class="photo-credit">
                   {t(lang, 'photo.credit')}: <a href={c.photo.source} rel="noopener" target="_blank">{c.photo.author}</a>,{' '}
-                  <a href={c.photo.licenseUrl} rel="license noopener" target="_blank">{c.photo.license}</a>, {t(lang, 'photo.cropped')}
+                  {c.photo.permission ? (
+                    t(lang, 'photo.permission')
+                  ) : c.photo.licenseUrl ? (
+                    <a href={c.photo.licenseUrl} rel="license noopener" target="_blank">{c.photo.license}</a>
+                  ) : c.photo.license}, {t(lang, 'photo.cropped')}
                 </p>
               )}
             </div>

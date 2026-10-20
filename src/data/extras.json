@@ -11,8 +11,14 @@
   "web": "https://teamba.sk",
   "photo": { "src": "/photos/primator-5.jpg", "author": "Andrej Shadura", "license": "CC BY 4.0", "licenseUrl": "https://creativecommons.org/licenses/by/4.0/", "source": "https://commons.wikimedia.org/wiki/File:Mat%C3%BA%C5%A1_Vallo,_Pod_lampou_(november_2023).jpg" }
  },
- "primator-6": { "web": "https://martinwinkler.sk" },
- "primator-1": { "web": "https://myslovensko.sk/kandidati" },
+ "primator-6": {
+  "web": "https://martinwinkler.sk",
+    "photo": { "src": "/photos/primator-6.jpg", "author": "Tím Martina Winklera", "permission": true, "source": "https://martinwinkler.sk/" }
+ },
+ "primator-1": {
+  "web": "https://myslovensko.sk/kandidati",
+    "photo": { "src": "/photos/primator-1.jpg", "author": "MySlovensko", "permission": true, "source": "https://myslovensko.sk/kandidati/lubomir-geci" }
+ },
  "predseda-bsk-1": {
   "web": "https://droba.sk",
   "photo": { "src": "/photos/predseda-bsk-1.jpg", "author": "Pavol Frešo", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "source": "https://commons.wikimedia.org/wiki/File:Juraj_Droba_2.jpg" }
