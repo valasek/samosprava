@@ -358,6 +358,47 @@ section {
   font-size: 0.85rem;
 }
 
+.filters {
+  scroll-margin-top: 0.5rem;
+}
+
+.filter-pill {
+  position: fixed;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: calc(100% - 1rem);
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font: inherit;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+
+.filter-pill[hidden] {
+  display: none;
+}
+
+.filter-pill-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.filter-pill-action {
+  flex: none;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 select {
   font: inherit;
   padding: 0.6rem;
@@ -560,9 +601,6 @@ select {
   }
   .filters {
     grid-template-columns: repeat(2, 1fr);
-    position: sticky;
-    top: 0;
-    z-index: 1;
   }
   .filter-status {
     grid-column: 1 / -1;

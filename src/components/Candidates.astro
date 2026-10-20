@@ -113,6 +113,11 @@ const moreHref = (c: Candidate) =>
   </p>
 </form>
 
+<button type="button" id="filter-pill" class="filter-pill" aria-controls="filters" hidden>
+  <span class="filter-pill-text"><strong>{t(lang, 'filter.active')}:</strong> <span id="filter-pill-summary"></span></span>
+  <span class="filter-pill-action">{t(lang, 'filter.edit')} ↑</span>
+</button>
+
 {
   districts
     .filter((d) => !d.mzObvody)
@@ -240,6 +245,39 @@ const moreHref = (c: Candidate) =>
     return { obvody: new Set(match.map((r) => d.obvodByOkrsok[r[2]])), lines };
   }
 
+  const pill = document.getElementById('filter-pill')!;
+  const pillSummary = document.getElementById('filter-pill-summary')!;
+  let filterOffscreen = false;
+  let filterActive = false;
+
+  function updatePill(shown: number) {
+    const parts: string[] = [];
+    for (const name of ['mc', 'v', 'p'] as const) {
+      const sel = form.elements.namedItem(name) as HTMLSelectElement;
+      if (sel.value) parts.push(sel.selectedOptions[0].text);
+    }
+    const f = new FormData(form);
+    const ul = String(f.get('ul') ?? '').trim();
+    const cd = String(f.get('cd') ?? '').trim();
+    if (ul) parts.push(cd ? `${ul} ${cd}` : ul);
+    const q = String(f.get('q') ?? '').trim();
+    if (q) parts.push(`„${q}“`);
+    filterActive = parts.length > 0;
+    pillSummary.textContent = `${parts.join(' · ')} (${shown})`;
+    pill.hidden = !(filterActive && filterOffscreen);
+  }
+
+  new IntersectionObserver(([e]) => {
+    filterOffscreen = !e.isIntersecting && e.boundingClientRect.top < 0;
+    pill.hidden = !(filterActive && filterOffscreen);
+  }).observe(form);
+
+  pill.addEventListener('click', () => {
+    const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    form.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+    form.querySelector<HTMLElement>('select, input')?.focus({ preventScroll: true });
+  });
+
   function apply() {
     const mcNow = (form.elements.namedItem('mc') as HTMLSelectElement).value;
     for (const fs of lookups) fs.hidden = fs.disabled = fs.dataset.streetsFor !== mcNow;
@@ -273,6 +311,7 @@ const moreHref = (c: Candidate) =>
     for (const n of notes) n.hidden = !(mc && n.dataset.note === mc && (!body || body === 'mz'));
     countEl.textContent = String(shown);
     noResults.hidden = shown > 0;
+    updatePill(shown);
 
     const params = new URLSearchParams();
     for (const k of fields) {
