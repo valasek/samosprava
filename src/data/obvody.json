@@ -1,0 +1,172 @@
+{
+ "msz": [
+  {
+   "obvod": 1,
+   "seats": 5,
+   "districts": [
+    "stare-mesto"
+   ]
+  },
+  {
+   "obvod": 2,
+   "seats": 2,
+   "districts": [
+    "podunajske-biskupice"
+   ]
+  },
+  {
+   "obvod": 3,
+   "seats": 8,
+   "districts": [
+    "ruzinov"
+   ]
+  },
+  {
+   "obvod": 4,
+   "seats": 2,
+   "districts": [
+    "vrakuna"
+   ]
+  },
+  {
+   "obvod": 5,
+   "seats": 4,
+   "districts": [
+    "nove-mesto"
+   ]
+  },
+  {
+   "obvod": 6,
+   "seats": 3,
+   "districts": [
+    "raca",
+    "vajnory"
+   ]
+  },
+  {
+   "obvod": 7,
+   "seats": 2,
+   "districts": [
+    "devinska-nova-ves",
+    "devin"
+   ]
+  },
+  {
+   "obvod": 8,
+   "seats": 5,
+   "districts": [
+    "dubravka",
+    "lamac",
+    "zahorska-bystrica"
+   ]
+  },
+  {
+   "obvod": 9,
+   "seats": 3,
+   "districts": [
+    "karlova-ves"
+   ]
+  },
+  {
+   "obvod": 10,
+   "seats": 10,
+   "districts": [
+    "petrzalka"
+   ]
+  },
+  {
+   "obvod": 11,
+   "seats": 1,
+   "districts": [
+    "jarovce",
+    "rusovce",
+    "cunovo"
+   ]
+  }
+ ],
+ "zastupitelstvo-bsk": [
+  {
+   "obvod": 1,
+   "seats": 4,
+   "districts": [
+    "stare-mesto"
+   ]
+  },
+  {
+   "obvod": 2,
+   "seats": 6,
+   "districts": [
+    "ruzinov"
+   ]
+  },
+  {
+   "obvod": 3,
+   "seats": 2,
+   "districts": [
+    "vrakuna"
+   ]
+  },
+  {
+   "obvod": 4,
+   "seats": 2,
+   "districts": [
+    "podunajske-biskupice"
+   ]
+  },
+  {
+   "obvod": 5,
+   "seats": 3,
+   "districts": [
+    "nove-mesto"
+   ]
+  },
+  {
+   "obvod": 6,
+   "seats": 2,
+   "districts": [
+    "raca",
+    "vajnory"
+   ]
+  },
+  {
+   "obvod": 7,
+   "seats": 3,
+   "districts": [
+    "karlova-ves"
+   ]
+  },
+  {
+   "obvod": 8,
+   "seats": 1,
+   "districts": [
+    "devinska-nova-ves",
+    "devin"
+   ]
+  },
+  {
+   "obvod": 9,
+   "seats": 3,
+   "districts": [
+    "dubravka"
+   ]
+  },
+  {
+   "obvod": 10,
+   "seats": 1,
+   "districts": [
+    "lamac",
+    "zahorska-bystrica"
+   ]
+  },
+  {
+   "obvod": 11,
+   "seats": 9,
+   "districts": [
+    "petrzalka",
+    "jarovce",
+    "rusovce",
+    "cunovo"
+   ]
+  }
+ ]
+}

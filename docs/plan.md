@@ -45,6 +45,15 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 | Credit & feedback | Footer credit to Stanislav Valasek; feedback via Netlify Forms. |
 | Where to vote | Explanation + links to polling station lists of each city district (no street lookup). |
 | Hosting | Netlify, auto-deploy from git push; all static assets in repo. |
+| Candidate data source | Official MV SR XLSX registers (starosta/primátor, obecné poslanci, predseda VÚC, poslanci VÚC), filtered to Bratislava by `scripts/extract.py` into `src/data/*.json`. Seat counts from city, BSK and Staré Mesto notices. |
+| BSK constituencies | Obvody 1–11 cover Bratislava (24 in total in the region); obvody 12–24 are excluded. |
+| Staré Mesto council | 8 obvody defined by okrsky (polling districts); voter finds their okrsok number on the notice mailed to households. |
+
+## Data pipeline
+
+1. `scripts/download.sh` downloads the MV SR XLSX files into `sources/` (git-ignored).
+2. `.venv/bin/python3 scripts/extract.py` writes `src/data/candidates.json`, `districts.json`, `obvody.json`.
+3. Counts (2026-10-20): primátor 6, starosta 44 (17 MČ), MsZ 220, Staré Mesto MZ 70, predseda BSK 7, zastupiteľstvo BSK 192 (Bratislava obvody) = 539.
 
 ## Phases
 

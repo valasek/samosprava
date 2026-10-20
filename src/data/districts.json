@@ -1,0 +1,221 @@
+[
+ {
+  "id": "stare-mesto",
+  "name": "Staré Mesto",
+  "mszObvod": 1,
+  "bskObvod": 1,
+  "url": "https://www.staremesto.sk/31451/volby-do-organov-uzemnej-samospravy-2026",
+  "mzObvody": [
+   {
+    "obvod": 1,
+    "seats": 3,
+    "okrsky": [
+     1,
+     2,
+     3,
+     12
+    ]
+   },
+   {
+    "obvod": 2,
+    "seats": 3,
+    "okrsky": [
+     4,
+     5,
+     6,
+     30
+    ]
+   },
+   {
+    "obvod": 3,
+    "seats": 3,
+    "okrsky": [
+     7,
+     8,
+     9,
+     34
+    ]
+   },
+   {
+    "obvod": 4,
+    "seats": 3,
+    "okrsky": [
+     10,
+     11,
+     13,
+     14
+    ]
+   },
+   {
+    "obvod": 5,
+    "seats": 3,
+    "okrsky": [
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   {
+    "obvod": 6,
+    "seats": 3,
+    "okrsky": [
+     19,
+     20,
+     21,
+     22
+    ]
+   },
+   {
+    "obvod": 7,
+    "seats": 4,
+    "okrsky": [
+     23,
+     24,
+     25,
+     26,
+     27,
+     28
+    ]
+   },
+   {
+    "obvod": 8,
+    "seats": 3,
+    "okrsky": [
+     29,
+     31,
+     32,
+     33
+    ]
+   }
+  ]
+ },
+ {
+  "id": "podunajske-biskupice",
+  "name": "Podunajské Biskupice",
+  "mszObvod": 2,
+  "bskObvod": 4,
+  "url": "https://www.biskupice.sk/zverejnovanie/volby-1/volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-2026-2351sk.html",
+  "mzObvody": null
+ },
+ {
+  "id": "ruzinov",
+  "name": "Ružinov",
+  "mszObvod": 3,
+  "bskObvod": 2,
+  "url": "https://www.ruzinov.sk/sk/stranky/view/volby-do-organov-samospravy-obci-a-organov-samospravnych-krajov-2026",
+  "mzObvody": null
+ },
+ {
+  "id": "vrakuna",
+  "name": "Vrakuňa",
+  "mszObvod": 4,
+  "bskObvod": 3,
+  "url": "https://www.vrakuna.sk/31466/komunalne-volby-2026",
+  "mzObvody": null
+ },
+ {
+  "id": "nove-mesto",
+  "name": "Nové Mesto",
+  "mszObvod": 5,
+  "bskObvod": 5,
+  "url": "https://www.banm.sk/28691/volby",
+  "mzObvody": null
+ },
+ {
+  "id": "raca",
+  "name": "Rača",
+  "mszObvod": 6,
+  "bskObvod": 6,
+  "url": "https://www.raca.sk/komunalne-volby-2026/",
+  "mzObvody": null
+ },
+ {
+  "id": "vajnory",
+  "name": "Vajnory",
+  "mszObvod": 6,
+  "bskObvod": 6,
+  "url": "https://www.vajnory.sk/volby-do-organov-uzemnej-samospravy-2026",
+  "mzObvody": null
+ },
+ {
+  "id": "devinska-nova-ves",
+  "name": "Devínska Nová Ves",
+  "mszObvod": 7,
+  "bskObvod": 8,
+  "url": "https://www.devinskanovaves.sk/31556/volby-2026",
+  "mzObvody": null
+ },
+ {
+  "id": "devin",
+  "name": "Devín",
+  "mszObvod": 7,
+  "bskObvod": 8,
+  "url": "https://www.devin.sk/",
+  "mzObvody": null
+ },
+ {
+  "id": "dubravka",
+  "name": "Dúbravka",
+  "mszObvod": 8,
+  "bskObvod": 9,
+  "url": "https://www.dubravka.sk/",
+  "mzObvody": null
+ },
+ {
+  "id": "lamac",
+  "name": "Lamač",
+  "mszObvod": 8,
+  "bskObvod": 10,
+  "url": "https://www.lamac.sk/info/volby-2026",
+  "mzObvody": null
+ },
+ {
+  "id": "zahorska-bystrica",
+  "name": "Záhorská Bystrica",
+  "mszObvod": 8,
+  "bskObvod": 10,
+  "url": "https://zahorskabystrica.sk/ako-hlasovat-v-komunalnych-volbach-2026/",
+  "mzObvody": null
+ },
+ {
+  "id": "karlova-ves",
+  "name": "Karlova Ves",
+  "mszObvod": 9,
+  "bskObvod": 7,
+  "url": "https://www.karlovaves.sk/komunalne-volby-2026/",
+  "mzObvody": null
+ },
+ {
+  "id": "petrzalka",
+  "name": "Petržalka",
+  "mszObvod": 10,
+  "bskObvod": 11,
+  "url": "https://www.petrzalka.sk/samosprava/miestne-zastupitelstvo/volby/",
+  "mzObvody": null
+ },
+ {
+  "id": "jarovce",
+  "name": "Jarovce",
+  "mszObvod": 11,
+  "bskObvod": 11,
+  "url": "http://www.jarovce.sk/",
+  "mzObvody": null
+ },
+ {
+  "id": "rusovce",
+  "name": "Rusovce",
+  "mszObvod": 11,
+  "bskObvod": 11,
+  "url": "http://www.rusovce.sk/",
+  "mzObvody": null
+ },
+ {
+  "id": "cunovo",
+  "name": "Čunovo",
+  "mszObvod": 11,
+  "bskObvod": 11,
+  "url": "https://www.cunovo.sk/",
+  "mzObvody": null
+ }
+]
