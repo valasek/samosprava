@@ -35,8 +35,30 @@ const path = Astro.url.pathname;
     <meta property="og:description" content={t(lang, 'site.description')} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === 'sk' ? 'sk_SK' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0b5cad" />
   </head>
   <body>
+    <a class="skip-link" href="#main">{t(lang, 'nav.skip')}</a>
+    <div class="banner" role="status">
+      <span data-phase="before">{t(lang, 'banner.before')}</span>
+      <span data-phase="during" hidden>{t(lang, 'banner.during')}</span>
+      <span data-phase="after" hidden>
+        {t(lang, 'banner.after')} <a href="https://volby.statistics.sk/" rel="noopener" target="_blank">volby.statistics.sk</a>
+      </span>
+    </div>
+    <script is:inline>
+      (() => {
+        const now = Date.now();
+        const phase =
+          now >= Date.parse('2026-10-24T20:00:00+02:00') ? 'after' : now >= Date.parse('2026-10-24T07:00:00+02:00') ? 'during' : 'before';
+        document.querySelectorAll('[data-phase]').forEach((el) => (el.hidden = el.dataset.phase !== phase));
+      })();
+    </script>
     <header class="site-header">
       <a class="brand" href={`/${lang}/`}>{t(lang, 'site.short')}</a>
       <nav class="lang-switch" aria-label="Language">
@@ -57,7 +79,7 @@ const path = Astro.url.pathname;
       {nav.map((n) => <a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>)}
     </nav>
 
-    <main>
+    <main id="main">
       <slot />
     </main>
 

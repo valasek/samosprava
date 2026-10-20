@@ -134,6 +134,32 @@ button {
   display: none !important;
 }
 
+.skip-link {
+  position: absolute;
+  left: -999px;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+  z-index: 10;
+  background: var(--bg);
+  padding: 0.5rem;
+}
+
+.banner {
+  background: var(--accent);
+  color: var(--accent-fg);
+  text-align: center;
+  padding: 0.5rem var(--space);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.banner a {
+  color: inherit;
+}
+
 .small {
   font-size: 0.875rem;
 }
@@ -355,7 +381,7 @@ select {
   place-items: center;
   font-weight: 700;
   color: #fff;
-  background: hsl(var(--h) 45% 42%);
+  background: hsl(var(--h) 45% 30%);
 }
 
 .cand-body p {
@@ -384,6 +410,21 @@ select {
 
 .cand-party {
   font-size: 0.9rem;
+}
+
+.cand.withdrawn {
+  opacity: 0.75;
+  border: 2px dashed #b3261e;
+}
+
+.cand.withdrawn .cand-name {
+  text-decoration: line-through;
+}
+
+.badge-withdrawn {
+  color: #b3261e;
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 
 @media (min-width: 40rem) {

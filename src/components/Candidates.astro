@@ -103,7 +103,7 @@ const moreHref = (c: Candidate) =>
       )}
       <ul class="cands">
         {b.candidates.map((c) => (
-          <li class="cand" data-p={partyAttr(c)} data-q={searchAttr(c)}>
+          <li class:list={['cand', { withdrawn: c.withdrawn }]} data-p={partyAttr(c)} data-q={searchAttr(c)}>
             <span class="avatar" style={`--h:${hue(c)}`} aria-hidden="true">
               {initials(c)}
             </span>
@@ -111,6 +111,7 @@ const moreHref = (c: Candidate) =>
               <p class="cand-name">
                 <span class="cand-num">{c.number}</span> {fullName(c)}
               </p>
+              {c.withdrawn && <p class="badge-withdrawn">{t(lang, 'cand.withdrawn')}</p>}
               <p class="cand-meta">
                 {c.age} {t(lang, 'cand.age')} · {c.occupation}
               </p>

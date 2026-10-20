@@ -9,6 +9,7 @@ export const ui = {
     'site.description':
       'Jednoduchý sprievodca pre voličov v Bratislave: koho, kedy, kde a ako voliť 24. októbra 2026.',
     'nav.home': 'Ako voliť',
+    'nav.skip': 'Preskočiť na obsah',
     'nav.candidates': 'Kandidáti',
     'nav.links': 'Odkazy',
     'nav.feedback': 'Spätná väzba',
@@ -40,6 +41,7 @@ export const ui = {
     'cand.age': 'rokov',
     'cand.independent': 'nezávislý kandidát',
     'cand.residence': 'Trvalý pobyt',
+    'cand.withdrawn': 'Vzdal(a) sa kandidatúry – hlas pre tohto kandidáta sa nezapočíta',
     'cand.more': 'Viac o kandidátovi',
     'cand.title': 'Kandidáti',
     'cand.intro':
@@ -48,7 +50,10 @@ export const ui = {
       'Kandidáti do miestneho zastupiteľstva sa tu zobrazujú iba pre Staré Mesto. Pre ostatné mestské časti pozrite stránku mestskej časti:',
     'cand.mzOkrsok':
       'Číslo vášho volebného okrsku je na oznámení, ktoré dostala vaša domácnosť do schránky.',
-    'cand.source': 'Zdroj údajov: register kandidátov MV SR, stav k 20. 10. 2026.',
+    'cand.source': 'Zdroj údajov: register kandidátov MV SR, stav k 20. 10. 2026. Vzdanie sa kandidatúry je možné do 48 hodín pred voľbami – aktuálny zoznam je vyvesený vo volebnej miestnosti.',
+    'banner.before': 'Voľby: sobota 24. 10. 2026, 7:00 – 20:00. Vezmite si občiansky preukaz.',
+    'banner.during': 'Dnes sa volí do 20:00. Vezmite si občiansky preukaz.',
+    'banner.after': 'Volebné miestnosti sú zatvorené. Výsledky:',
     'links.title': 'Odkazy a zdroje',
     'home.headline': 'Voľby do samosprávy 2026',
     'footer.credit': 'Pripravil',
@@ -70,6 +75,7 @@ export const ui = {
     'site.description':
       'A simple guide for voters in Bratislava: who, when, where and how to vote on 24 October 2026.',
     'nav.home': 'How to vote',
+    'nav.skip': 'Skip to content',
     'nav.candidates': 'Candidates',
     'nav.links': 'Links',
     'nav.feedback': 'Feedback',
@@ -101,6 +107,7 @@ export const ui = {
     'cand.age': 'years',
     'cand.independent': 'independent candidate',
     'cand.residence': 'Permanent residence',
+    'cand.withdrawn': 'Withdrew – a vote for this candidate will not count',
     'cand.more': 'More about the candidate',
     'cand.title': 'Candidates',
     'cand.intro':
@@ -108,7 +115,10 @@ export const ui = {
     'cand.mzNote':
       'District council candidates are shown only for Staré Mesto. For other districts see the district website:',
     'cand.mzOkrsok': 'Your polling district number is on the notice delivered to your household.',
-    'cand.source': 'Data source: Ministry of Interior candidate register, as of 20 Oct 2026.',
+    'cand.source': 'Data source: Ministry of Interior candidate register, as of 20 Oct 2026. Candidates may withdraw up to 48 hours before the election – the current list is posted in the polling station.',
+    'banner.before': 'Election: Saturday 24 Oct 2026, 7:00 – 20:00. Bring your ID.',
+    'banner.during': 'Polls are open today until 20:00. Bring your ID.',
+    'banner.after': 'Polls are closed. Results:',
     'links.title': 'Links and sources',
     'home.headline': 'Self-Government Elections 2026',
     'footer.credit': 'Made by',

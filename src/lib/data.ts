@@ -1,6 +1,7 @@
 import candidatesJson from '../data/candidates.json';
 import districtsJson from '../data/districts.json';
 import obvodyJson from '../data/obvody.json';
+import withdrawnJson from '../data/withdrawn.json';
 
 export type BodyId = 'primator' | 'msz' | 'starosta' | 'mz' | 'predseda-bsk' | 'zastupitelstvo-bsk';
 
@@ -19,6 +20,7 @@ export interface Candidate {
   parties: string[];
   independent: boolean;
   residence?: string;
+  withdrawn?: boolean;
 }
 
 export interface District {
@@ -41,7 +43,9 @@ export interface Ballot {
   candidates: Candidate[];
 }
 
-export const candidates = candidatesJson as Candidate[];
+// Candidate ids that withdrew after registration (law 180/2014 §142(4)); still printed on ballots.
+const withdrawn = new Set(withdrawnJson as string[]);
+export const candidates = (candidatesJson as Candidate[]).map((c) => ({ ...c, withdrawn: withdrawn.has(c.id) }));
 export const districts = districtsJson as District[];
 const obvody = obvodyJson as Record<'msz' | 'zastupitelstvo-bsk', { obvod: number; seats: number; districts: string[] }[]>;
 
