@@ -73,22 +73,26 @@ const moreHref = (c: Candidate) =>
     Object.keys(streets).map((id) => (
       <fieldset class="street-lookup" data-streets-for={id} hidden>
         <legend>{t(lang, 'street.legend')}</legend>
-        <label class="combo">
-          {t(lang, 'filter.street')}
-          <input
-            name="ul"
-            role="combobox"
-            aria-autocomplete="list"
-            aria-expanded="false"
-            aria-controls={`sl-${id}`}
-            autocomplete="off"
-            autocapitalize="off"
-            autocorrect="off"
-            spellcheck="false"
-            enterkeyhint="done"
-          />
+        <div class="combo">
+          <label for={`ul-${id}`}>{t(lang, 'filter.street')}</label>
+          <div class="combo-row">
+            <input
+              id={`ul-${id}`}
+              name="ul"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-controls={`sl-${id}`}
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="done"
+            />
+            <button type="button" class="combo-toggle" tabindex="-1" aria-label={t(lang, 'filter.streetList')}>▾</button>
+          </div>
           <ul class="combo-list" id={`sl-${id}`} role="listbox" hidden />
-        </label>
+        </div>
         <label>
           {t(lang, 'filter.house')}
           <input name="cd" inputmode="text" autocomplete="off" size="6" />
@@ -257,12 +261,15 @@ const moreHref = (c: Candidate) =>
   for (const fs of lookups) {
     const input = fs.querySelector<HTMLInputElement>('input[name="ul"]')!;
     const list = fs.querySelector<HTMLUListElement>('.combo-list')!;
+    const toggle = fs.querySelector<HTMLButtonElement>('.combo-toggle')!;
     const names = [...new Set(streetData[fs.dataset.streetsFor!].streets.map((r) => r[0]))]
       .sort((a, b) => a.localeCompare(b, 'sk'))
       .map((n) => ({ n, k: norm(n) }));
     let active = -1;
+    let blurTimer = 0;
 
     const close = () => {
+      clearTimeout(blurTimer);
       list.hidden = true;
       input.setAttribute('aria-expanded', 'false');
       input.removeAttribute('aria-activedescendant');
@@ -280,16 +287,16 @@ const moreHref = (c: Candidate) =>
       input.value = name;
       close();
       input.dispatchEvent(new Event('input', { bubbles: true }));
-      fs.querySelector<HTMLInputElement>('input[name="cd"]')?.focus();
+      input.blur();
     };
-    const render = () => {
-      const q = norm(input.value);
+    const render = (all = false) => {
+      clearTimeout(blurTimer);
+      const q = all ? '' : norm(input.value);
       const words = q.split(/\s+/).filter(Boolean);
-      if (!words.length || names.some((x) => x.k === q)) return close();
+      if ((!all && !words.length) || names.some((x) => x.k === q)) return close();
       const hits = names
         .filter((x) => words.every((w) => x.k.includes(w)))
-        .sort((a, b) => Number(!a.k.startsWith(q)) - Number(!b.k.startsWith(q)))
-        .slice(0, 8);
+        .sort((a, b) => Number(!a.k.startsWith(q)) - Number(!b.k.startsWith(q)));
       list.replaceChildren(
         ...hits.map((x, i) =>
           Object.assign(document.createElement('li'), {
@@ -304,9 +311,12 @@ const moreHref = (c: Candidate) =>
       input.setAttribute('aria-expanded', String(hits.length > 0));
     };
 
-    input.addEventListener('input', render);
-    input.addEventListener('focus', render);
-    input.addEventListener('blur', close);
+    input.addEventListener('input', () => render());
+    input.addEventListener('focus', () => render());
+    // iOS blurs the input before the tap's click fires, so closing right away would swallow the selection.
+    input.addEventListener('blur', () => {
+      blurTimer = window.setTimeout(close, 300);
+    });
     input.addEventListener('keydown', (e) => {
       if (list.hidden) return;
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
@@ -324,6 +334,14 @@ const moreHref = (c: Candidate) =>
     list.addEventListener('click', (e) => {
       const li = (e.target as HTMLElement).closest('li');
       if (li) choose(li.textContent!);
+    });
+    toggle.addEventListener('pointerdown', (e) => e.preventDefault());
+    toggle.addEventListener('click', () => {
+      if (!list.hidden) return close();
+      render(true);
+    });
+    document.addEventListener('click', (e) => {
+      if (!list.hidden && !fs.querySelector('.combo')!.contains(e.target as Node)) close();
     });
   }
 
