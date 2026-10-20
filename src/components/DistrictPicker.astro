@@ -1,0 +1,19 @@
+---
+import { districts } from '../lib/data';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const sorted = [...districts].sort((a, b) => a.name.localeCompare(b.name, 'sk'));
+---
+
+<label>
+  {t(lang, 'filter.district')}
+  <select name="mc">
+    <option value="">{t(lang, 'filter.allDistricts')}</option>
+    {sorted.map((d) => <option value={d.id}>{d.name}</option>)}
+  </select>
+</label>

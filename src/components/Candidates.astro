@@ -1,0 +1,201 @@
+---
+import DistrictPicker from './DistrictPicker.astro';
+import { t, type Lang } from '../i18n/ui';
+import {
+  bodyOrder,
+  buildBallots,
+  districtById,
+  districts,
+  envelope,
+  fullName,
+  initials,
+  normalize,
+  parties,
+  type Ballot,
+  type Candidate,
+} from '../lib/data';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const ballots = buildBallots();
+const partyIndex = new Map(parties.map((p, i) => [p, String(i)]));
+
+function title(b: Ballot): string {
+  const name = t(lang, `body.${b.body}`);
+  if (b.body === 'starosta' || b.body === 'mz') {
+    const d = districtById[b.district!].name;
+    return b.obvod ? `${name} ${d} – ${t(lang, 'ballot.obvod')} ${b.obvod}` : `${name} – ${d}`;
+  }
+  if (b.obvod) {
+    const names = b.districts.map((id) => districtById[id].name).join(', ');
+    return `${name} – ${t(lang, 'ballot.obvod')} ${b.obvod} (${names})`;
+  }
+  return name;
+}
+
+function hue(c: Candidate): number {
+  let h = 2166136261;
+  for (const ch of c.firstName + c.lastName) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return (h >>> 0) % 360;
+}
+
+const partyAttr = (c: Candidate) => (c.independent ? 'i' : c.parties.map((p) => partyIndex.get(p)).join(' '));
+const searchAttr = (c: Candidate) => normalize(`${c.firstName} ${c.lastName} ${c.occupation} ${c.parties.join(' ')}`);
+const moreHref = (c: Candidate) =>
+  `https://www.google.com/search?q=${encodeURIComponent(`"${c.firstName} ${c.lastName}" Bratislava voľby 2026`)}`;
+---
+
+<form id="filters" class="filters card" role="search">
+  <DistrictPicker lang={lang} />
+  <label>
+    {t(lang, 'filter.body')}
+    <select name="v">
+      <option value="">{t(lang, 'filter.allBodies')}</option>
+      {bodyOrder.map((b) => <option value={b}>{t(lang, `body.${b}`)}</option>)}
+    </select>
+  </label>
+  <label>
+    {t(lang, 'filter.party')}
+    <select name="p">
+      <option value="">{t(lang, 'filter.allParties')}</option>
+      <option value="i">{t(lang, 'filter.independent')}</option>
+      {parties.map((p, i) => <option value={String(i)}>{p}</option>)}
+    </select>
+  </label>
+  <label>
+    <span class="visually-hidden">{t(lang, 'filter.search')}</span>
+    <input type="search" name="q" placeholder={t(lang, 'filter.search')} autocomplete="off" />
+  </label>
+  <p class="filter-status">
+    <span>{t(lang, 'filter.shown')}: <strong id="shown-count">{ballots.reduce((n, b) => n + b.candidates.length, 0)}</strong></span>
+    <button type="reset" class="link-button">{t(lang, 'filter.reset')}</button>
+  </p>
+</form>
+
+{
+  districts
+    .filter((d) => !d.mzObvody)
+    .map((d) => (
+      <p class="card note" data-note={d.id} hidden>
+        {t(lang, 'cand.mzNote')} <a href={d.url} rel="noopener" target="_blank">{d.name}</a>
+      </p>
+    ))
+}
+
+<p id="no-results" class="card" hidden>{t(lang, 'filter.none')}</p>
+
+{
+  ballots.map((b) => (
+    <section class={`ballot envelope-${envelope[b.body]}`} data-body={b.body} data-districts={b.districts.join(' ')}>
+      <h2>{title(b)}</h2>
+      <p class="ballot-meta">
+        <strong>{b.seats === 1 ? t(lang, 'ballot.circleOne') : `${t(lang, 'ballot.circleMax')} ${b.seats}`}</strong>
+        <span>· {b.candidates.length} {t(lang, 'ballot.candidates')}</span>
+        <span>· {t(lang, `ballot.envelope.${envelope[b.body]}`)}</span>
+      </p>
+      {b.okrsky && (
+        <p class="muted small">
+          {t(lang, 'ballot.okrsky')}: {b.okrsky.join(', ')}. {t(lang, 'cand.mzOkrsok')}
+        </p>
+      )}
+      <ul class="cands">
+        {b.candidates.map((c) => (
+          <li class="cand" data-p={partyAttr(c)} data-q={searchAttr(c)}>
+            <span class="avatar" style={`--h:${hue(c)}`} aria-hidden="true">
+              {initials(c)}
+            </span>
+            <div class="cand-body">
+              <p class="cand-name">
+                <span class="cand-num">{c.number}</span> {fullName(c)}
+              </p>
+              <p class="cand-meta">
+                {c.age} {t(lang, 'cand.age')} · {c.occupation}
+              </p>
+              <p class="cand-party">{c.independent ? t(lang, 'cand.independent') : c.parties.join(', ')}</p>
+              {c.residence && (
+                <p class="cand-meta">
+                  {t(lang, 'cand.residence')}: {c.residence}
+                </p>
+              )}
+              <a class="cand-more small" href={moreHref(c)} rel="noopener nofollow" target="_blank">
+                {t(lang, 'cand.more')} ↗
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))
+}
+
+<p class="muted small">{t(lang, 'cand.source')}</p>
+
+<script>
+  const norm = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  const form = document.getElementById('filters') as HTMLFormElement;
+  const groups = [...document.querySelectorAll<HTMLElement>('.ballot')].map((el) => ({
+    el,
+    body: el.dataset.body!,
+    districts: el.dataset.districts!.split(' '),
+    cards: [...el.querySelectorAll<HTMLElement>('.cand')].map((c) => ({
+      el: c,
+      parties: c.dataset.p!.split(' '),
+      q: c.dataset.q!,
+    })),
+  }));
+  const notes = [...document.querySelectorAll<HTMLElement>('[data-note]')];
+  const countEl = document.getElementById('shown-count')!;
+  const noResults = document.getElementById('no-results')!;
+  const fields = ['mc', 'v', 'p', 'q'] as const;
+
+  function apply() {
+    const f = new FormData(form);
+    const mc = String(f.get('mc') ?? '');
+    const body = String(f.get('v') ?? '');
+    const party = String(f.get('p') ?? '');
+    const q = norm(String(f.get('q') ?? ''));
+    let shown = 0;
+    for (const g of groups) {
+      const groupOk = (!mc || g.districts.includes(mc)) && (!body || g.body === body);
+      let n = 0;
+      for (const c of g.cards) {
+        const ok = groupOk && (!party || c.parties.includes(party)) && (!q || c.q.includes(q));
+        c.el.hidden = !ok;
+        if (ok) n++;
+      }
+      g.el.hidden = n === 0;
+      shown += n;
+    }
+    for (const n of notes) n.hidden = !(mc && n.dataset.note === mc && (!body || body === 'mz'));
+    countEl.textContent = String(shown);
+    noResults.hidden = shown > 0;
+
+    const params = new URLSearchParams();
+    for (const k of fields) {
+      const v = String(f.get(k) ?? '').trim();
+      if (v) params.set(k, v);
+    }
+    const qs = params.toString();
+    history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+    if (mc) localStorage.setItem('mc', mc);
+  }
+
+  const params = new URLSearchParams(location.search);
+  if (!params.has('mc') && localStorage.getItem('mc')) params.set('mc', localStorage.getItem('mc')!);
+  for (const k of fields) {
+    const el = form.elements.namedItem(k) as HTMLInputElement | HTMLSelectElement | null;
+    const v = params.get(k);
+    if (el && v) el.value = v;
+  }
+
+  form.addEventListener('input', apply);
+  form.addEventListener('submit', (e) => e.preventDefault());
+  form.addEventListener('reset', () => {
+    localStorage.removeItem('mc');
+    setTimeout(apply);
+  });
+  apply();
+</script>

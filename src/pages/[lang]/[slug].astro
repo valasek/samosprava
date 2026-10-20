@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Candidates from '../../components/Candidates.astro';
+import { links } from '../../i18n/content';
 import { langs, slugs, t, type Lang } from '../../i18n/ui';
 
 type Page = keyof typeof slugs;
@@ -20,7 +22,29 @@ const thanksUrl = `/${lang}/${slugs.thanks[lang]}/`;
 ---
 
 {
-  page === 'feedback' ? (
+  page === 'candidates' ? (
+    <Base lang={lang} title={t(lang, 'cand.title')} alternates={alternates}>
+      <h1>{t(lang, 'cand.title')}</h1>
+      <p>{t(lang, 'cand.intro')}</p>
+      <Candidates lang={lang} />
+    </Base>
+  ) : page === 'links' ? (
+    <Base lang={lang} title={t(lang, 'links.title')} alternates={alternates}>
+      <h1>{t(lang, 'links.title')}</h1>
+      {links[lang].map((g) => (
+        <section>
+          <h2>{g.group}</h2>
+          <ul class="link-list">
+            {g.items.map((i) => (
+              <li>
+                <a href={i.href} rel="noopener" target="_blank">{i.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </Base>
+  ) : page === 'feedback' ? (
     <Base lang={lang} title={t(lang, 'feedback.title')} alternates={alternates}>
       <h1>{t(lang, 'feedback.title')}</h1>
       <p>{t(lang, 'feedback.intro')}</p>

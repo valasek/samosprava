@@ -130,6 +130,297 @@ button {
   white-space: nowrap;
 }
 
+[hidden] {
+  display: none !important;
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.lead {
+  font-size: 1.1rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+  line-height: 1.25;
+  margin-top: 2rem;
+}
+
+section {
+  margin-block: 1.5rem;
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--space);
+  overflow-x: auto;
+  border-bottom: 1px solid var(--surface);
+}
+
+.main-nav a {
+  padding: 0.6rem 0.4rem;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+}
+
+.main-nav a[aria-current='page'] {
+  border-bottom-color: var(--accent);
+  color: var(--fg);
+}
+
+.facts {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.facts div {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 0.75rem var(--space);
+}
+
+.facts dt {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.cta form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.envelopes {
+  display: grid;
+  gap: var(--space);
+}
+
+.envelope {
+  border-radius: var(--radius);
+  padding: var(--space);
+  border: 2px solid #c4c7cc;
+}
+
+.envelope h3 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+.envelope ul {
+  padding-left: 1.1rem;
+}
+
+.envelope li {
+  margin-bottom: 0.5rem;
+}
+
+.envelope-blue {
+  border-color: #2f6fd1;
+  background: #eef4fd;
+}
+
+.steps li,
+.warn li {
+  margin-bottom: 0.5rem;
+}
+
+.warn {
+  background: #fff4e5;
+  border-left: 4px solid #e08a00;
+}
+
+.warn h2 {
+  margin-top: 0;
+}
+
+.columns {
+  columns: 2;
+  padding-left: 1.1rem;
+}
+
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.link-list li {
+  margin-bottom: 0.5rem;
+}
+
+.filters {
+  display: grid;
+  gap: 0.5rem;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
+}
+
+.filters label {
+  font-size: 0.85rem;
+}
+
+select {
+  font: inherit;
+  padding: 0.6rem;
+  border-radius: var(--radius);
+  border: 1px solid #c4c7cc;
+  background: var(--bg);
+  width: 100%;
+}
+
+.filters input {
+  width: 100%;
+}
+
+.filter-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.link-button {
+  background: none;
+  color: var(--accent);
+  padding: 0.25rem;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.note {
+  margin-top: var(--space);
+}
+
+.ballot {
+  border-left: 4px solid #c4c7cc;
+  padding-left: 0.75rem;
+}
+
+.ballot.envelope-blue {
+  border-left-color: #2f6fd1;
+  background: none;
+}
+
+.ballot h2 {
+  margin-bottom: 0.25rem;
+}
+
+.ballot-meta {
+  margin-top: 0;
+  font-size: 0.9rem;
+}
+
+.cands {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.cand {
+  display: flex;
+  gap: 0.6rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.avatar {
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #fff;
+  background: hsl(var(--h) 45% 42%);
+}
+
+.cand-body p {
+  margin: 0;
+}
+
+.cand-name {
+  font-weight: 700;
+}
+
+.cand-num {
+  display: inline-block;
+  min-width: 1.75rem;
+  padding: 0 0.35rem;
+  margin-right: 0.25rem;
+  border: 2px solid var(--fg);
+  border-radius: 999px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.cand-meta {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.cand-party {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 40rem) {
+  .avatar {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1rem;
+  }
+  .facts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .envelopes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .filters {
+    grid-template-columns: repeat(2, 1fr);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .filter-status {
+    grid-column: 1 / -1;
+  }
+  .columns {
+    columns: 3;
+  }
+}
+
+@media (min-width: 64rem) {
+  .filters {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .cands {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (min-width: 48rem) {
   h1 {
     font-size: 2.25rem;

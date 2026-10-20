@@ -13,6 +13,12 @@ interface Props {
 const { lang, title, alternates = {} } = Astro.props;
 const pageTitle = title ? `${title} | ${t(lang, 'site.title')}` : t(lang, 'site.title');
 const altLinks = langs.map((l) => ({ lang: l, href: alternates[l] ?? `/${l}/` }));
+const nav = [
+  { href: `/${lang}/`, label: t(lang, 'nav.home') },
+  { href: `/${lang}/${slugs.candidates[lang]}/`, label: t(lang, 'nav.candidates') },
+  { href: `/${lang}/${slugs.links[lang]}/`, label: t(lang, 'nav.links') },
+];
+const path = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -32,7 +38,7 @@ const altLinks = langs.map((l) => ({ lang: l, href: alternates[l] ?? `/${l}/` })
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href={`/${lang}/`}>{t(lang, 'site.title')}</a>
+      <a class="brand" href={`/${lang}/`}>{t(lang, 'site.short')}</a>
       <nav class="lang-switch" aria-label="Language">
         {
           altLinks.map((a) =>
@@ -47,6 +53,9 @@ const altLinks = langs.map((l) => ({ lang: l, href: alternates[l] ?? `/${l}/` })
         }
       </nav>
     </header>
+    <nav class="main-nav" aria-label={t(lang, 'site.title')}>
+      {nav.map((n) => <a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>)}
+    </nav>
 
     <main>
       <slot />

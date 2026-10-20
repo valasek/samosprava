@@ -1,16 +1,96 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { langs, t, type Lang } from '../../i18n/ui';
+import DistrictPicker from '../../components/DistrictPicker.astro';
+import { home } from '../../i18n/content';
+import { langs, slugs, t, type Lang } from '../../i18n/ui';
+import { bodyOrder, districts, envelope } from '../../lib/data';
 
 export function getStaticPaths() {
   return langs.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Lang;
+const c = home[lang];
+const single = new Set(['primator', 'starosta', 'predseda-bsk']);
+const sortedDistricts = [...districts].sort((a, b) => a.name.localeCompare(b.name, 'sk'));
 ---
 
 <Base lang={lang}>
   <h1>{t(lang, 'home.headline')}</h1>
-  <p><strong>{t(lang, 'home.date')}</strong></p>
-  <p class="card">{t(lang, 'home.poc')}</p>
+  <p class="lead">{c.lead}</p>
+
+  <dl class="facts">
+    {
+      c.keyFacts.map((f) => (
+        <div>
+          <dt>{f.label}</dt>
+          <dd>{f.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <section class="card cta">
+    <form method="get" action={`/${lang}/${slugs.candidates[lang]}/`}>
+      <DistrictPicker lang={lang} />
+      <button type="submit">{t(lang, 'filter.go')}</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>{c.ballots.title}</h2>
+    <div class="envelopes">
+      {
+        (['white', 'blue'] as const).map((env) => (
+          <div class={`envelope envelope-${env}`}>
+            <h3>{env === 'white' ? c.ballots.white : c.ballots.blue}</h3>
+            <ul>
+              {bodyOrder
+                .filter((b) => envelope[b] === env)
+                .map((b) => (
+                  <li>
+                    <strong>{t(lang, `body.${b}`)}</strong>
+                    <br />
+                    <span class="muted">
+                      {single.has(b) ? t(lang, 'ballot.circleOne') : `${t(lang, 'ballot.circleMax')} N`}
+                    </span>
+                  </li>
+                ))}
+            </ul>
+            <p class="muted small">{env === 'white' ? c.ballots.whiteNote : c.ballots.blueNote}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="muted small">N = {c.ballots.seatsNote}</p>
+  </section>
+
+  <section>
+    <h2>{c.steps.title}</h2>
+    <ol class="steps">{c.steps.items!.map((i) => <li>{i}</li>)}</ol>
+  </section>
+
+  <section class="card warn">
+    <h2>{c.mistakes.title}</h2>
+    <ul>{c.mistakes.items!.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section>
+    <h2>{c.who.title}</h2>
+    <ul>{c.who.items!.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section>
+    <h2>{c.where.title}</h2>
+    <p>{c.where.intro}</p>
+    <ul class="columns">
+      {sortedDistricts.map((d) => <li><a href={d.url} rel="noopener" target="_blank">{d.name}</a></li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>{c.results.title}</h2>
+    <ul>{c.results.items!.map((i) => <li>{i}</li>)}</ul>
+    <p><a class="button" href="https://volby.statistics.sk/" rel="noopener" target="_blank">volby.statistics.sk</a></p>
+  </section>
 </Base>
