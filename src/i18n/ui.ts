@@ -59,7 +59,8 @@ export const ui = {
     'photo.credit': 'Foto / zdroj',
     'photo.cropped': 'orezané',
     'photo.permission': 'použité so súhlasom',
-    'photo.note': 'Zobrazujeme voľne licencované fotografie alebo fotografie použité so súhlasom. Chýbajúca fotka nie je hodnotenie kandidáta.',
+    'photo.sourceOnly': 'licencia na zdrojovej stránke neuvedená',
+    'photo.note': 'Zobrazujeme voľne licencované fotografie, fotografie použité so súhlasom alebo fotografie s uvedeným zdrojom. Chýbajúca fotka nie je hodnotenie kandidáta.',
     'cand.title': 'Kandidáti',
     'cand.intro':
       'Zoznam všetkých zaregistrovaných kandidátov pre Bratislavu podľa oficiálneho registra MV SR. Vyberte svoju mestskú časť a uvidíte presne tie hlasovacie lístky, ktoré dostanete.',
@@ -143,7 +144,8 @@ export const ui = {
     'photo.credit': 'Photo / source',
     'photo.cropped': 'cropped',
     'photo.permission': 'used with permission',
-    'photo.note': 'Photos are shown when freely licensed or used with permission. A missing photo says nothing about the candidate.',
+    'photo.sourceOnly': 'no license stated by source',
+    'photo.note': 'Photos are shown when freely licensed, used with permission, or attributed to their source. A missing photo says nothing about the candidate.',
     'cand.title': 'Candidates',
     'cand.intro':
       'All registered candidates for Bratislava from the official Ministry of Interior register. Pick your city district to see exactly the ballots you will receive. Candidate details are in Slovak as officially published.',

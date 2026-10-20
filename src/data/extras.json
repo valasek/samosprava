@@ -23,7 +23,10 @@
   "web": "https://droba.sk",
   "photo": { "src": "/photos/predseda-bsk-1.jpg", "author": "Pavol Frešo", "license": "CC BY 2.0", "licenseUrl": "https://creativecommons.org/licenses/by/2.0/", "source": "https://commons.wikimedia.org/wiki/File:Juraj_Droba_2.jpg" }
  },
- "predseda-bsk-4": { "web": "https://pravonapravdu.sk/kandidati" },
+ "predseda-bsk-4": {
+  "web": "https://zupanka.sk/",
+  "photo": { "src": "/photos/predseda-bsk-4.jpg", "author": "Zuzana Krajčovičová", "sourceOnly": true, "source": "https://zupanka.sk/" }
+ },
  "starosta-stare-mesto-1": {
   "photo": { "src": "/photos/starosta-stare-mesto-1.jpg", "author": "M.stevove", "license": "CC BY-SA 4.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/", "source": "https://commons.wikimedia.org/wiki/File:Aufrichtova_portret.jpg" }
  },

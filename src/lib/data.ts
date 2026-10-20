@@ -11,6 +11,7 @@ export interface Photo {
   license?: string;
   licenseUrl?: string;
   permission?: boolean;
+  sourceOnly?: boolean;
   source: string;
 }
 const extras = extrasJson as Record<string, { web?: string; photo?: Photo }>;
