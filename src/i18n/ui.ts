@@ -71,6 +71,7 @@ export const ui = {
     'home.headline': 'Voľby do samosprávy 2026',
     'footer.credit': 'Pripravil',
     'footer.feedback': 'Napíšte nám spätnú väzbu',
+    'footer.source': 'Zdrojový kód na GitHube',
     'footer.disclaimer':
       'Neoficiálny sprievodca. Záväzné informácie nájdete na stránkach MV SR a hlavného mesta.',
     'feedback.title': 'Spätná väzba',
@@ -149,6 +150,7 @@ export const ui = {
     'home.headline': 'Self-Government Elections 2026',
     'footer.credit': 'Made by',
     'footer.feedback': 'Send feedback',
+    'footer.source': 'Source code on GitHub',
     'footer.disclaimer':
       'Unofficial guide. For binding information see the Ministry of Interior and City of Bratislava websites.',
     'feedback.title': 'Feedback',

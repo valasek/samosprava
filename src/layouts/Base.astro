@@ -85,9 +85,10 @@ const path = Astro.url.pathname;
 
     <footer class="site-footer">
       <p>
-        {t(lang, 'footer.credit')}
+        {t(lang, 'footer.credit')}:{' '}
         <a href="https://stanislavvalasek.com" rel="author">Stanislav Valasek</a>
         · <a href={`/${lang}/${slugs.feedback[lang]}/`}>{t(lang, 'footer.feedback')}</a>
+        · <a href="https://github.com/valasek/samosprava" rel="noopener" target="_blank">{t(lang, 'footer.source')}</a>
       </p>
       <p class="muted">{t(lang, 'footer.disclaimer')}</p>
     </footer>
