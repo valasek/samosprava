@@ -56,7 +56,7 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 
 - Phases 1–4 done and deployed; Lighthouse mobile 100/100/100/100.
 - Election-day banner switches automatically (before / 24. 10. 7:00–20:00 / after → results link).
-- Remaining: candidate photos (deferred); refresh data on 23. 10. (`scripts/download.sh` + `scripts/extract.py`) and check withdrawals.
+- Remaining: refresh data on 23. 10. (`scripts/download.sh` + `scripts/extract.py`) and check withdrawals; more photos only with written permission from campaigns.
 
 ## Data pipeline
 
