@@ -1,9 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import DistrictPicker from '../../components/DistrictPicker.astro';
+import PollingPlace from '../../components/PollingPlace.astro';
 import { home } from '../../i18n/content';
 import { langs, slugs, t, type Lang } from '../../i18n/ui';
-import { bodyOrder, districts, envelope } from '../../lib/data';
+import { bodyOrder, envelope } from '../../lib/data';
 
 export function getStaticPaths() {
   return langs.map((lang) => ({ params: { lang } }));
@@ -12,7 +13,6 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Lang;
 const c = home[lang];
 const single = new Set(['primator', 'starosta', 'predseda-bsk']);
-const sortedDistricts = [...districts].sort((a, b) => a.name.localeCompare(b.name, 'sk'));
 ---
 
 <Base lang={lang}>
@@ -83,9 +83,7 @@ const sortedDistricts = [...districts].sort((a, b) => a.name.localeCompare(b.nam
   <section>
     <h2>{c.where.title}</h2>
     <p>{c.where.intro}</p>
-    <ul class="columns">
-      {sortedDistricts.map((d) => <li><a href={d.url} rel="noopener" target="_blank">{d.name}</a></li>)}
-    </ul>
+    <PollingPlace lang={lang} />
   </section>
 
   <section>

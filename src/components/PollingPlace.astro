@@ -1,0 +1,153 @@
+---
+import { districts } from '../lib/data';
+import polling from '../data/polling.json';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const sorted = [...districts].sort((a, b) => a.name.localeCompare(b.name, 'sk'));
+const i18n = {
+  pickHouse: t(lang, 'where.pickHouse'),
+  noHouse: t(lang, 'where.noHouse'),
+  notFound: t(lang, 'street.notFound'),
+  houses: t(lang, 'street.houses'),
+  other: t(lang, 'where.other'),
+  map: t(lang, 'where.map'),
+  source: t(lang, 'where.source'),
+};
+---
+
+<form id="where" class="filters card" role="search">
+  <label>
+    {t(lang, 'filter.district')}
+    <select name="mc">
+      <option value="">{t(lang, 'where.pick')}</option>
+      {sorted.map((d) => <option value={d.id}>{d.name}</option>)}
+    </select>
+  </label>
+  <fieldset class="street-lookup" hidden disabled>
+    <legend>{t(lang, 'where.legend')}</legend>
+    <div class="combo">
+      <label for="where-ul">{t(lang, 'filter.street')}</label>
+      <div class="combo-row">
+        <input
+          id="where-ul"
+          name="ul"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="where-list"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          enterkeyhint="done"
+        />
+        <button type="button" class="combo-toggle" tabindex="-1" aria-label={t(lang, 'filter.streetList')}>▾</button>
+      </div>
+      <ul class="combo-list" id="where-list" role="listbox" hidden></ul>
+    </div>
+    <label>
+      {t(lang, 'filter.house')}
+      <input name="cd" inputmode="text" autocomplete="off" size="6" />
+    </label>
+  </fieldset>
+  <div class="where-result" aria-live="polite"></div>
+</form>
+
+<script type="application/json" id="polling-data" set:html={JSON.stringify(polling)} />
+<script type="application/json" id="polling-i18n" set:html={JSON.stringify(i18n)} />
+
+<script>
+  import { norm, setupCombo } from '../lib/combo';
+
+  type District = { places: string[]; streets: [string, string | null, number][]; source: string };
+  const data: Record<string, District> = JSON.parse(document.getElementById('polling-data')!.textContent!);
+  const i18n: Record<string, string> = JSON.parse(document.getElementById('polling-i18n')!.textContent!);
+  const form = document.getElementById('where') as HTMLFormElement;
+  const select = form.elements.namedItem('mc') as HTMLSelectElement;
+  const lookup = form.querySelector<HTMLFieldSetElement>('.street-lookup')!;
+  const street = form.elements.namedItem('ul') as HTMLInputElement;
+  const house = form.elements.namedItem('cd') as HTMLInputElement;
+  const result = form.querySelector<HTMLElement>('.where-result')!;
+  const combo = setupCombo(form.querySelector<HTMLElement>('.combo')!, []);
+  let comboFor = '';
+
+  // House number specs look like "1, 3, 5A" or "1-29", "4-62 párne", "nepárne 1-29".
+  function houseMatches(spec: string, cd: string): boolean {
+    const n = parseInt(cd, 10);
+    return spec.split(',').some((raw) => {
+      const tok = raw.trim().toUpperCase();
+      if (tok.replace(/[\s/]/g, '') === cd) return true;
+      const m = tok.match(/(\d+)\s*-\s*(\d+)/);
+      if (!m || Number.isNaN(n) || n < +m[1] || n > +m[2]) return false;
+      if (/NEPÁRNE/.test(tok)) return n % 2 === 1;
+      if (/PÁRNE/.test(tok)) return n % 2 === 0;
+      return true;
+    });
+  }
+
+  function placeEl(d: District, idx: number, note?: string): HTMLElement {
+    const place = d.places[idx];
+    const box = Object.assign(document.createElement('div'), { className: 'where-place' });
+    const name = Object.assign(document.createElement('p'), { textContent: place });
+    const link = Object.assign(document.createElement('a'), {
+      href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.replace(/\s*\(.*?\)/g, '')}, Bratislava`)}`,
+      target: '_blank',
+      rel: 'noopener',
+      textContent: `${i18n.map} ↗`,
+    });
+    box.append(name);
+    if (note) box.append(Object.assign(document.createElement('p'), { className: 'muted small', textContent: note }));
+    box.append(link);
+    return box;
+  }
+
+  function render() {
+    const mc = select.value;
+    const d = data[mc];
+    const hasStreets = !!d && d.streets.length > 0;
+    lookup.hidden = lookup.disabled = !hasStreets;
+    if (hasStreets && comboFor !== mc) {
+      if (comboFor) street.value = house.value = '';
+      comboFor = mc;
+      combo.setNames(d.streets.map((r) => r[0]));
+    }
+    const out: HTMLElement[] = [];
+    if (d && !hasStreets) out.push(placeEl(d, 0));
+    if (hasStreets && street.value.trim()) {
+      const rows = d.streets.filter((r) => norm(r[0]) === norm(street.value));
+      const cd = house.value.toUpperCase().replace(/[\s/]/g, '');
+      const multi = rows.length > 1;
+      let match = rows;
+      if (multi && cd) {
+        const exact = rows.filter((r) => r[1] && houseMatches(r[1], cd));
+        const rest = rows.filter((r) => !r[1]);
+        match = exact.length ? exact : rest.length ? rest : rows;
+        if (!exact.length && !rest.length) out.push(Object.assign(document.createElement('p'), { textContent: i18n.noHouse }));
+      } else if (multi) {
+        out.push(Object.assign(document.createElement('p'), { textContent: i18n.pickHouse }));
+      }
+      if (!rows.length) out.push(Object.assign(document.createElement('p'), { textContent: i18n.notFound }));
+      const showNote = match.length > 1;
+      for (const r of match) out.push(placeEl(d, r[2], showNote ? (r[1] ? `${i18n.houses}: ${r[1]}` : i18n.other) : undefined));
+    }
+    if (d) {
+      const src = Object.assign(document.createElement('a'), { href: d.source, target: '_blank', rel: 'noopener', textContent: `${i18n.source} ↗` });
+      const p = Object.assign(document.createElement('p'), { className: 'muted small' });
+      p.append(src);
+      out.push(p);
+    }
+    result.replaceChildren(...out);
+    if (mc) localStorage.setItem('mc', mc);
+  }
+
+  form.addEventListener('input', render);
+  form.addEventListener('submit', (e) => e.preventDefault());
+  const saved = localStorage.getItem('mc');
+  if (saved && data[saved]) select.value = saved;
+  render();
+</script>

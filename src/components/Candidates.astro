@@ -218,7 +218,8 @@ const moreHref = (c: Candidate) =>
 <script type="application/json" id="streets-i18n" set:html={JSON.stringify(streetI18n)} />
 
 <script>
-  const norm = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  import { norm, setupCombo } from '../lib/combo';
+
   const form = document.getElementById('filters') as HTMLFormElement;
   const groups = [...document.querySelectorAll<HTMLElement>('.ballot')].map((el) => ({
     el,
@@ -260,92 +261,7 @@ const moreHref = (c: Candidate) =>
     return { obvody: new Set(match.map((r) => d.obvodByOkrsok[r[2]])), lines };
   }
 
-  for (const fs of lookups) {
-    const input = fs.querySelector<HTMLInputElement>('input[name="ul"]')!;
-    const list = fs.querySelector<HTMLUListElement>('.combo-list')!;
-    const toggle = fs.querySelector<HTMLButtonElement>('.combo-toggle')!;
-    const names = [...new Set(streetData[fs.dataset.streetsFor!].streets.map((r) => r[0]))]
-      .sort((a, b) => a.localeCompare(b, 'sk'))
-      .map((n) => ({ n, k: norm(n) }));
-    let active = -1;
-    let blurTimer = 0;
-
-    const close = () => {
-      clearTimeout(blurTimer);
-      list.hidden = true;
-      input.setAttribute('aria-expanded', 'false');
-      input.removeAttribute('aria-activedescendant');
-      active = -1;
-    };
-    const highlight = (i: number) => {
-      const items = list.children;
-      if (!items.length) return;
-      active = (i + items.length) % items.length;
-      [...items].forEach((li, j) => li.setAttribute('aria-selected', String(j === active)));
-      input.setAttribute('aria-activedescendant', items[active].id);
-      items[active].scrollIntoView({ block: 'nearest' });
-    };
-    const choose = (name: string) => {
-      input.value = name;
-      close();
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.blur();
-    };
-    const render = (all = false) => {
-      clearTimeout(blurTimer);
-      const q = all ? '' : norm(input.value);
-      const words = q.split(/\s+/).filter(Boolean);
-      if ((!all && !words.length) || names.some((x) => x.k === q)) return close();
-      const hits = names
-        .filter((x) => words.every((w) => x.k.includes(w)))
-        .sort((a, b) => Number(!a.k.startsWith(q)) - Number(!b.k.startsWith(q)));
-      list.replaceChildren(
-        ...hits.map((x, i) =>
-          Object.assign(document.createElement('li'), {
-            id: `${list.id}-${i}`,
-            role: 'option',
-            textContent: x.n,
-          }),
-        ),
-      );
-      active = -1;
-      list.hidden = !hits.length;
-      input.setAttribute('aria-expanded', String(hits.length > 0));
-    };
-
-    input.addEventListener('input', () => render());
-    input.addEventListener('focus', () => render());
-    // iOS blurs the input before the tap's click fires, so closing right away would swallow the selection.
-    input.addEventListener('blur', () => {
-      blurTimer = window.setTimeout(close, 300);
-    });
-    input.addEventListener('keydown', (e) => {
-      if (list.hidden) return;
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        highlight(active + (e.key === 'ArrowDown' ? 1 : -1));
-      } else if (e.key === 'Enter' && active >= 0) {
-        e.preventDefault();
-        choose(list.children[active].textContent!);
-      } else if (e.key === 'Escape') {
-        close();
-      }
-    });
-    // Keep focus on the input so blur doesn't close the list before the tap registers.
-    list.addEventListener('pointerdown', (e) => e.preventDefault());
-    list.addEventListener('click', (e) => {
-      const li = (e.target as HTMLElement).closest('li');
-      if (li) choose(li.textContent!);
-    });
-    toggle.addEventListener('pointerdown', (e) => e.preventDefault());
-    toggle.addEventListener('click', () => {
-      if (!list.hidden) return close();
-      render(true);
-    });
-    document.addEventListener('click', (e) => {
-      if (!list.hidden && !fs.querySelector('.combo')!.contains(e.target as Node)) close();
-    });
-  }
+  for (const fs of lookups) setupCombo(fs.querySelector('.combo')!, streetData[fs.dataset.streetsFor!].streets.map((r) => r[0]));
 
   const pill = document.getElementById('filter-pill')!;
   const pillSummary = document.getElementById('filter-pill-summary')!;

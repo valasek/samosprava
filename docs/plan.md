@@ -43,7 +43,7 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 | Languages | Slovak + English only. |
 | Domain | `samosprava.stanislavvalasek.com` (overrides the originally proposed `komunalne-volby-2026.stanislavvalasek.com`). |
 | Credit & feedback | Footer credit to Stanislav Valasek; feedback via Netlify Forms. |
-| Where to vote | Explanation + links to polling station lists of each city district (no street lookup). |
+| Where to vote | Polling place lookup: city district → (street → house number) → polling place address + Google Maps link. Data in `src/data/polling.json`, parsed by `scripts/polling.py` from each district's notice (Vajnory notice is a scan, transcribed in the script; single-place districts hard-coded). |
 | Hosting | Netlify, auto-deploy from git push; all static assets in repo. |
 | Candidate data source | Official MV SR XLSX registers (starosta/primátor, obecné poslanci, predseda VÚC, poslanci VÚC), filtered to Bratislava by `scripts/extract.py` into `src/data/*.json`. Seat counts from city, BSK and Staré Mesto notices. |
 | BSK constituencies | Obvody 1–11 cover Bratislava (24 in total in the region); obvody 12–24 are excluded. |
@@ -62,7 +62,8 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 
 1. `scripts/download.sh` downloads the MV SR XLSX files into `sources/` (git-ignored).
 2. `.venv/bin/python3 scripts/extract.py` writes `src/data/candidates.json`, `districts.json`, `obvody.json`.
-3. Counts (2026-10-20): primátor 6, starosta 44 (17 MČ), MsZ 220, Staré Mesto MZ 70, predseda BSK 7, zastupiteľstvo BSK 192 (Bratislava obvody) = 539.
+3. `python3 scripts/polling.py` writes `src/data/polling.json` (needs `pdftotext`; run after `extract.py`, reuses `streets.json` for Staré Mesto).
+4. Counts (2026-10-20): primátor 6, starosta 44 (17 MČ), MsZ 220, Staré Mesto MZ 70, predseda BSK 7, zastupiteľstvo BSK 192 (Bratislava obvody) = 539.
 
 ## Phases
 

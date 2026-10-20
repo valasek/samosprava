@@ -72,7 +72,7 @@ export const home: Record<Lang, HomeContent> = {
     },
     where: {
       title: 'Kde voliť',
-      intro: 'Volíte vo volebnej miestnosti svojho volebného okrsku podľa adresy trvalého pobytu. Adresu miestnosti nájdete na oznámení, ktoré dostala každá domácnosť, alebo na stránke svojej mestskej časti:',
+      intro: 'Volíte vo volebnej miestnosti svojho volebného okrsku podľa adresy trvalého pobytu. Vyberte mestskú časť, prípadne ulicu a číslo domu – zobrazíme adresu volebnej miestnosti. Nájdete ju aj na oznámení, ktoré dostala každá domácnosť.',
     },
     results: {
       title: 'Kedy budú výsledky',
@@ -136,7 +136,7 @@ export const home: Record<Lang, HomeContent> = {
     },
     where: {
       title: 'Where to vote',
-      intro: 'You vote at the polling station of your polling district, based on your permanent address. The address is on the notice delivered to every household, or on your city district website:',
+      intro: 'You vote at the polling station of your polling district, based on your permanent address. Choose your city district and, if needed, your street and house number to see the polling station address. It is also on the notice delivered to every household.',
     },
     results: {
       title: 'When are the results',
