@@ -38,7 +38,7 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 | Topic | Decision |
 |---|---|
 | Elections covered | Primátor, MsZ, 17 starostovia, predseda BSK, zastupiteľstvo BSK (Bratislava constituencies). Miestne zastupiteľstvo **only for Staré Mesto**. |
-| Photos | Only primátor, predseda BSK and starostovia (with source credit). Councillor candidates get initials avatars. |
+| Photos | Only primátor, predseda BSK and starostovia (with source credit). Councillor candidates get initials avatars. **Deferred:** launch Phase 4 with initials avatars for everyone; add photos afterwards. |
 | Tech stack | Astro (static output) + JSON data + small vanilla JS filter. |
 | Languages | Slovak + English only. |
 | Domain | `samosprava.stanislavvalasek.com` (overrides the originally proposed `komunalne-volby-2026.stanislavvalasek.com`). |
