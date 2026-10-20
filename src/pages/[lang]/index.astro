@@ -24,7 +24,7 @@ const single = new Set(['primator', 'starosta', 'predseda-bsk']);
       c.keyFacts.map((f) => (
         <div>
           <dt>{f.label}</dt>
-          <dd>{f.value}</dd>
+          <dd>{f.href ? <a href={f.href}>{f.value}</a> : f.value}</dd>
         </div>
       ))
     }
@@ -65,6 +65,12 @@ const single = new Set(['primator', 'starosta', 'predseda-bsk']);
     <p class="muted small">N = {c.ballots.seatsNote}</p>
   </section>
 
+  <section id="kde-volit">
+    <h2>{c.where.title}</h2>
+    <p>{c.where.intro}</p>
+    <PollingPlace lang={lang} />
+  </section>
+
   <section>
     <h2>{c.steps.title}</h2>
     <ol class="steps">{c.steps.items!.map((i) => <li>{i}</li>)}</ol>
@@ -78,12 +84,6 @@ const single = new Set(['primator', 'starosta', 'predseda-bsk']);
   <section>
     <h2>{c.who.title}</h2>
     <ul>{c.who.items!.map((i) => <li>{i}</li>)}</ul>
-  </section>
-
-  <section>
-    <h2>{c.where.title}</h2>
-    <p>{c.where.intro}</p>
-    <PollingPlace lang={lang} />
   </section>
 
   <section>

@@ -7,6 +7,48 @@
 
 [[redirects]]
   from = "/"
+  to = "/hu/"
+  status = 302
+  force = true
+  conditions = { Language = ["hu"] }
+
+[[redirects]]
+  from = "/"
+  to = "/cs/"
+  status = 302
+  force = true
+  conditions = { Language = ["cs"] }
+
+[[redirects]]
+  from = "/"
+  to = "/uk/"
+  status = 302
+  force = true
+  conditions = { Language = ["uk"] }
+
+[[redirects]]
+  from = "/"
+  to = "/ru/"
+  status = 302
+  force = true
+  conditions = { Language = ["ru"] }
+
+[[redirects]]
+  from = "/"
+  to = "/vi/"
+  status = 302
+  force = true
+  conditions = { Language = ["vi"] }
+
+[[redirects]]
+  from = "/"
+  to = "/rue/"
+  status = 302
+  force = true
+  conditions = { Language = ["rue"] }
+
+[[redirects]]
+  from = "/"
   to = "/en/"
   status = 302
   force = true

@@ -4,7 +4,7 @@ A simple, mobile-first web guide for voters in Bratislava for the combined munic
 
 It explains what is elected, how, where and when to vote, and where to find the results. It lists the candidates with filtering, to help undecided voters decide and to prevent mistakes when voting.
 
-- Languages: Slovak, English
+- Languages: Slovak, English, Hungarian, Czech, Russian, Ukrainian, Vietnamese, Rusyn
 - Scope: Bratislava and its city districts only
 - Live at: https://samosprava.stanislavvalasek.com
 - Stack: Astro (static site), JSON data, deployed to Netlify on git push

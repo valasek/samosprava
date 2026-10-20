@@ -56,17 +56,83 @@ main,
   font-size: 0.95rem;
 }
 
-.lang-switch {
-  display: flex;
-  gap: 0.5rem;
-  font-weight: 600;
+.lang-menu details {
+  position: relative;
 }
 
-.lang-switch a,
-.lang-switch span {
-  padding: 0.5rem;
-  min-width: 2.75rem;
-  text-align: center;
+.lang-menu summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #c9ccd1;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.lang-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.lang-menu summary::after {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-left: 0.15rem;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.lang-menu details[open] summary::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+.lang-menu summary:hover,
+.lang-menu details[open] summary {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lang-menu ul {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.25rem);
+  z-index: 20;
+  min-width: 12rem;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  background: var(--bg);
+  border: 1px solid #c9ccd1;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.12);
+}
+
+.lang-menu a {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.lang-menu a:hover,
+.lang-menu a:focus-visible {
+  background: var(--surface);
+}
+
+.lang-menu a[aria-current] {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.lang-menu a[aria-current]::after {
+  content: ' ✓';
 }
 
 main {
@@ -679,10 +745,27 @@ select {
   .filter-status {
     grid-column: 1 / -1;
   }
+  .where-form {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
+    column-gap: 1.5rem;
+  }
+  .where-form > label,
+  .where-form .street-lookup {
+    grid-column: 1;
+  }
+  .where-form .where-result {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+  .where-form .where-place:first-child {
+    margin-top: 0;
+  }
 }
 
 @media (min-width: 64rem) {
-  .filters {
+  .filters:not(.where-form) {
     grid-template-columns: repeat(4, 1fr);
   }
   .cands {

@@ -1,5 +1,5 @@
 ---
-import { languages, langs, t, type Lang } from '../i18n/ui';
+import { languages, langs, ogLocale, t, type Lang } from '../i18n/ui';
 import { slugs } from '../i18n/ui';
 import '../styles/global.css';
 
@@ -38,7 +38,8 @@ const path = Astro.url.pathname;
     <meta property="og:image" content={new URL('/og.png', Astro.site)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content={lang === 'sk' ? 'sk_SK' : 'en_GB'} />
+    <meta property="og:locale" content={ogLocale[lang]} />
+    {langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#0b5cad" />
     {import.meta.env.PROD && (
@@ -64,19 +65,42 @@ const path = Astro.url.pathname;
     </script>
     <header class="site-header">
       <a class="brand" href={`/${lang}/`}>{t(lang, 'site.short')}</a>
-      <nav class="lang-switch" aria-label="Language">
-        {
-          altLinks.map((a) =>
-            a.lang === lang ? (
-              <span aria-current="true">{a.lang.toUpperCase()}</span>
-            ) : (
-              <a href={a.href} hreflang={a.lang} lang={a.lang} title={languages[a.lang]}>
-                {a.lang.toUpperCase()}
-              </a>
-            ),
-          )
-        }
+      <nav class="lang-menu" aria-label={t(lang, 'lang.label')}>
+        <details>
+          <summary>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" />
+            </svg>
+            <span class="visually-hidden">{t(lang, 'lang.label')}:</span>
+            <span>{languages[lang]}</span>
+          </summary>
+          <ul>
+            {
+              altLinks.map((a) => (
+                <li>
+                  <a href={a.href} hreflang={a.lang} lang={a.lang} aria-current={a.lang === lang ? 'true' : undefined}>
+                    {languages[a.lang]}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </details>
       </nav>
+      <script is:inline>
+        (() => {
+          const menu = document.querySelector('.lang-menu details');
+          const close = () => menu.removeAttribute('open');
+          document.addEventListener('click', (e) => !menu.contains(e.target) && close());
+          menu.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menu.open) {
+              close();
+              menu.querySelector('summary').focus();
+            }
+          });
+        })();
+      </script>
     </header>
     <nav class="main-nav" aria-label={t(lang, 'site.title')}>
       {nav.map((n) => <a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>)}
