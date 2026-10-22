@@ -136,5 +136,29 @@
  "predseda-bsk-7": {
   "web": "https://staruch.eu",
   "photo": { "src": "/photos/predseda-bsk-7.jpg", "author": "Dávid Staruch", "permission": true, "source": "https://staruch.eu/" }
+ },
+ "primator-stupava-1": {
+  "web": "https://lepsiastupava.sk/",
+  "photo": { "src": "/photos/primator-stupava-1.jpg", "author": "Lepšia Stupava", "sourceOnly": true, "source": "https://lepsiastupava.sk/" }
+ },
+ "primator-stupava-2": {
+  "web": "https://stupavastupaj.sk/",
+  "photo": { "src": "/photos/primator-stupava-2.jpg", "author": "Stupava Stúpaj!", "sourceOnly": true, "source": "https://stupavastupaj.sk/" }
+ },
+ "primator-stupava-3": {
+  "web": "https://prestupavu.sk/",
+  "photo": { "src": "/photos/primator-stupava-3.jpg", "author": "Stupava nás spája", "sourceOnly": true, "source": "https://prestupavu.sk/" }
+ },
+ "primator-stupava-4": {
+  "web": "https://www.sluzimestupave.sk/",
+  "photo": { "src": "/photos/primator-stupava-4.jpg", "author": "Slúžime Stupave", "sourceOnly": true, "source": "https://www.sluzimestupave.sk/" }
+ },
+ "zastupitelstvo-bsk-16-6": {
+  "web": "https://lepsiastupava.sk/",
+  "photo": { "src": "/photos/zastupitelstvo-bsk-16-6.jpg", "author": "Lepšia Stupava", "sourceOnly": true, "source": "https://lepsiastupava.sk/" }
+ },
+ "zastupitelstvo-bsk-16-8": {
+  "web": "https://prestupavu.sk/",
+  "photo": { "src": "/photos/zastupitelstvo-bsk-16-8.jpg", "author": "Stupava nás spája", "sourceOnly": true, "source": "https://prestupavu.sk/" }
  }
 }
