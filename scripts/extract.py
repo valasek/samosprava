@@ -5,6 +5,7 @@ Usage: .venv/bin/python3 scripts/extract.py  (run scripts/download.sh first)
 
 import json
 import re
+import unicodedata
 from pathlib import Path
 
 import openpyxl
@@ -36,7 +37,12 @@ DISTRICTS = [
 
 # Seats per constituency, from the official notices (see docs/plan.md sources).
 MSZ_SEATS = {1: 5, 2: 2, 3: 8, 4: 2, 5: 4, 6: 3, 7: 2, 8: 5, 9: 3, 10: 10, 11: 1}
-BSK_SEATS = {1: 4, 2: 6, 3: 2, 4: 2, 5: 3, 6: 2, 7: 3, 8: 1, 9: 3, 10: 1, 11: 9}
+# Obvod 16 = Stupava, Marianka, Borinka (only Stupava is in scope).
+BSK_SEATS = {1: 4, 2: 6, 3: 2, 4: 2, 5: 3, 6: 2, 7: 3, 8: 1, 9: 3, 10: 1, 11: 9, 16: 1}
+
+# Stupava (town in okres Malacky): id, name, BSK obvod, election page; city council obvod: (seats, okrsky)
+STUPAVA = ("stupava", "Stupava", 16, "https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html")
+STUPAVA_MSZ = {1: (4, [1, 2]), 2: (4, [3, 6]), 3: (4, [4, 5]), 4: (4, [7, 8])}
 SM_MZ = {  # obvod: (seats, okrsky)
     1: (3, [1, 2, 3, 12]),
     2: (3, [4, 5, 6, 30]),
@@ -132,6 +138,52 @@ def parse_okrsky(path: Path) -> dict:
     return {"okrsky": okrsky, "streets": streets}
 
 
+def parse_stupava(path: Path) -> dict:
+    """Parse the Stupava notice: streets (with house ranges), localities and cadastral areas per okrsok."""
+    okrsky: dict[int, str] = {}
+    streets: list[list] = []
+    okrsok, mode, area = None, None, ""
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if line.startswith("Mgr."):
+            break
+        if not line or re.match(r"^(Strana|\d/6$|Voľby do orgánov|orgánov samosprávnych|Vo volebnom obvode|volebný okrsok č\. \d+ a)", line):
+            continue
+        if m := re.match(r"^Volebný okrsok č\. (\d+)$", line):
+            okrsok, mode = int(m.group(1)), None
+        elif m := re.match(r"^Volebná miestnosť: (.+)$", line):
+            okrsky[okrsok], mode = clean(m.group(1)), "place"
+        elif okrsok is None:
+            continue
+        elif re.match(r"^\d\. pre voličov, ktorí majú trvalý pobyt na uliciach", line):
+            mode = "street"
+        elif re.match(r"^\d\. pre voličov, ktorí majú trvalý pobyt evidovaní na mesto", line):
+            streets.append(["Trvalý pobyt bez ulice (len „Stupava“)", None, okrsok])
+        elif m := re.match(r"^\d\. v stavbách v k\. ú\. (.+?)(?: v lokalitách:)?$", line):
+            area = m.group(1)
+            if "lokalitách" in line:
+                mode = "locality"
+            else:
+                streets.append([f"k. ú. {area}", None, okrsok])
+                mode = None
+        elif mode == "place":
+            okrsky[okrsok] = clean(f"{okrsky[okrsok]} {line}")
+        elif mode == "street":
+            line = line.rstrip(",")
+            m = re.match(r"^(.*?[^\d\s])\s+(\d.*)$", line)
+            name, houses = (m.group(1), re.sub(r"\((n?e?párne)\)", r"\1", m.group(2))) if m else (line, None)
+            streets.append([clean(name), houses and clean(houses), okrsok])
+        elif mode == "locality":
+            line = line.rstrip(",")
+            name = f"{line} – lokalita" + ("" if area == "Stupava" else f" (k. ú. {area})")
+            if [name, None, okrsok] not in streets:
+                streets.append([name, None, okrsok])
+        else:
+            raise ValueError(f"Unparsed line in {path.name}: {line!r}")
+    okrsky = {o: re.sub(r",\s*Stupava(?=\s*\(|$)", "", p) for o, p in okrsky.items()}
+    return {"okrsky": okrsky, "streets": sorted(streets, key=lambda r: (unicodedata.normalize("NFD", r[0].lower()), r[2]))}
+
+
 def main() -> None:
     by_name = {f"Bratislava - {d[1]}": d[0] for d in DISTRICTS}
     candidates: list[dict] = []
@@ -140,6 +192,8 @@ def main() -> None:
         obec = clean(r[1])
         if obec == "Bratislava":
             body, district = "primator", None
+        elif obec == STUPAVA[1] and clean(r[0]) == "Malacky":
+            body, district = "primator", STUPAVA[0]
         elif obec in by_name:
             body, district = "starosta", by_name[obec]
         else:
@@ -152,6 +206,8 @@ def main() -> None:
         obec = clean(r[1])
         if obec == "Bratislava":
             body, district = "msz", None
+        elif obec == STUPAVA[1] and clean(r[0]) == "Malacky":
+            body, district = "msz", STUPAVA[0]
         elif obec == "Bratislava - Staré Mesto":
             body, district = "mz", "stare-mesto"
         else:
@@ -178,17 +234,25 @@ def main() -> None:
     assert len(ids) == len(set(ids)), "duplicate candidate ids"
 
     districts = [
-        {"id": i, "name": n, "mszObvod": m, "bskObvod": b, "url": u,
-         "mzObvody": [{"obvod": o, "seats": s, "okrsky": ok} for o, (s, ok) in SM_MZ.items()] if i == "stare-mesto" else None}
+        {"id": i, "city": "bratislava", "name": n, "mszObvod": m, "bskObvod": b, "url": u,
+         "mzObvody": [{"obvod": o, "seats": s, "okrsky": ok} for o, (s, ok) in SM_MZ.items()] if i == "stare-mesto" else None,
+         "mszObvody": None}
         for i, n, m, b, u in DISTRICTS
+    ] + [
+        {"id": STUPAVA[0], "city": "stupava", "name": STUPAVA[1], "mszObvod": None, "bskObvod": STUPAVA[2], "url": STUPAVA[3],
+         "mzObvody": None, "mszObvody": [{"obvod": o, "seats": s, "okrsky": ok} for o, (s, ok) in STUPAVA_MSZ.items()]}
     ]
+    bsk_districts = {d[3]: [] for d in DISTRICTS} | {STUPAVA[2]: []}
+    for d in DISTRICTS:
+        bsk_districts[d[3]].append(d[0])
+    bsk_districts[STUPAVA[2]].append(STUPAVA[0])
     obvody = {
         "msz": [{"obvod": o, "seats": s, "districts": [d[0] for d in DISTRICTS if d[2] == o]} for o, s in MSZ_SEATS.items()],
-        "zastupitelstvo-bsk": [{"obvod": o, "seats": s, "districts": [d[0] for d in DISTRICTS if d[3] == o]} for o, s in BSK_SEATS.items()],
+        "zastupitelstvo-bsk": [{"obvod": o, "seats": s, "districts": bsk_districts[o]} for o, s in BSK_SEATS.items()],
     }
 
     OUT.mkdir(parents=True, exist_ok=True)
-    streets = {"stare-mesto": parse_okrsky(SRC / "sm-okrsky.txt")}
+    streets = {"stare-mesto": parse_okrsky(SRC / "sm-okrsky.txt"), "stupava": parse_stupava(SRC / "okrsky" / "stupava.txt")}
     for name, data in (("candidates", candidates), ("districts", districts), ("obvody", obvody), ("streets", streets)):
         (OUT / f"{name}.json").write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 

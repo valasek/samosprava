@@ -65,13 +65,19 @@ export interface Candidate {
   photo?: Photo;
 }
 
+export type City = 'bratislava' | 'stupava';
+export const cities: City[] = ['bratislava', 'stupava'];
+
 export interface District {
   id: string;
+  city: City;
   name: string;
-  mszObvod: number;
+  mszObvod: number | null;
   bskObvod: number;
   url: string;
   mzObvody: { obvod: number; seats: number; okrsky: number[] }[] | null;
+  // City council constituencies inside a town outside Bratislava (Stupava).
+  mszObvody: { obvod: number; seats: number; okrsky: number[] }[] | null;
 }
 
 export interface Ballot {
@@ -80,6 +86,7 @@ export interface Ballot {
   district: string | null;
   obvod: number | null;
   seats: number;
+  cities: City[];
   districts: string[];
   okrsky?: number[];
   candidates: Candidate[];
@@ -104,6 +111,8 @@ export const envelope: Record<BodyId, 'white' | 'blue'> = {
 
 export const districtById = Object.fromEntries(districts.map((d) => [d.id, d]));
 const allDistricts = districts.map((d) => d.id);
+const baDistricts = districts.filter((d) => d.city === 'bratislava');
+const citiesOf = (ids: string[]) => cities.filter((c) => ids.some((id) => districtById[id].city === c));
 
 function pick(body: BodyId, district: string | null = null, obvod: number | null = null): Candidate[] {
   return candidates
@@ -113,19 +122,26 @@ function pick(body: BodyId, district: string | null = null, obvod: number | null
 
 export function buildBallots(): Ballot[] {
   const out: Ballot[] = [];
-  out.push({ key: 'primator', body: 'primator', district: null, obvod: null, seats: 1, districts: allDistricts, candidates: pick('primator') });
+  const ba: City[] = ['bratislava'];
+  out.push({ key: 'primator', body: 'primator', district: null, obvod: null, seats: 1, cities: ba, districts: baDistricts.map((d) => d.id), candidates: pick('primator') });
   for (const o of obvody.msz) {
-    out.push({ key: `msz-${o.obvod}`, body: 'msz', district: null, obvod: o.obvod, seats: o.seats, districts: o.districts, candidates: pick('msz', null, o.obvod) });
+    out.push({ key: `msz-${o.obvod}`, body: 'msz', district: null, obvod: o.obvod, seats: o.seats, cities: ba, districts: o.districts, candidates: pick('msz', null, o.obvod) });
   }
-  for (const d of districts) {
-    out.push({ key: `starosta-${d.id}`, body: 'starosta', district: d.id, obvod: null, seats: 1, districts: [d.id], candidates: pick('starosta', d.id) });
+  for (const d of baDistricts) {
+    out.push({ key: `starosta-${d.id}`, body: 'starosta', district: d.id, obvod: null, seats: 1, cities: ba, districts: [d.id], candidates: pick('starosta', d.id) });
     for (const o of d.mzObvody ?? []) {
-      out.push({ key: `mz-${d.id}-${o.obvod}`, body: 'mz', district: d.id, obvod: o.obvod, seats: o.seats, districts: [d.id], okrsky: o.okrsky, candidates: pick('mz', d.id, o.obvod) });
+      out.push({ key: `mz-${d.id}-${o.obvod}`, body: 'mz', district: d.id, obvod: o.obvod, seats: o.seats, cities: ba, districts: [d.id], okrsky: o.okrsky, candidates: pick('mz', d.id, o.obvod) });
     }
   }
-  out.push({ key: 'predseda-bsk', body: 'predseda-bsk', district: null, obvod: null, seats: 1, districts: allDistricts, candidates: pick('predseda-bsk') });
+  for (const d of districts.filter((d) => d.city !== 'bratislava')) {
+    out.push({ key: `primator-${d.id}`, body: 'primator', district: d.id, obvod: null, seats: 1, cities: [d.city], districts: [d.id], candidates: pick('primator', d.id) });
+    for (const o of d.mszObvody ?? []) {
+      out.push({ key: `msz-${d.id}-${o.obvod}`, body: 'msz', district: d.id, obvod: o.obvod, seats: o.seats, cities: [d.city], districts: [d.id], okrsky: o.okrsky, candidates: pick('msz', d.id, o.obvod) });
+    }
+  }
+  out.push({ key: 'predseda-bsk', body: 'predseda-bsk', district: null, obvod: null, seats: 1, cities, districts: allDistricts, candidates: pick('predseda-bsk') });
   for (const o of obvody['zastupitelstvo-bsk']) {
-    out.push({ key: `bsk-${o.obvod}`, body: 'zastupitelstvo-bsk', district: null, obvod: o.obvod, seats: o.seats, districts: o.districts, candidates: pick('zastupitelstvo-bsk', null, o.obvod) });
+    out.push({ key: `bsk-${o.obvod}`, body: 'zastupitelstvo-bsk', district: null, obvod: o.obvod, seats: o.seats, cities: citiesOf(o.districts), districts: o.districts, candidates: pick('zastupitelstvo-bsk', null, o.obvod) });
   }
   return out;
 }

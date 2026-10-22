@@ -1,6 +1,6 @@
 ---
 import DistrictPicker from './DistrictPicker.astro';
-import { t, type Lang } from '../i18n/ui';
+import { t, type Lang, type UiKey } from '../i18n/ui';
 import {
   bodyOrder,
   buildBallots,
@@ -23,19 +23,22 @@ interface Props {
 const { lang } = Astro.props;
 const ballots = buildBallots();
 const partyIndex = new Map(parties.map((p, i) => [p, String(i)]));
-// Per district: streets [name, houses|null, okrsok], polling places, okrsok -> district-council obvod.
+// Per district: streets [name, houses|null, okrsok], polling places, okrsok -> council obvod decided by address.
 const streetData = Object.fromEntries(
-  Object.entries(streets).map(([id, s]) => [
-    id,
-    {
-      ...s,
-      obvodByOkrsok: Object.fromEntries((districtById[id].mzObvody ?? []).flatMap((o) => o.okrsky.map((k) => [k, o.obvod]))),
-    },
-  ]),
+  Object.entries(streets).map(([id, s]) => {
+    const d = districtById[id];
+    return [
+      id,
+      {
+        ...s,
+        obvodLabel: t(lang, d.mszObvody ? 'street.obvodMsz' : 'street.obvod'),
+        obvodByOkrsok: Object.fromEntries((d.mzObvody ?? d.mszObvody ?? []).flatMap((o) => o.okrsky.map((k) => [k, o.obvod]))),
+      },
+    ];
+  }),
 );
 const streetI18n = {
   okrsok: t(lang, 'street.okrsok'),
-  obvod: t(lang, 'street.obvod'),
   houses: t(lang, 'street.houses'),
   whole: t(lang, 'street.whole'),
   pickHouse: t(lang, 'street.pickHouse'),
@@ -43,6 +46,10 @@ const streetI18n = {
 };
 
 function title(b: Ballot): string {
+  if (b.district && districtById[b.district].city !== 'bratislava') {
+    const name = t(lang, `body.${b.body}.${districtById[b.district].city}` as UiKey);
+    return b.obvod ? `${name} – ${t(lang, 'ballot.obvod')} ${b.obvod}` : name;
+  }
   const name = t(lang, `body.${b.body}`);
   if (b.body === 'starosta' || b.body === 'mz') {
     const d = districtById[b.district!].name;
@@ -63,8 +70,11 @@ function hue(c: Candidate): number {
 
 const partyAttr = (c: Candidate) => (c.independent ? 'i' : c.parties.map((p) => partyIndex.get(p)).join(' '));
 const searchAttr = (c: Candidate) => normalize(`${c.firstName} ${c.lastName} ${c.occupation} ${c.parties.join(' ')}`);
-const moreHref = (c: Candidate) =>
-  `https://www.google.com/search?q=${encodeURIComponent(`"${c.firstName} ${c.lastName}" Bratislava voľby 2026`)}`;
+const moreHref = (c: Candidate, b: Ballot) =>
+  `https://www.google.com/search?q=${encodeURIComponent(`"${c.firstName} ${c.lastName}" ${b.cities.length === 1 ? t(lang, `city.${b.cities[0]}`) : 'Bratislava'} voľby 2026`)}`;
+// Body filter: bodies elected only in Bratislava, and labels that differ per city.
+const bodyOnly: Partial<Record<string, string>> = { starosta: 'bratislava', mz: 'bratislava' };
+const bodyAlt = (b: string) => (b === 'primator' || b === 'msz' ? t(lang, `body.${b}.stupava` as UiKey) : undefined);
 ---
 
 <form id="filters" class="filters card" role="search">
@@ -105,7 +115,11 @@ const moreHref = (c: Candidate) =>
     {t(lang, 'filter.body')}
     <select name="v">
       <option value="">{t(lang, 'filter.allBodies')}</option>
-      {bodyOrder.map((b) => <option value={b}>{t(lang, `body.${b}`)}</option>)}
+      {bodyOrder.map((b) => (
+        <option value={b} data-only={bodyOnly[b]} data-label={t(lang, `body.${b}`)} data-stupava={bodyAlt(b)}>
+          {t(lang, `body.${b}`)}
+        </option>
+      ))}
     </select>
   </label>
   <label>
@@ -133,7 +147,7 @@ const moreHref = (c: Candidate) =>
 
 {
   districts
-    .filter((d) => !d.mzObvody)
+    .filter((d) => d.city === 'bratislava' && !d.mzObvody)
     .map((d) => (
       <p class="card note" data-note={d.id} hidden>
         {t(lang, 'cand.mzNote')} <a href={d.url} rel="noopener" target="_blank">{d.name}</a>
@@ -145,7 +159,7 @@ const moreHref = (c: Candidate) =>
 
 {
   ballots.map((b) => (
-    <section class={`ballot envelope-${envelope[b.body]}`} data-body={b.body} data-districts={b.districts.join(' ')} data-obvod={b.body === 'mz' ? b.obvod : undefined}>
+    <section class={`ballot envelope-${envelope[b.body]}`} data-body={b.body} data-cities={b.cities.join(' ')} data-districts={b.districts.join(' ')} data-obvod={b.okrsky ? b.obvod : undefined}>
       <h2>{title(b)}</h2>
       <p class="ballot-meta">
         <strong>{b.seats === 1 ? t(lang, 'ballot.circleOne') : `${t(lang, 'ballot.circleMax')} ${b.seats}`}</strong>
@@ -187,7 +201,7 @@ const moreHref = (c: Candidate) =>
                     {t(lang, 'cand.web')} ↗
                   </a>
                 )}
-                <a href={moreHref(c)} rel="noopener nofollow" target="_blank">
+                <a href={moreHref(c, b)} rel="noopener nofollow" target="_blank">
                   {t(lang, 'cand.more')} ↗
                 </a>
               </p>
@@ -218,13 +232,16 @@ const moreHref = (c: Candidate) =>
 <script type="application/json" id="streets-i18n" set:html={JSON.stringify(streetI18n)} />
 
 <script>
-  import { norm, setupCombo } from '../lib/combo';
+  import { houseMatches, norm, setupCombo } from '../lib/combo';
+  import { loadPlace, savePlace, syncPicker, writePlace } from '../lib/place';
 
   const form = document.getElementById('filters') as HTMLFormElement;
+  const bodySelect = form.elements.namedItem('v') as HTMLSelectElement;
   const groups = [...document.querySelectorAll<HTMLElement>('.ballot')].map((el) => ({
     el,
     body: el.dataset.body!,
     obvod: Number(el.dataset.obvod ?? 0),
+    cities: el.dataset.cities!.split(' '),
     districts: el.dataset.districts!.split(' '),
     cards: [...el.querySelectorAll<HTMLElement>('.cand')].map((c) => ({
       el: c,
@@ -235,10 +252,11 @@ const moreHref = (c: Candidate) =>
   const notes = [...document.querySelectorAll<HTMLElement>('[data-note]')];
   const countEl = document.getElementById('shown-count')!;
   const noResults = document.getElementById('no-results')!;
-  const fields = ['mc', 'ul', 'cd', 'v', 'p', 'q'] as const;
+  const fields = ['city', 'mc', 'ul', 'cd', 'v', 'p', 'q'] as const;
   type StreetDistrict = {
     okrsky: Record<string, string>;
     streets: [string, string | null, number][];
+    obvodLabel: string;
     obvodByOkrsok: Record<string, number>;
   };
   const streetData: Record<string, StreetDistrict> = JSON.parse(document.getElementById('streets-data')!.textContent!);
@@ -250,11 +268,11 @@ const moreHref = (c: Candidate) =>
     if (!d || !ul.trim()) return { obvody: null, lines: [] };
     const rows = d.streets.filter((r) => norm(r[0]) === norm(ul));
     if (!rows.length) return { obvody: null, lines: [si18n.notFound] };
-    const house = cd.toUpperCase().replace(/\s/g, '');
-    const byHouse = house ? rows.filter((r) => !r[1] || r[1].split(',').includes(house)) : rows;
+    const house = cd.toUpperCase().replace(/[\s/]/g, '');
+    const byHouse = house ? rows.filter((r) => !r[1] || houseMatches(r[1], house)) : rows;
     const match = byHouse.length ? byHouse : rows;
     const lines = match.map((r) => {
-      const where = `${si18n.okrsok} ${r[2]} · ${si18n.obvod} ${d.obvodByOkrsok[r[2]]} – ${d.okrsky[r[2]]}`;
+      const where = `${si18n.okrsok} ${r[2]} · ${d.obvodLabel} ${d.obvodByOkrsok[r[2]]} – ${d.okrsky[r[2]]}`;
       return r[1] ? `${where} (${si18n.houses}: ${r[1].replaceAll(',', ', ')})` : `${where} (${si18n.whole})`;
     });
     if (new Set(match.map((r) => r[2])).size > 1) lines.unshift(si18n.pickHouse);
@@ -270,9 +288,11 @@ const moreHref = (c: Candidate) =>
 
   function updatePill(shown: number) {
     const parts: string[] = [];
+    const city = form.querySelector<HTMLInputElement>('input[name="city"]:checked');
+    if (city) parts.push(city.labels![0].textContent!.trim());
     for (const name of ['mc', 'v', 'p'] as const) {
       const sel = form.elements.namedItem(name) as HTMLSelectElement;
-      if (sel.value) parts.push(sel.selectedOptions[0].text);
+      if (sel.value && !sel.disabled) parts.push(sel.selectedOptions[0].text);
     }
     const f = new FormData(form);
     const ul = String(f.get('ul') ?? '').trim();
@@ -297,10 +317,14 @@ const moreHref = (c: Candidate) =>
   });
 
   function apply() {
-    const mcNow = (form.elements.namedItem('mc') as HTMLSelectElement).value;
-    for (const fs of lookups) fs.hidden = fs.disabled = fs.dataset.streetsFor !== mcNow;
+    const { city, place: mc } = syncPicker(form);
+    for (const o of bodySelect.options) {
+      o.hidden = !!city && !!o.dataset.only && o.dataset.only !== city;
+      if (o.dataset.stupava) o.text = city === 'stupava' ? o.dataset.stupava : o.dataset.label!;
+    }
+    if (bodySelect.selectedOptions[0]?.hidden) bodySelect.value = '';
+    for (const fs of lookups) fs.hidden = fs.disabled = fs.dataset.streetsFor !== mc;
     const f = new FormData(form);
-    const mc = String(f.get('mc') ?? '');
     const body = String(f.get('v') ?? '');
     const party = String(f.get('p') ?? '');
     const q = norm(String(f.get('q') ?? ''));
@@ -314,9 +338,10 @@ const moreHref = (c: Candidate) =>
     let shown = 0;
     for (const g of groups) {
       const groupOk =
+        (!city || g.cities.includes(city)) &&
         (!mc || g.districts.includes(mc)) &&
         (!body || g.body === body) &&
-        !(street.obvody && g.body === 'mz' && !street.obvody.has(g.obvod));
+        !(street.obvody && g.obvod && !street.obvody.has(g.obvod));
       let n = 0;
       for (const c of g.cards) {
         const ok = groupOk && (!party || c.parties.includes(party)) && (!q || c.q.includes(q));
@@ -338,21 +363,23 @@ const moreHref = (c: Candidate) =>
     }
     const qs = params.toString();
     history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
-    if (mc) localStorage.setItem('mc', mc);
+    savePlace(form);
   }
 
   const params = new URLSearchParams(location.search);
-  if (!params.has('mc') && localStorage.getItem('mc')) params.set('mc', localStorage.getItem('mc')!);
-  for (const k of fields) {
+  if (!params.has('mc') && !params.has('city')) {
+    const saved = loadPlace();
+    if (saved.city) params.set('city', saved.city);
+    if (saved.mc) params.set('mc', saved.mc);
+  }
+  writePlace(form, { city: params.get('city') ?? '', mc: params.get('mc') ?? '' });
+  for (const k of fields.slice(2)) {
     const v = params.get(k);
     if (v) form.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[name="${k}"]`).forEach((el) => (el.value = v));
   }
 
   form.addEventListener('input', apply);
   form.addEventListener('submit', (e) => e.preventDefault());
-  form.addEventListener('reset', () => {
-    localStorage.removeItem('mc');
-    setTimeout(apply);
-  });
+  form.addEventListener('reset', () => setTimeout(apply));
   apply();
 </script>

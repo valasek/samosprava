@@ -167,6 +167,13 @@
     "rusovce",
     "cunovo"
    ]
+  },
+  {
+   "obvod": 16,
+   "seats": 1,
+   "districts": [
+    "stupava"
+   ]
   }
  ]
 }

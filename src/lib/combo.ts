@@ -1,5 +1,19 @@
 export const norm = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 
+// House number specs look like "1, 3, 5A" or "1-29", "4-62 párne", "nepárne 1-29"; `cd` is upper-case without spaces.
+export function houseMatches(spec: string, cd: string): boolean {
+  const n = parseInt(cd, 10);
+  return spec.split(',').some((raw) => {
+    const tok = raw.trim().toUpperCase();
+    if (tok.replace(/[\s/]/g, '') === cd) return true;
+    const m = tok.match(/(\d+)\s*-\s*(\d+)/);
+    if (!m || Number.isNaN(n) || n < +m[1] || n > +m[2]) return false;
+    if (/NEPÁRNE/.test(tok)) return n % 2 === 1;
+    if (/PÁRNE/.test(tok)) return n % 2 === 0;
+    return true;
+  });
+}
+
 // Wires up a `.combo` element (combobox input, toggle button, listbox) to suggest from `names`.
 export function setupCombo(combo: HTMLElement, names: string[]) {
   const input = combo.querySelector<HTMLInputElement>('input[role="combobox"]')!;

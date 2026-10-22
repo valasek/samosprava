@@ -82,8 +82,13 @@ def comma_list(text: str) -> list[tuple[str, str | None]]:
 
 
 def stare_mesto() -> list[Row]:
-    sm = json.loads((ROOT / "src" / "data" / "streets.json").read_text(encoding="utf-8"))["stare-mesto"]
-    return [(s, h.replace(",", ", ") if h else None, sm["okrsky"][str(o)]) for s, h, o in sm["streets"]]
+    return from_streets("stare-mesto")
+
+
+def from_streets(district: str) -> list[Row]:
+    """Districts already parsed into streets.json by extract.py."""
+    d = json.loads((ROOT / "src" / "data" / "streets.json").read_text(encoding="utf-8"))[district]
+    return [(s, h.replace(",", ", ").replace(",  ", ", ") if h else None, d["okrsky"][str(o)]) for s, h, o in d["streets"]]
 
 
 def ruzinov() -> list[Row]:
@@ -331,6 +336,7 @@ SOURCES = {
     "cunovo": "https://www.cunovo.eu/files/2026-07-31-120505-ur__enie_okrskov.pdf",
     "lamac": "https://www.lamac.sk/files/documents/zverejnovanie/volby/komunalne/2026/oznamenie_o_urceni_volebnych_okrskov.pdf",
     "zahorska-bystrica": "https://zahorskabystrica.sk/ako-hlasovat-v-komunalnych-volbach-2026/",
+    "stupava": "https://www.stupava.sk/e_download.php?file=/data/uredni_deska/obsah8410_1.pdf&original=OZN%C3%81MENIE_volebn%C3%A9_okrsky_a_miestnosti.pdf",
 }
 
 
@@ -370,6 +376,7 @@ def main() -> None:
         "podunajske-biskupice": biskupice(),
         "rusovce": rusovce(),
         "vajnory": [(s.strip(), None, p) for p, streets in VAJNORY.items() for s in streets.split(",")],
+        "stupava": from_streets("stupava"),
     }
     data = {i: {"places": [p], "streets": [], "source": SOURCES[i]} for i, p in SINGLE.items()}
     for i, rows in parsed.items():

@@ -2098,5 +2098,919 @@
     34
    ]
   ]
+ },
+ "stupava": {
+  "okrsky": {
+   "1": "Mestský úrad Stupava (zasadačka na prízemí), Hlavná 1/24",
+   "2": "Ekocentrum Stupava, Hlavná ul. č. 9C",
+   "3": "Základná škola kpt. J. Nálepku v Stupave, Školská ul. č. 2",
+   "6": "Základná škola kpt. J. Nálepku v Stupave, Školská ul. č. 2",
+   "4": "Materská škola, ul. J. Kráľa č. 1",
+   "5": "Kultúrny dom Stupava (malá sála), Agátová ul. č. 9 (vchod zozadu od ulice Kúpeľnej)",
+   "7": "Kultúrny dom Stupava (veľká sála), Agátová ul. č. 9 (hlavný vchod)",
+   "8": "Obecný dom Mást, Hviezdoslavova ul. č. 44"
+  },
+  "streets": [
+   [
+    "Agátová",
+    null,
+    4
+   ],
+   [
+    "Astrová",
+    null,
+    6
+   ],
+   [
+    "Bajzova",
+    null,
+    8
+   ],
+   [
+    "Bazová",
+    null,
+    3
+   ],
+   [
+    "Bernolákova",
+    null,
+    7
+   ],
+   [
+    "Bezručova",
+    null,
+    4
+   ],
+   [
+    "Bitúnková",
+    null,
+    1
+   ],
+   [
+    "Bočná",
+    null,
+    7
+   ],
+   [
+    "Borovicová",
+    null,
+    2
+   ],
+   [
+    "Bottova",
+    null,
+    8
+   ],
+   [
+    "Brezová",
+    null,
+    2
+   ],
+   [
+    "Budovateľská",
+    null,
+    4
+   ],
+   [
+    "Cementárenská",
+    "1-17 nepárne, 2-30 párne",
+    5
+   ],
+   [
+    "Cementárenská",
+    "19-29 nepárne, 32-50 párne",
+    7
+   ],
+   [
+    "Cintorínska",
+    null,
+    3
+   ],
+   [
+    "Čakanková",
+    null,
+    6
+   ],
+   [
+    "Debnáreň",
+    null,
+    3
+   ],
+   [
+    "Devínska cesta",
+    null,
+    8
+   ],
+   [
+    "Dlhá",
+    "1-9 nepárne, 63, 65, 2-6C párne",
+    5
+   ],
+   [
+    "Dlhá",
+    "11-61 nepárne, 8-60 párne",
+    7
+   ],
+   [
+    "Dolná",
+    null,
+    8
+   ],
+   [
+    "Dolná hora – lokalita",
+    null,
+    6
+   ],
+   [
+    "Družstevná",
+    null,
+    1
+   ],
+   [
+    "Dubová",
+    null,
+    2
+   ],
+   [
+    "Duklianska",
+    null,
+    3
+   ],
+   [
+    "Džbankárska",
+    null,
+    2
+   ],
+   [
+    "Fándlyho",
+    null,
+    7
+   ],
+   [
+    "Ferdiša Kostku",
+    null,
+    1
+   ],
+   [
+    "Gaštanová",
+    null,
+    3
+   ],
+   [
+    "Grefty – lokalita",
+    null,
+    3
+   ],
+   [
+    "Háje – lokalita",
+    null,
+    7
+   ],
+   [
+    "Hlavná",
+    "1-57A nepárne, 2-50 párne",
+    4
+   ],
+   [
+    "Hlavná",
+    "59-99 nepárne, 52-94A párne",
+    6
+   ],
+   [
+    "Hodžova",
+    null,
+    8
+   ],
+   [
+    "Hollého",
+    null,
+    8
+   ],
+   [
+    "Hrabová",
+    null,
+    2
+   ],
+   [
+    "Hroznová",
+    null,
+    6
+   ],
+   [
+    "Hurbanova",
+    null,
+    8
+   ],
+   [
+    "Hviezdoslavova",
+    null,
+    8
+   ],
+   [
+    "J. Kráľa",
+    null,
+    4
+   ],
+   [
+    "Jaseňová",
+    null,
+    3
+   ],
+   [
+    "Javorová",
+    null,
+    3
+   ],
+   [
+    "Jána Ondruša",
+    null,
+    1
+   ],
+   [
+    "Jedľová",
+    null,
+    2
+   ],
+   [
+    "Jelenia",
+    null,
+    2
+   ],
+   [
+    "Jilemnického",
+    null,
+    1
+   ],
+   [
+    "Juračkova",
+    null,
+    8
+   ],
+   [
+    "k. ú. Bystrická hora",
+    null,
+    6
+   ],
+   [
+    "k. ú. Hrubé lúky",
+    null,
+    7
+   ],
+   [
+    "k. ú. Mástske grefty",
+    null,
+    6
+   ],
+   [
+    "k. ú. Stará Graba",
+    null,
+    7
+   ],
+   [
+    "Kalinčiakova",
+    null,
+    1
+   ],
+   [
+    "Kalvárska",
+    null,
+    3
+   ],
+   [
+    "Karpatská",
+    null,
+    3
+   ],
+   [
+    "Keltská",
+    null,
+    5
+   ],
+   [
+    "Kolakovičova",
+    null,
+    8
+   ],
+   [
+    "Konvalinková",
+    null,
+    6
+   ],
+   [
+    "Kosatcová",
+    null,
+    6
+   ],
+   [
+    "Krajná",
+    null,
+    8
+   ],
+   [
+    "Krátka",
+    null,
+    6
+   ],
+   [
+    "Kremenica – lokalita",
+    null,
+    3
+   ],
+   [
+    "Krížna",
+    null,
+    4
+   ],
+   [
+    "Kŕče – lokalita (k. ú. Mást)",
+    null,
+    7
+   ],
+   [
+    "Kukučínova",
+    null,
+    5
+   ],
+   [
+    "Kúpeľná",
+    null,
+    5
+   ],
+   [
+    "Kvetná",
+    null,
+    3
+   ],
+   [
+    "Lesná",
+    null,
+    2
+   ],
+   [
+    "Liesková",
+    null,
+    2
+   ],
+   [
+    "Lingráby – lokalita",
+    null,
+    3
+   ],
+   [
+    "Lintavy – lokalita",
+    null,
+    6
+   ],
+   [
+    "Lipová",
+    null,
+    5
+   ],
+   [
+    "Líščia",
+    null,
+    2
+   ],
+   [
+    "Lúčna",
+    null,
+    3
+   ],
+   [
+    "Ľ. Kraskovskej",
+    null,
+    2
+   ],
+   [
+    "Ľanová",
+    null,
+    6
+   ],
+   [
+    "M. Benku",
+    null,
+    6
+   ],
+   [
+    "Malacká",
+    null,
+    2
+   ],
+   [
+    "Malý Háj",
+    null,
+    7
+   ],
+   [
+    "Marcheggská",
+    null,
+    5
+   ],
+   [
+    "Marianska",
+    "1-31A nepárne, 2-32A párne",
+    3
+   ],
+   [
+    "Marianska",
+    "33-71 nepárne, 34-86 párne",
+    6
+   ],
+   [
+    "Mateja Bela",
+    null,
+    2
+   ],
+   [
+    "Matuškova",
+    null,
+    8
+   ],
+   [
+    "Mástske grefty – lokalita",
+    null,
+    6
+   ],
+   [
+    "Medzipotočná",
+    null,
+    2
+   ],
+   [
+    "Mierová",
+    null,
+    7
+   ],
+   [
+    "Mlynská",
+    null,
+    4
+   ],
+   [
+    "Moyzesova",
+    null,
+    8
+   ],
+   [
+    "Muštová",
+    null,
+    6
+   ],
+   [
+    "Na aleji",
+    null,
+    7
+   ],
+   [
+    "Na Dieloch",
+    null,
+    6
+   ],
+   [
+    "Na Kliešti – lokalita (k. ú. Mást)",
+    null,
+    7
+   ],
+   [
+    "Na Kopcoch",
+    null,
+    2
+   ],
+   [
+    "Na Pekárkach",
+    null,
+    6
+   ],
+   [
+    "Na stráni",
+    null,
+    6
+   ],
+   [
+    "Na Vrchnú horu",
+    null,
+    6
+   ],
+   [
+    "Na Vyhliadke",
+    null,
+    3
+   ],
+   [
+    "Nad potokom",
+    null,
+    1
+   ],
+   [
+    "Nám. M. R. Štefánika",
+    null,
+    4
+   ],
+   [
+    "Nám. sv. Trojice",
+    null,
+    3
+   ],
+   [
+    "Námestie Slovenského povstania",
+    null,
+    1
+   ],
+   [
+    "Nevädzová",
+    null,
+    6
+   ],
+   [
+    "Nová",
+    null,
+    3
+   ],
+   [
+    "Nová hora – lokalita",
+    null,
+    2
+   ],
+   [
+    "Obuvnícka",
+    null,
+    2
+   ],
+   [
+    "Okružná",
+    null,
+    5
+   ],
+   [
+    "Orechová",
+    null,
+    3
+   ],
+   [
+    "Osiková",
+    null,
+    2
+   ],
+   [
+    "Pajštúnska",
+    null,
+    2
+   ],
+   [
+    "Panské – lokalita",
+    null,
+    7
+   ],
+   [
+    "Panské – lokalita (k. ú. Mást)",
+    null,
+    7
+   ],
+   [
+    "Park",
+    null,
+    3
+   ],
+   [
+    "Pastierska",
+    null,
+    2
+   ],
+   [
+    "Pažitná",
+    null,
+    1
+   ],
+   [
+    "Piesková",
+    null,
+    3
+   ],
+   [
+    "Piesky – lokalita",
+    null,
+    1
+   ],
+   [
+    "Platanová",
+    null,
+    2
+   ],
+   [
+    "Pod Kopcami",
+    null,
+    2
+   ],
+   [
+    "Pod Kremenicou",
+    null,
+    3
+   ],
+   [
+    "Pod líščími jamami – lokalita",
+    null,
+    2
+   ],
+   [
+    "Pod vŕškom",
+    null,
+    2
+   ],
+   [
+    "Poľná",
+    null,
+    1
+   ],
+   [
+    "Pri artézskej studni",
+    null,
+    2
+   ],
+   [
+    "Pri Borníku",
+    null,
+    3
+   ],
+   [
+    "Pri Greftoch",
+    null,
+    3
+   ],
+   [
+    "Pri kríži",
+    null,
+    6
+   ],
+   [
+    "Pri majeri",
+    null,
+    5
+   ],
+   [
+    "Pri Polankoch",
+    null,
+    8
+   ],
+   [
+    "Pri potoku",
+    null,
+    5
+   ],
+   [
+    "Prof. Ondroucha",
+    null,
+    2
+   ],
+   [
+    "Púpavová",
+    null,
+    6
+   ],
+   [
+    "Rakytná – lokalita",
+    null,
+    7
+   ],
+   [
+    "Révová",
+    null,
+    6
+   ],
+   [
+    "Riedky vŕšok – lokalita",
+    null,
+    2
+   ],
+   [
+    "Rímska",
+    null,
+    2
+   ],
+   [
+    "Robotnícka",
+    null,
+    7
+   ],
+   [
+    "Rovná",
+    null,
+    7
+   ],
+   [
+    "Ruda Morica",
+    null,
+    1
+   ],
+   [
+    "Ružová",
+    "2-6 párne, 1-9 nepárne",
+    4
+   ],
+   [
+    "Ružová",
+    "8-24 párne",
+    6
+   ],
+   [
+    "Sadová",
+    null,
+    6
+   ],
+   [
+    "Sady – lokalita",
+    null,
+    2
+   ],
+   [
+    "Sama Chalupku",
+    null,
+    4
+   ],
+   [
+    "Sama Tomášika",
+    null,
+    7
+   ],
+   [
+    "Sládkovičova",
+    null,
+    7
+   ],
+   [
+    "Slnečná",
+    null,
+    6
+   ],
+   [
+    "Slovenská",
+    null,
+    3
+   ],
+   [
+    "SNP",
+    null,
+    1
+   ],
+   [
+    "Spálená – lokalita",
+    null,
+    7
+   ],
+   [
+    "Spálená – lokalita (k. ú. Mást)",
+    null,
+    7
+   ],
+   [
+    "Spojná",
+    null,
+    8
+   ],
+   [
+    "Stredná",
+    null,
+    7
+   ],
+   [
+    "Stromová",
+    null,
+    6
+   ],
+   [
+    "Šípková",
+    null,
+    8
+   ],
+   [
+    "Školská",
+    null,
+    6
+   ],
+   [
+    "Škrlite – lokalita (k. ú. Mást)",
+    null,
+    7
+   ],
+   [
+    "Štúrova",
+    null,
+    8
+   ],
+   [
+    "Továrenská",
+    null,
+    5
+   ],
+   [
+    "Trojerovo námestie",
+    null,
+    4
+   ],
+   [
+    "Trvalý pobyt bez ulice (len „Stupava“)",
+    null,
+    3
+   ],
+   [
+    "U Kozánka",
+    null,
+    2
+   ],
+   [
+    "Vajanského",
+    null,
+    5
+   ],
+   [
+    "Václava Honzu",
+    null,
+    2
+   ],
+   [
+    "Veterná",
+    null,
+    7
+   ],
+   [
+    "Veternicová",
+    null,
+    6
+   ],
+   [
+    "Vincenta Šikulu",
+    null,
+    1
+   ],
+   [
+    "Viničná",
+    null,
+    6
+   ],
+   [
+    "Vinohradská",
+    null,
+    6
+   ],
+   [
+    "Vrchná cesta – lokalita (k. ú. Mást)",
+    null,
+    7
+   ],
+   [
+    "Vrchná hora – lokalita",
+    null,
+    6
+   ],
+   [
+    "Wolkerova",
+    null,
+    7
+   ],
+   [
+    "Zadná",
+    null,
+    8
+   ],
+   [
+    "Záhradná",
+    null,
+    4
+   ],
+   [
+    "Záhumenská",
+    null,
+    8
+   ],
+   [
+    "Zdravotnícka",
+    null,
+    4
+   ],
+   [
+    "Zemanská",
+    null,
+    4
+   ],
+   [
+    "Zvončeková",
+    null,
+    6
+   ],
+   [
+    "Žabárňa",
+    null,
+    5
+   ],
+   [
+    "Železničná",
+    "9-55 nepárne, 10-36 párne",
+    7
+   ],
+   [
+    "Železničná",
+    "3-7 nepárne, 4-8 párne",
+    8
+   ]
+  ]
  }
 }

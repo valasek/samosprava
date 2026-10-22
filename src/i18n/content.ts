@@ -16,6 +16,8 @@ interface HomeContent {
   who: Section;
   where: Section;
   results: Section;
+  // Overrides shown when the voter picks Stupava (4 ballots, no city district).
+  stupava: { lead: string; ballotsTitle: string; white: string; whiteNote: string; step2: string };
 }
 
 export const home: Record<Lang, HomeContent> = {
@@ -64,11 +66,18 @@ export const home: Record<Lang, HomeContent> = {
     who: {
       title: 'Kto môže voliť',
       items: [
-        'Občan SR aj cudzinec, ktorý má trvalý pobyt v Bratislave.',
+        'Občan SR aj cudzinec, ktorý má trvalý pobyt v Bratislave alebo v Stupave.',
         'Najneskôr v deň volieb dovŕši 18 rokov.',
         'Môžete sa zúčastniť len jedných volieb (napr. iba krajských) – lístky na druhé jednoducho neprevezmete.',
         'Ak nemôžete prísť zo zdravotných dôvodov, požiadajte mestskú časť (alebo v deň volieb komisiu) o prenosnú volebnú schránku.',
       ],
+    },
+    stupava: {
+      lead: 'V sobotu 24. októbra 2026 si Stupavčania volia naraz vedenie mesta aj Bratislavského kraja. Na jednej návšteve volebnej miestnosti dostanete 4 hlasovacie lístky.',
+      ballotsTitle: 'Koho volíte – 4 hlasovacie lístky',
+      white: 'Biela obálka – mesto Stupava',
+      whiteNote: 'Mestské časti a starostu Stupava nemá, volí sa len primátor a mestské zastupiteľstvo.',
+      step2: 'Komisia vám dá modrú obálku s 2 lístkami (kraj) a bielu obálku s 2 lístkami (mesto). Prevzatie podpíšete v každom zozname zvlášť.',
     },
     where: {
       title: 'Kde voliť',
@@ -128,11 +137,18 @@ export const home: Record<Lang, HomeContent> = {
     who: {
       title: 'Who can vote',
       items: [
-        'Slovak citizens and foreigners with permanent residence in Bratislava.',
+        'Slovak citizens and foreigners with permanent residence in Bratislava or Stupava.',
         'Aged 18 or over on election day.',
         'You may take part in only one of the elections (e.g. only regional) – just do not take the other ballots.',
         'If you cannot come for health reasons, ask your city district (or the commission on election day) for a portable ballot box.',
       ],
+    },
+    stupava: {
+      lead: 'On Saturday 24 October 2026, Stupava residents elect the leadership of the town and the Bratislava Region – all at once. In one visit to the polling station you will receive 4 ballots.',
+      ballotsTitle: 'Who you elect – 4 ballots',
+      white: 'White envelope – Town of Stupava',
+      whiteNote: 'Stupava has no city districts or district mayor; you elect only the mayor and the town council.',
+      step2: 'The commission gives you a blue envelope with 2 ballots (region) and a white envelope with 2 ballots (town). You sign for each in a separate list.',
     },
     where: {
       title: 'Where to vote',
@@ -192,11 +208,18 @@ export const home: Record<Lang, HomeContent> = {
     who: {
       title: 'Ki szavazhat',
       items: [
-        'Szlovák állampolgár és külföldi is, akinek állandó lakhelye (trvalý pobyt) Pozsonyban van.',
+        'Szlovák állampolgár és külföldi is, akinek állandó lakhelye (trvalý pobyt) Pozsonyban vagy Stomfán van.',
         'Legkésőbb a választás napján betölti 18. életévét.',
         'Részt vehet csak az egyik választáson is (pl. csak a megyein) – a többi szavazólapot egyszerűen ne vegye át.',
         'Ha egészségügyi okból nem tud elmenni, kérjen mozgóurnát a városrésztől (vagy a választás napján a bizottságtól).',
       ],
+    },
+    stupava: {
+      lead: '2026. október 24-én, szombaton a stomfaiak egyszerre választják meg a város és Pozsony megye vezetését. A szavazóhelyiségben egyetlen alkalommal 4 szavazólapot kap.',
+      ballotsTitle: 'Kire szavaz – 4 szavazólap',
+      white: 'Fehér boríték – Stomfa város',
+      whiteNote: 'Stomfának nincsenek városrészei, csak a polgármestert és a városi képviselő-testületet választják.',
+      step2: 'A bizottság ad egy kék borítékot 2 szavazólappal (megye) és egy fehér borítékot 2 szavazólappal (város). Az átvételt mindegyik jegyzékben külön aláírja.',
     },
     where: {
       title: 'Hol szavazzon',
@@ -256,11 +279,18 @@ export const home: Record<Lang, HomeContent> = {
     who: {
       title: 'Kdo může volit',
       items: [
-        'Občan SR i cizinec (včetně občanů ČR), který má trvalý pobyt v Bratislavě.',
+        'Občan SR i cizinec (včetně občanů ČR), který má trvalý pobyt v Bratislavě nebo ve Stupavě.',
         'Nejpozději v den voleb dovrší 18 let.',
         'Můžete se zúčastnit jen jedněch voleb (např. jen krajských) – lístky na ostatní jednoduše nepřevezmete.',
         'Pokud nemůžete přijít ze zdravotních důvodů, požádejte městskou část (nebo v den voleb komisi) o přenosnou volební schránku.',
       ],
+    },
+    stupava: {
+      lead: 'V sobotu 24. října 2026 si obyvatelé Stupavy volí najednou vedení města i Bratislavského kraje. Při jedné návštěvě volebí místnosti dostanete 4 hlasovací lístky.',
+      ballotsTitle: 'Koho volíte – 4 hlasovací lístky',
+      white: 'Bílá obálka – město Stupava',
+      whiteNote: 'Stupava nemá městské části ani starostu, volí se jen primátor a městské zastupitelstvo.',
+      step2: 'Komise vám dá modrou obálku se 2 lístky (kraj) a bílou obálku se 2 lístky (město). Převzetí podepíšete v každém seznamu zvlášť.',
     },
     where: {
       title: 'Kde volit',
@@ -320,12 +350,19 @@ export const home: Record<Lang, HomeContent> = {
     who: {
       title: 'Кто может голосовать',
       items: [
-        'Гражданин Словакии, а также иностранец с постоянным местом жительства (trvalý pobyt) в Братиславе.',
+        'Гражданин Словакии, а также иностранец с постоянным местом жительства (trvalý pobyt) в Братиславе или Ступаве.',
         'Временное убежище (dočasné útočisko) и временное пребывание (prechodný pobyt) права голоса на этих выборах не дают.',
         'Исполнилось 18 лет не позднее дня выборов.',
         'Можно участвовать только в одних выборах (например, только краевых) – просто не берите остальные бюллетени.',
         'Если вы не можете прийти по состоянию здоровья, попросите городской район (или в день выборов комиссию) о переносной урне.',
       ],
+    },
+    stupava: {
+      lead: 'В субботу, 24 октября 2026 года, жители Ступавы одновременно избирают руководство города и Братиславского края. За одно посещение помещения для голосования вы получите 4 бюллетеня.',
+      ballotsTitle: 'За кого вы голосуете – 4 бюллетеня',
+      white: 'Белый конверт – город Ступава',
+      whiteNote: 'В Ступаве нет городских районов – избираются только мэр и городской совет.',
+      step2: 'Комиссия выдаст вам синий конверт с 2 бюллетенями (край) и белый конверт с 2 бюллетенями (город). Получение вы подтверждаете подписью в каждом списке отдельно.',
     },
     where: {
       title: 'Где голосовать',
@@ -385,12 +422,19 @@ export const home: Record<Lang, HomeContent> = {
     who: {
       title: 'Хто може голосувати',
       items: [
-        'Громадянин Словаччини, а також іноземець із постійним проживанням (trvalý pobyt) у Братиславі.',
+        'Громадянин Словаччини, а також іноземець із постійним проживанням (trvalý pobyt) у Братиславі або Ступаві.',
         'Тимчасовий захист (dočasné útočisko) і тимчасове проживання (prechodný pobyt) права голосу на цих виборах не дають.',
         'Виповнилося 18 років не пізніше дня виборів.',
         'Можна взяти участь лише в одних виборах (наприклад, лише крайових) – просто не беріть інші бюлетені.',
         'Якщо ви не можете прийти через стан здоров’я, попросіть міський район (або в день виборів комісію) про переносну скриньку.',
       ],
+    },
+    stupava: {
+      lead: 'У суботу, 24 жовтня 2026 року, жителі Ступави одночасно обирають керівництво міста та Братиславського краю. За одне відвідування приміщення для голосування ви отримаєте 4 бюлетені.',
+      ballotsTitle: 'За кого ви голосуєте – 4 бюлетені',
+      white: 'Білий конверт – місто Ступава',
+      whiteNote: 'У Ступаві немає міських районів – обирають лише мера та міську раду.',
+      step2: 'Комісія видасть вам синій конверт із 2 бюлетенями (край) і білий конверт із 2 бюлетенями (місто). Отримання ви підтверджуєте підписом у кожному списку окремо.',
     },
     where: {
       title: 'Де голосувати',
@@ -450,12 +494,19 @@ export const home: Record<Lang, HomeContent> = {
     who: {
       title: 'Ai được bỏ phiếu',
       items: [
-        'Công dân Slovakia và người nước ngoài có thường trú (trvalý pobyt) tại Bratislava.',
+        'Công dân Slovakia và người nước ngoài có thường trú (trvalý pobyt) tại Bratislava hoặc Stupava.',
         'Người chỉ có tạm trú (prechodný pobyt) không có quyền bỏ phiếu trong cuộc bầu cử này.',
         'Đủ 18 tuổi chậm nhất vào ngày bầu cử.',
         'Bạn có thể chỉ tham gia một cuộc bầu cử (ví dụ chỉ bầu cấp vùng) – chỉ cần không nhận các lá phiếu còn lại.',
         'Nếu không thể đến vì lý do sức khỏe, hãy đề nghị quận (hoặc ban bầu cử vào ngày bầu cử) mang thùng phiếu lưu động đến.',
       ],
+    },
+    stupava: {
+      lead: 'Vào thứ Bảy, ngày 24 tháng 10 năm 2026, người dân Stupava cùng lúc bầu ra lãnh đạo thành phố và vùng Bratislava. Trong một lần đến phòng bỏ phiếu, bạn sẽ nhận 4 lá phiếu.',
+      ballotsTitle: 'Bạn bầu cho ai – 4 lá phiếu',
+      white: 'Phong bì trắng – thành phố Stupava',
+      whiteNote: 'Stupava không có quận, chỉ bầu thị trưởng và hội đồng thành phố.',
+      step2: 'Ban bầu cử sẽ đưa bạn một phong bì xanh có 2 lá phiếu (vùng) và một phong bì trắng có 2 lá phiếu (thành phố). Bạn ký nhận riêng trong từng danh sách.',
     },
     where: {
       title: 'Bỏ phiếu ở đâu',
@@ -515,11 +566,18 @@ export const home: Record<Lang, HomeContent> = {
     who: {
       title: 'Хто може голосовати',
       items: [
-        'Обчан СР і чуджінець, котрый має трвалый побыт у Братіславі.',
+        'Обчан СР і чуджінець, котрый має трвалый побыт у Братіславі або в Ступаві.',
         'Найпізнїше в день волеб доповнить 18 років.',
         'Можете ся зучастнити лем єдных волеб (напр. лем крайскых) – листкы на другы просто не приймете.',
         'Кідь не можете прийти зо здравотных причін, попросьте містьску часть (або в день волеб комісію) о переносну вольбову скринку.',
       ],
+    },
+    stupava: {
+      lead: 'В суботу 24. октобра 2026 Ступавчане выберуть нараз веджіня міста і Братіславского краю. При єдній навщіві вольбовой містности достанете 4 голосовачі листкы.',
+      ballotsTitle: 'Кого волите – 4 голосовачі листкы',
+      white: 'Біла обалка – місто Ступава',
+      whiteNote: 'Ступава не має містьскых частей, волиться лем прімар і містьске заступительство.',
+      step2: 'Комісія вам дасть модру обалку з 2 листками (край) і білу обалку з 2 листками (місто). Пріятя підпишете в каждім списку окремо.',
     },
     where: {
       title: 'Де голосовати',
@@ -545,6 +603,7 @@ export const links: Record<Lang, { group: string; items: { label: string; href: 
         { label: 'MV SR – Informácie pre voliča a registre kandidátov', href: 'https://www.minv.sk/?samosprava26-info10' },
         { label: 'Hlavné mesto Bratislava – Komunálne voľby 2026', href: 'https://bratislava.sk/mesto-bratislava/transparentne-mesto/komunalne-volby-2026' },
         { label: 'Bratislavský samosprávny kraj – Voľby do VÚC 2026', href: 'https://bratislavskykraj.sk/volby-do-vuc-2026/' },
+        { label: 'Mesto Stupava – Spojené voľby 2026: obvody a okrsky', href: 'https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html' },
         { label: 'Štatistický úrad SR – výsledky volieb', href: 'https://volby.statistics.sk/' },
       ],
     },
@@ -565,6 +624,7 @@ export const links: Record<Lang, { group: string; items: { label: string; href: 
         { label: 'Ministry of Interior – Voter information and candidate registers', href: 'https://www.minv.sk/?samosprava26-info10' },
         { label: 'City of Bratislava – Municipal elections 2026', href: 'https://bratislava.sk/mesto-bratislava/transparentne-mesto/komunalne-volby-2026' },
         { label: 'Bratislava Self-Governing Region – Regional elections 2026', href: 'https://bratislavskykraj.sk/volby-do-vuc-2026/' },
+        { label: 'Town of Stupava – Elections 2026: constituencies and polling districts', href: 'https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html' },
         { label: 'Statistical Office – election results', href: 'https://volby.statistics.sk/' },
       ],
     },
@@ -585,6 +645,7 @@ export const links: Record<Lang, { group: string; items: { label: string; href: 
         { label: 'Belügyminisztérium – Tájékoztató a választóknak és jelöltnyilvántartások', href: 'https://www.minv.sk/?samosprava26-info10' },
         { label: 'Pozsony főváros – Önkormányzati választások 2026', href: 'https://bratislava.sk/mesto-bratislava/transparentne-mesto/komunalne-volby-2026' },
         { label: 'Pozsony megye – Megyei választások 2026', href: 'https://bratislavskykraj.sk/volby-do-vuc-2026/' },
+        { label: 'Stomfa város – Választások 2026: választókerületek és szavazókörök', href: 'https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html' },
         { label: 'Statisztikai Hivatal – választási eredmények', href: 'https://volby.statistics.sk/' },
       ],
     },
@@ -605,6 +666,7 @@ export const links: Record<Lang, { group: string; items: { label: string; href: 
         { label: 'MV SR – Informace pro voliče a registry kandidátů', href: 'https://www.minv.sk/?samosprava26-info10' },
         { label: 'Hlavní město Bratislava – Komunální volby 2026', href: 'https://bratislava.sk/mesto-bratislava/transparentne-mesto/komunalne-volby-2026' },
         { label: 'Bratislavský samosprávný kraj – Krajské volby 2026', href: 'https://bratislavskykraj.sk/volby-do-vuc-2026/' },
+        { label: 'Město Stupava – Volby 2026: obvody a okrsky', href: 'https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html' },
         { label: 'Statistický úřad SR – výsledky voleb', href: 'https://volby.statistics.sk/' },
       ],
     },
@@ -624,6 +686,7 @@ export const links: Record<Lang, { group: string; items: { label: string; href: 
         { label: 'МВД СР – Информация для избирателей и реестры кандидатов', href: 'https://www.minv.sk/?samosprava26-info10' },
         { label: 'Город Братислава – Муниципальные выборы 2026', href: 'https://bratislava.sk/mesto-bratislava/transparentne-mesto/komunalne-volby-2026' },
         { label: 'Братиславский самоуправляемый край – Краевые выборы 2026', href: 'https://bratislavskykraj.sk/volby-do-vuc-2026/' },
+        { label: 'Город Ступава – Выборы 2026: округа и участки', href: 'https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html' },
         { label: 'Статистическое управление СР – результаты выборов', href: 'https://volby.statistics.sk/' },
       ],
     },
@@ -643,6 +706,7 @@ export const links: Record<Lang, { group: string; items: { label: string; href: 
         { label: 'МВС СР – Інформація для виборців і реєстри кандидатів', href: 'https://www.minv.sk/?samosprava26-info10' },
         { label: 'Місто Братислава – Муніципальні вибори 2026', href: 'https://bratislava.sk/mesto-bratislava/transparentne-mesto/komunalne-volby-2026' },
         { label: 'Братиславський самоврядний край – Крайові вибори 2026', href: 'https://bratislavskykraj.sk/volby-do-vuc-2026/' },
+        { label: 'Місто Ступава – Вибори 2026: округи та дільниці', href: 'https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html' },
         { label: 'Статистичне управління СР – результати виборів', href: 'https://volby.statistics.sk/' },
       ],
     },
@@ -662,6 +726,7 @@ export const links: Record<Lang, { group: string; items: { label: string; href: 
         { label: 'Bộ Nội vụ – Thông tin cho cử tri và danh sách ứng viên', href: 'https://www.minv.sk/?samosprava26-info10' },
         { label: 'Thành phố Bratislava – Bầu cử địa phương 2026', href: 'https://bratislava.sk/mesto-bratislava/transparentne-mesto/komunalne-volby-2026' },
         { label: 'Vùng tự quản Bratislava – Bầu cử cấp vùng 2026', href: 'https://bratislavskykraj.sk/volby-do-vuc-2026/' },
+        { label: 'Thành phố Stupava – Bầu cử 2026: đơn vị bầu cử và khu vực bỏ phiếu', href: 'https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html' },
         { label: 'Văn phòng Thống kê – kết quả bầu cử', href: 'https://volby.statistics.sk/' },
       ],
     },
@@ -681,6 +746,7 @@ export const links: Record<Lang, { group: string; items: { label: string; href: 
         { label: 'МВ СР – Інформації про вольча і реґістры кандідатів', href: 'https://www.minv.sk/?samosprava26-info10' },
         { label: 'Головне місто Братіслава – Комуналны вольбы 2026', href: 'https://bratislava.sk/mesto-bratislava/transparentne-mesto/komunalne-volby-2026' },
         { label: 'Братіславскый самосправный край – Вольбы до ВУЦ 2026', href: 'https://bratislavskykraj.sk/volby-do-vuc-2026/' },
+        { label: 'Місто Ступава – Вольбы 2026: обводы і окрскы', href: 'https://www.stupava.sk/mesto/oznamy/spojene-volby-2026-obvody-vz-okrsky-6886sk.html' },
         { label: 'Штатістічный уряд СР – резултаты волеб', href: 'https://volby.statistics.sk/' },
       ],
     },

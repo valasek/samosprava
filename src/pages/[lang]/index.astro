@@ -3,8 +3,8 @@ import Base from '../../layouts/Base.astro';
 import DistrictPicker from '../../components/DistrictPicker.astro';
 import PollingPlace from '../../components/PollingPlace.astro';
 import { home } from '../../i18n/content';
-import { langs, slugs, t, type Lang } from '../../i18n/ui';
-import { bodyOrder, envelope } from '../../lib/data';
+import { langs, slugs, t, type Lang, type UiKey } from '../../i18n/ui';
+import { bodyOrder, envelope, type BodyId } from '../../lib/data';
 
 export function getStaticPaths() {
   return langs.map((lang) => ({ params: { lang } }));
@@ -13,11 +13,24 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Lang;
 const c = home[lang];
 const single = new Set(['primator', 'starosta', 'predseda-bsk']);
+const variants = [
+  { city: 'bratislava', title: c.ballots.title, white: c.ballots.white, whiteNote: c.ballots.whiteNote, bodies: bodyOrder },
+  {
+    city: 'stupava',
+    title: c.stupava.ballotsTitle,
+    white: c.stupava.white,
+    whiteNote: c.stupava.whiteNote,
+    bodies: bodyOrder.filter((b) => b !== 'starosta' && b !== 'mz'),
+  },
+];
+const bodyLabel = (b: BodyId, city: string) =>
+  t(lang, (city === 'stupava' && (b === 'primator' || b === 'msz') ? `body.${b}.stupava` : `body.${b}`) as UiKey);
 ---
 
 <Base lang={lang}>
   <h1>{t(lang, 'home.headline')}</h1>
-  <p class="lead">{c.lead}</p>
+  <p class="lead" data-city-show="bratislava">{c.lead}</p>
+  <p class="lead" data-city-show="stupava" hidden>{c.stupava.lead}</p>
 
   <dl class="facts">
     {
@@ -31,39 +44,41 @@ const single = new Set(['primator', 'starosta', 'predseda-bsk']);
   </dl>
 
   <section class="card cta">
-    <form method="get" action={`/${lang}/${slugs.candidates[lang]}/`}>
+    <form id="cta-form" method="get" action={`/${lang}/${slugs.candidates[lang]}/`}>
       <DistrictPicker lang={lang} />
       <button type="submit">{t(lang, 'filter.go')}</button>
     </form>
   </section>
 
-  <section>
-    <h2>{c.ballots.title}</h2>
-    <div class="envelopes">
-      {
-        (['white', 'blue'] as const).map((env) => (
-          <div class={`envelope envelope-${env}`}>
-            <h3>{env === 'white' ? c.ballots.white : c.ballots.blue}</h3>
-            <ul>
-              {bodyOrder
-                .filter((b) => envelope[b] === env)
-                .map((b) => (
-                  <li>
-                    <strong>{t(lang, `body.${b}`)}</strong>
-                    <br />
-                    <span class="muted">
-                      {single.has(b) ? t(lang, 'ballot.circleOne') : `${t(lang, 'ballot.circleMax')} N`}
-                    </span>
-                  </li>
-                ))}
-            </ul>
-            <p class="muted small">{env === 'white' ? c.ballots.whiteNote : c.ballots.blueNote}</p>
-          </div>
-        ))
-      }
-    </div>
-    <p class="muted small">N = {c.ballots.seatsNote}</p>
-  </section>
+  {
+    variants.map((v) => (
+      <section data-city-show={v.city} hidden={v.city !== 'bratislava'}>
+        <h2>{v.title}</h2>
+        <div class="envelopes">
+          {(['white', 'blue'] as const).map((env) => (
+            <div class={`envelope envelope-${env}`}>
+              <h3>{env === 'white' ? v.white : c.ballots.blue}</h3>
+              <ul>
+                {v.bodies
+                  .filter((b) => envelope[b] === env)
+                  .map((b) => (
+                    <li>
+                      <strong>{bodyLabel(b, v.city)}</strong>
+                      <br />
+                      <span class="muted">
+                        {single.has(b) ? t(lang, 'ballot.circleOne') : `${t(lang, 'ballot.circleMax')} N`}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+              <p class="muted small">{env === 'white' ? v.whiteNote : c.ballots.blueNote}</p>
+            </div>
+          ))}
+        </div>
+        <p class="muted small">N = {c.ballots.seatsNote}</p>
+      </section>
+    ))
+  }
 
   <section id="kde-volit">
     <h2>{c.where.title}</h2>
@@ -73,7 +88,20 @@ const single = new Set(['primator', 'starosta', 'predseda-bsk']);
 
   <section>
     <h2>{c.steps.title}</h2>
-    <ol class="steps">{c.steps.items!.map((i) => <li>{i}</li>)}</ol>
+    <ol class="steps">
+      {
+        c.steps.items!.map((i, n) =>
+          n === 1 ? (
+            <li>
+              <span data-city-show="bratislava">{i}</span>
+              <span data-city-show="stupava" hidden>{c.stupava.step2}</span>
+            </li>
+          ) : (
+            <li>{i}</li>
+          ),
+        )
+      }
+    </ol>
   </section>
 
   <section class="card warn">
@@ -92,3 +120,19 @@ const single = new Set(['primator', 'starosta', 'predseda-bsk']);
     <p><a class="button" href="https://volby.statistics.sk/" rel="noopener" target="_blank">volby.statistics.sk</a></p>
   </section>
 </Base>
+
+<script>
+  import { loadPlace, onPlaceChange, savePlace, writePlace } from '../../lib/place';
+
+  const cta = document.getElementById('cta-form') as HTMLFormElement;
+  const show = (city: string) => {
+    const key = city === 'stupava' ? 'stupava' : 'bratislava';
+    for (const el of document.querySelectorAll<HTMLElement>('[data-city-show]')) el.hidden = el.dataset.cityShow !== key;
+  };
+  cta.addEventListener('input', () => savePlace(cta));
+  onPlaceChange((p, source) => {
+    if (source !== cta) writePlace(cta, p);
+    show(p.city);
+  });
+  show(writePlace(cta, loadPlace()).city);
+</script>

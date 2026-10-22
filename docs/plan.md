@@ -51,6 +51,8 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 | Ballot validity | Per law 180/2014 §152 (VÚC) and §184 (obce): a ballot is invalid if no candidate or more than allowed are circled. |
 | Withdrawn candidates | Per §142(4) they stay on the ballot but are disregarded. Marked via candidate ids in `src/data/withdrawn.json`. 2026-10-20: Miroslav Heredoš withdrew as primátor candidate (`primator-2`); his MsZ candidacy (obvod 10) stays. |
 | Street lookup | Staré Mesto only (the only district whose council constituencies are in scope): street + house number → okrsok → MZ obvod + polling place, parsed from the district notice into `src/data/streets.json`. MsZ and BSK obvody cover whole districts, so no lookup is needed there. |
+| Stupava (added 2026-10-22) | Same scope as Bratislava: primátor Stupavy (4), mestské zastupiteľstvo Stupavy (4 obvody × 4 seats, 56 candidates), predseda BSK, zastupiteľstvo BSK obvod 16 (1 seat, 9 candidates; obvod also covers Marianka and Borinka). Voter gets 4 ballots (white: 2, blue: 2). Modelled as a `district` with `city: "stupava"`, `mszObvody` (obvod → okrsky); candidates use body `primator`/`msz` with `district: "stupava"`. Street lookup (street + house ranges → okrsok → MsZ obvod + polling place) parsed by `extract.py` from the [town notice](https://www.stupava.sk/e_download.php?file=/data/uredni_deska/obsah8410_1.pdf&original=OZN%C3%81MENIE_volebn%C3%A9_okrsky_a_miestnosti.pdf). |
+| Place picker | City switch first (Bratislava / Stupava segmented control), district select only for Bratislava. State shared via `src/lib/place.ts` (localStorage `city` + `mc`, URL `?city=&mc=`); old `?mc=` links imply Bratislava. Home page lead, ballots section and step 2 follow the chosen city. |
 
 ## Status (2026-10-20)
 
@@ -63,7 +65,7 @@ Sources: minv.sk, bratislava.sk, zmos.sk
 1. `scripts/download.sh` downloads the MV SR XLSX files into `sources/` (git-ignored).
 2. `.venv/bin/python3 scripts/extract.py` writes `src/data/candidates.json`, `districts.json`, `obvody.json`.
 3. `python3 scripts/polling.py` writes `src/data/polling.json` (needs `pdftotext`; run after `extract.py`, reuses `streets.json` for Staré Mesto).
-4. Counts (2026-10-20): primátor 6, starosta 44 (17 MČ), MsZ 220, Staré Mesto MZ 70, predseda BSK 7, zastupiteľstvo BSK 192 (Bratislava obvody) = 539.
+4. Counts (2026-10-22): primátor 6 + Stupava 4, starosta 44 (17 MČ), MsZ 220 + Stupava 56, Staré Mesto MZ 70, predseda BSK 7, zastupiteľstvo BSK 192 (Bratislava obvody) + 9 (obvod 16) = 608.
 
 ## Phases
 

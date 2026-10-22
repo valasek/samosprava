@@ -26,4 +26,6 @@ dl pb1.pdf "https://www.biskupice.sk/evt_file.php?file=15318"
 dl pb2.pdf "https://www.biskupice.sk/evt_file.php?file=15320"
 dl dnv.pdf "https://www.devinskanovaves.sk/data/page/devinskanovaves.sk/31556/rozdelenie-okrskov.pdf"
 dl rus.pdf "https://www.bratislava-rusovce.sk/media/files/volby/2026__spojene_samospravne_volby_/2026-07-30/okrsky_v_mc_bratislava-rusovce_pre_volby_do_organov_samospravy_obci_a_do_organov_samospravy_krajov.pdf"
+dl stupava.pdf "https://www.stupava.sk/e_download.php?file=/data/uredni_deska/obsah8410_1.pdf&original=OZN%C3%81MENIE_volebn%C3%A9_okrsky_a_miestnosti.pdf"
+pdftotext -layout okrsky/stupava.pdf okrsky/stupava.txt
 echo "Downloaded to $(pwd)"

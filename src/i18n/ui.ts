@@ -14,10 +14,10 @@ export const langs = Object.keys(languages) as Lang[];
 
 export const ui = {
   sk: {
-    'site.title': 'Voľby do samosprávy 2026 – Bratislava',
-    'site.short': 'Voľby 2026 Bratislava',
+    'site.title': 'Voľby do samosprávy 2026 – Bratislava a Stupava',
+    'site.short': 'Voľby 2026 Bratislava a Stupava',
     'site.description':
-      'Jednoduchý sprievodca pre voličov v Bratislave: koho, kedy, kde a ako voliť 24. októbra 2026.',
+      'Jednoduchý sprievodca pre voličov v Bratislave a Stupave: koho, kedy, kde a ako voliť 24. októbra 2026.',
     'nav.home': 'Ako voliť',
     'nav.skip': 'Preskočiť na obsah',
     'nav.candidates': 'Kandidáti',
@@ -29,6 +29,13 @@ export const ui = {
     'body.mz': 'Miestne zastupiteľstvo',
     'body.predseda-bsk': 'Predseda Bratislavského kraja (BSK)',
     'body.zastupitelstvo-bsk': 'Zastupiteľstvo Bratislavského kraja',
+    'body.primator.stupava': 'Primátor Stupavy',
+    'body.msz.stupava': 'Mestské zastupiteľstvo Stupavy',
+    'city.bratislava': 'Bratislava',
+    'city.stupava': 'Stupava',
+    'filter.city': 'Mesto (trvalý pobyt)',
+    'street.obvodMsz': 'obvod mestského zastupiteľstva',
+    'where.sourceTown': 'Zdroj: oznámenie mesta',
     'ballot.obvod': 'volebný obvod',
     'ballot.circleMax': 'Zakrúžkujte najviac',
     'ballot.circleOne': 'Zakrúžkujte 1 kandidáta',
@@ -80,7 +87,7 @@ export const ui = {
     'photo.note': 'Zobrazujeme voľne licencované fotografie, fotografie použité so súhlasom alebo fotografie s uvedeným zdrojom. Chýbajúca fotka nie je hodnotenie kandidáta.',
     'cand.title': 'Kandidáti',
     'cand.intro':
-      'Zoznam všetkých zaregistrovaných kandidátov pre Bratislavu podľa oficiálneho registra MV SR. Vyberte svoju mestskú časť a uvidíte presne tie hlasovacie lístky, ktoré dostanete.',
+      'Zoznam všetkých zaregistrovaných kandidátov pre Bratislavu a Stupavu podľa oficiálneho registra MV SR. Vyberte mesto (v Bratislave aj mestskú časť) a uvidíte presne tie hlasovacie lístky, ktoré dostanete.',
     'cand.mzNote':
       'Kandidáti do miestneho zastupiteľstva sa tu zobrazujú iba pre Staré Mesto. Pre ostatné mestské časti pozrite stránku mestskej časti:',
     'cand.mzOkrsok':
@@ -109,10 +116,10 @@ export const ui = {
     'notFound.text': 'Odkaz môže byť neaktuálny alebo stránka už neexistuje.',
   },
   en: {
-    'site.title': 'Self-Government Elections 2026 – Bratislava',
-    'site.short': 'Elections 2026 Bratislava',
+    'site.title': 'Self-Government Elections 2026 – Bratislava and Stupava',
+    'site.short': 'Elections 2026 Bratislava & Stupava',
     'site.description':
-      'A simple guide for voters in Bratislava: who, when, where and how to vote on 24 October 2026.',
+      'A simple guide for voters in Bratislava and Stupava: who, when, where and how to vote on 24 October 2026.',
     'nav.home': 'How to vote',
     'nav.skip': 'Skip to content',
     'nav.candidates': 'Candidates',
@@ -124,6 +131,13 @@ export const ui = {
     'body.mz': 'District Council',
     'body.predseda-bsk': 'Chair of the Bratislava Region (BSK)',
     'body.zastupitelstvo-bsk': 'Bratislava Regional Council',
+    'body.primator.stupava': 'Mayor of Stupava',
+    'body.msz.stupava': 'Stupava Town Council',
+    'city.bratislava': 'Bratislava',
+    'city.stupava': 'Stupava',
+    'filter.city': 'Town (permanent residence)',
+    'street.obvodMsz': 'town council constituency',
+    'where.sourceTown': 'Source: town notice (in Slovak)',
     'ballot.obvod': 'constituency',
     'ballot.circleMax': 'Circle at most',
     'ballot.circleOne': 'Circle 1 candidate',
@@ -175,7 +189,7 @@ export const ui = {
     'photo.note': 'Photos are shown when freely licensed, used with permission, or attributed to their source. A missing photo says nothing about the candidate.',
     'cand.title': 'Candidates',
     'cand.intro':
-      'All registered candidates for Bratislava from the official Ministry of Interior register. Pick your city district to see exactly the ballots you will receive. Candidate details are in Slovak as officially published.',
+      'All registered candidates for Bratislava and Stupava from the official Ministry of Interior register. Pick your town (in Bratislava also your city district) to see exactly the ballots you will receive. Candidate details are in Slovak as officially published.',
     'cand.mzNote':
       'District council candidates are shown only for Staré Mesto. For other districts see the district website:',
     'cand.mzOkrsok': 'Find your polling district with the street search above, or on the notice delivered to your household.',
@@ -203,10 +217,10 @@ export const ui = {
     'notFound.text': 'The link may be outdated or the page may no longer exist.',
   },
   hu: {
-    'site.title': 'Önkormányzati választások 2026 – Pozsony (Bratislava)',
-    'site.short': 'Választások 2026 Pozsony',
+    'site.title': 'Önkormányzati választások 2026 – Pozsony és Stomfa',
+    'site.short': 'Választások 2026 Pozsony és Stomfa',
     'site.description':
-      'Egyszerű útmutató pozsonyi választóknak: kire, mikor, hol és hogyan szavazhat 2026. október 24-én.',
+      'Egyszerű útmutató pozsonyi és stomfai választóknak: kire, mikor, hol és hogyan szavazhat 2026. október 24-én.',
     'nav.home': 'Hogyan szavazzunk',
     'nav.skip': 'Ugrás a tartalomra',
     'nav.candidates': 'Jelöltek',
@@ -218,6 +232,13 @@ export const ui = {
     'body.mz': 'Városrészi képviselő-testület',
     'body.predseda-bsk': 'Pozsony megye elnöke (BSK)',
     'body.zastupitelstvo-bsk': 'Pozsony megyei képviselő-testület',
+    'body.primator.stupava': 'Stomfa polgármestere',
+    'body.msz.stupava': 'Stomfa városi képviselő-testülete',
+    'city.bratislava': 'Pozsony',
+    'city.stupava': 'Stomfa',
+    'filter.city': 'Település (állandó lakhely)',
+    'street.obvodMsz': 'városi választókerület',
+    'where.sourceTown': 'Forrás: a város közleménye (szlovákul)',
     'ballot.obvod': 'választókerület',
     'ballot.circleMax': 'Legfeljebb ennyi jelöltet karikázzon be:',
     'ballot.circleOne': '1 jelöltet karikázzon be',
@@ -269,7 +290,7 @@ export const ui = {
     'photo.note': 'Szabad licencű, engedéllyel felhasznált vagy forrásmegjelöléssel ellátott fényképeket mutatunk. A hiányzó fotó nem minősíti a jelöltet.',
     'cand.title': 'Jelöltek',
     'cand.intro':
-      'Az összes Pozsonyban nyilvántartásba vett jelölt a szlovák Belügyminisztérium hivatalos nyilvántartása alapján. Válassza ki városrészét, és pontosan azokat a szavazólapokat látja, amelyeket kapni fog. A jelöltek adatai szlovákul szerepelnek, ahogy hivatalosan közzétették.',
+      'Az összes Pozsonyban és Stomfán nyilvántartásba vett jelölt a szlovák Belügyminisztérium hivatalos nyilvántartása alapján. Válassza ki települését (Pozsonyban a városrészét is), és pontosan azokat a szavazólapokat látja, amelyeket kapni fog. A jelöltek adatai szlovákul szerepelnek, ahogy hivatalosan közzétették.',
     'cand.mzNote':
       'A városrészi képviselő-testület jelöltjei itt csak Óváros (Staré Mesto) esetében jelennek meg. A többi városrészhez lásd a városrész honlapját:',
     'cand.mzOkrsok': 'Szavazókörzetét a fenti utcakeresővel vagy a háztartásába kézbesített értesítésen találja meg.',
@@ -297,10 +318,10 @@ export const ui = {
     'notFound.text': 'A hivatkozás elavult lehet, vagy az oldal már nem létezik.',
   },
   cs: {
-    'site.title': 'Volby do samosprávy 2026 – Bratislava',
-    'site.short': 'Volby 2026 Bratislava',
+    'site.title': 'Volby do samosprávy 2026 – Bratislava a Stupava',
+    'site.short': 'Volby 2026 Bratislava a Stupava',
     'site.description':
-      'Jednoduchý průvodce pro voliče v Bratislavě: koho, kdy, kde a jak volit 24. října 2026.',
+      'Jednoduchý průvodce pro voliče v Bratislavě a Stupavě: koho, kdy, kde a jak volit 24. října 2026.',
     'nav.home': 'Jak volit',
     'nav.skip': 'Přeskočit na obsah',
     'nav.candidates': 'Kandidáti',
@@ -312,6 +333,13 @@ export const ui = {
     'body.mz': 'Místní zastupitelstvo',
     'body.predseda-bsk': 'Předseda Bratislavského kraje (BSK)',
     'body.zastupitelstvo-bsk': 'Zastupitelstvo Bratislavského kraje',
+    'body.primator.stupava': 'Primátor Stupavy',
+    'body.msz.stupava': 'Městské zastupitelstvo Stupavy',
+    'city.bratislava': 'Bratislava',
+    'city.stupava': 'Stupava',
+    'filter.city': 'Město (trvalý pobyt)',
+    'street.obvodMsz': 'obvod městského zastupitelstva',
+    'where.sourceTown': 'Zdroj: oznámení města (slovensky)',
     'ballot.obvod': 'volební obvod',
     'ballot.circleMax': 'Zakroužkujte nejvýše',
     'ballot.circleOne': 'Zakroužkujte 1 kandidáta',
@@ -363,7 +391,7 @@ export const ui = {
     'photo.note': 'Zobrazujeme volně licencované fotografie, fotografie použité se souhlasem nebo fotografie s uvedeným zdrojem. Chybějící fotka není hodnocením kandidáta.',
     'cand.title': 'Kandidáti',
     'cand.intro':
-      'Seznam všech zaregistrovaných kandidátů pro Bratislavu podle oficiálního registru MV SR. Vyberte svou městskou část a uvidíte přesně ty hlasovací lístky, které dostanete. Údaje o kandidátech jsou ve slovenštině, jak byly oficiálně zveřejněny.',
+      'Seznam všech zaregistrovaných kandidátů pro Bratislavu a Stupavu podle oficiálního registru MV SR. Vyberte město (v Bratislavě i městskou část) a uvidíte přesně ty hlasovací lístky, které dostanete. Údaje o kandidátech jsou ve slovenštině, jak byly oficiálně zveřejněny.',
     'cand.mzNote':
       'Kandidáti do místního zastupitelstva se zde zobrazují pouze pro Staré Mesto. Pro ostatní městské části navštivte web městské části:',
     'cand.mzOkrsok': 'Svůj okrsek najdete vyhledáním ulice ve filtru výše nebo v oznámení, které dostala vaše domácnost.',
@@ -391,10 +419,10 @@ export const ui = {
     'notFound.text': 'Odkaz může být neaktuální nebo stránka již neexistuje.',
   },
   ru: {
-    'site.title': 'Выборы в органы самоуправления 2026 – Братислава',
-    'site.short': 'Выборы 2026 Братислава',
+    'site.title': 'Выборы в органы самоуправления 2026 – Братислава и Ступава',
+    'site.short': 'Выборы 2026 Братислава и Ступава',
     'site.description':
-      'Простой путеводитель для избирателей Братиславы: за кого, когда, где и как голосовать 24 октября 2026 года.',
+      'Простой путеводитель для избирателей Братиславы и Ступавы: за кого, когда, где и как голосовать 24 октября 2026 года.',
     'nav.home': 'Как голосовать',
     'nav.skip': 'Перейти к содержанию',
     'nav.candidates': 'Кандидаты',
@@ -406,6 +434,13 @@ export const ui = {
     'body.mz': 'Совет городского района',
     'body.predseda-bsk': 'Председатель Братиславского края (BSK)',
     'body.zastupitelstvo-bsk': 'Совет Братиславского края',
+    'body.primator.stupava': 'Мэр Ступавы',
+    'body.msz.stupava': 'Городской совет Ступавы',
+    'city.bratislava': 'Братислава',
+    'city.stupava': 'Ступава',
+    'filter.city': 'Город (постоянное место жительства)',
+    'street.obvodMsz': 'округ городского совета',
+    'where.sourceTown': 'Источник: объявление города (на словацком)',
     'ballot.obvod': 'избирательный округ',
     'ballot.circleMax': 'Обведите не более',
     'ballot.circleOne': 'Обведите 1 кандидата',
@@ -457,7 +492,7 @@ export const ui = {
     'photo.note': 'Мы показываем фотографии со свободной лицензией, используемые с разрешения или с указанием источника. Отсутствие фото ничего не говорит о кандидате.',
     'cand.title': 'Кандидаты',
     'cand.intro':
-      'Все зарегистрированные кандидаты в Братиславе по официальному реестру МВД Словакии. Выберите свой городской район – и увидите именно те бюллетени, которые получите. Данные о кандидатах приведены на словацком языке, как они были официально опубликованы.',
+      'Все зарегистрированные кандидаты в Братиславе и Ступаве по официальному реестру МВД Словакии. Выберите город (в Братиславе – и городской район) – и увидите именно те бюллетени, которые получите. Данные о кандидатах приведены на словацком языке, как они были официально опубликованы.',
     'cand.mzNote':
       'Кандидаты в совет городского района показаны только для района Старе-Место. Для других районов см. сайт района:',
     'cand.mzOkrsok': 'Свой участок можно найти через поиск улицы выше или в объявлении, доставленном в ваш почтовый ящик.',
@@ -485,10 +520,10 @@ export const ui = {
     'notFound.text': 'Ссылка могла устареть, или страница больше не существует.',
   },
   uk: {
-    'site.title': 'Вибори до органів самоврядування 2026 – Братислава',
-    'site.short': 'Вибори 2026 Братислава',
+    'site.title': 'Вибори до органів самоврядування 2026 – Братислава і Ступава',
+    'site.short': 'Вибори 2026 Братислава і Ступава',
     'site.description':
-      'Простий путівник для виборців Братислави: за кого, коли, де і як голосувати 24 жовтня 2026 року.',
+      'Простий путівник для виборців Братислави та Ступави: за кого, коли, де і як голосувати 24 жовтня 2026 року.',
     'nav.home': 'Як голосувати',
     'nav.skip': 'Перейти до змісту',
     'nav.candidates': 'Кандидати',
@@ -500,6 +535,13 @@ export const ui = {
     'body.mz': 'Рада міського району',
     'body.predseda-bsk': 'Голова Братиславського краю (BSK)',
     'body.zastupitelstvo-bsk': 'Рада Братиславського краю',
+    'body.primator.stupava': 'Мер Ступави',
+    'body.msz.stupava': 'Міська рада Ступави',
+    'city.bratislava': 'Братислава',
+    'city.stupava': 'Ступава',
+    'filter.city': 'Місто (постійне проживання)',
+    'street.obvodMsz': 'округ міської ради',
+    'where.sourceTown': 'Джерело: оголошення міста (словацькою)',
     'ballot.obvod': 'виборчий округ',
     'ballot.circleMax': 'Обведіть не більше',
     'ballot.circleOne': 'Обведіть 1 кандидата',
@@ -551,7 +593,7 @@ export const ui = {
     'photo.note': 'Ми показуємо фотографії з вільною ліцензією, використані з дозволу або із зазначенням джерела. Відсутність фото нічого не говорить про кандидата.',
     'cand.title': 'Кандидати',
     'cand.intro':
-      'Усі зареєстровані кандидати в Братиславі за офіційним реєстром МВС Словаччини. Виберіть свій міський район – і побачите саме ті бюлетені, які отримаєте. Дані про кандидатів наведено словацькою мовою, як їх офіційно опубліковано.',
+      'Усі зареєстровані кандидати в Братиславі та Ступаві за офіційним реєстром МВС Словаччини. Виберіть місто (у Братиславі – і міський район) – і побачите саме ті бюлетені, які отримаєте. Дані про кандидатів наведено словацькою мовою, як їх офіційно опубліковано.',
     'cand.mzNote':
       'Кандидати до ради міського району показані лише для району Старе Место. Для інших районів дивіться сайт району:',
     'cand.mzOkrsok': 'Свою дільницю можна знайти через пошук вулиці вище або в оголошенні, доставленому до вашої поштової скриньки.',
@@ -579,10 +621,10 @@ export const ui = {
     'notFound.text': 'Посилання могло застаріти, або сторінка більше не існує.',
   },
   vi: {
-    'site.title': 'Bầu cử chính quyền địa phương 2026 – Bratislava',
-    'site.short': 'Bầu cử 2026 Bratislava',
+    'site.title': 'Bầu cử chính quyền địa phương 2026 – Bratislava và Stupava',
+    'site.short': 'Bầu cử 2026 Bratislava và Stupava',
     'site.description':
-      'Hướng dẫn đơn giản cho cử tri tại Bratislava: bầu ai, khi nào, ở đâu và bỏ phiếu như thế nào vào ngày 24 tháng 10 năm 2026.',
+      'Hướng dẫn đơn giản cho cử tri tại Bratislava và Stupava: bầu ai, khi nào, ở đâu và bỏ phiếu như thế nào vào ngày 24 tháng 10 năm 2026.',
     'nav.home': 'Cách bỏ phiếu',
     'nav.skip': 'Chuyển đến nội dung',
     'nav.candidates': 'Ứng viên',
@@ -594,6 +636,13 @@ export const ui = {
     'body.mz': 'Hội đồng quận',
     'body.predseda-bsk': 'Chủ tịch vùng Bratislava (BSK)',
     'body.zastupitelstvo-bsk': 'Hội đồng vùng Bratislava',
+    'body.primator.stupava': 'Thị trưởng Stupava',
+    'body.msz.stupava': 'Hội đồng thành phố Stupava',
+    'city.bratislava': 'Bratislava',
+    'city.stupava': 'Stupava',
+    'filter.city': 'Thành phố (nơi thường trú)',
+    'street.obvodMsz': 'đơn vị bầu cử hội đồng thành phố',
+    'where.sourceTown': 'Nguồn: thông báo của thành phố (tiếng Slovakia)',
     'ballot.obvod': 'đơn vị bầu cử',
     'ballot.circleMax': 'Khoanh tròn tối đa',
     'ballot.circleOne': 'Khoanh tròn 1 ứng viên',
@@ -645,7 +694,7 @@ export const ui = {
     'photo.note': 'Chúng tôi hiển thị ảnh có giấy phép tự do, được phép sử dụng hoặc có ghi nguồn. Việc thiếu ảnh không phải là đánh giá về ứng viên.',
     'cand.title': 'Ứng viên',
     'cand.intro':
-      'Tất cả ứng viên đã đăng ký tại Bratislava theo danh sách chính thức của Bộ Nội vụ Slovakia. Chọn quận của bạn để xem chính xác các lá phiếu bạn sẽ nhận. Thông tin ứng viên bằng tiếng Slovakia như đã được công bố chính thức.',
+      'Tất cả ứng viên đã đăng ký tại Bratislava và Stupava theo danh sách chính thức của Bộ Nội vụ Slovakia. Chọn thành phố (ở Bratislava chọn thêm quận) để xem chính xác các lá phiếu bạn sẽ nhận. Thông tin ứng viên bằng tiếng Slovakia như đã được công bố chính thức.',
     'cand.mzNote':
       'Ứng viên hội đồng quận chỉ được hiển thị cho quận Staré Mesto. Với các quận khác, hãy xem trang web của quận:',
     'cand.mzOkrsok': 'Bạn có thể tìm khu vực bỏ phiếu của mình bằng ô tìm đường ở trên hoặc trên thông báo gửi đến hộ gia đình.',
@@ -673,10 +722,10 @@ export const ui = {
     'notFound.text': 'Liên kết có thể đã cũ hoặc trang không còn tồn tại.',
   },
   rue: {
-    'site.title': 'Вольбы до самосправы 2026 – Братіслава',
-    'site.short': 'Вольбы 2026 Братіслава',
+    'site.title': 'Вольбы до самосправы 2026 – Братіслава і Ступава',
+    'site.short': 'Вольбы 2026 Братіслава і Ступава',
     'site.description':
-      'Простый провідник про вольчів у Братіславі: кого, коли, де і як голосовати 24. октобра 2026.',
+      'Простый провідник про вольчів у Братіславі і Ступаві: кого, коли, де і як голосовати 24. октобра 2026.',
     'nav.home': 'Як голосовати',
     'nav.skip': 'Перескочіти на обсяг',
     'nav.candidates': 'Кандідаты',
@@ -688,6 +737,13 @@ export const ui = {
     'body.mz': 'Містне заступительство',
     'body.predseda-bsk': 'Председа Братіславского краю (BSK)',
     'body.zastupitelstvo-bsk': 'Заступительство Братіславского краю',
+    'body.primator.stupava': 'Прімар Ступавы',
+    'body.msz.stupava': 'Містьске заступительство Ступавы',
+    'city.bratislava': 'Братіслава',
+    'city.stupava': 'Ступава',
+    'filter.city': 'Місто (трвалый побыт)',
+    'street.obvodMsz': 'обвод містьского заступительства',
+    'where.sourceTown': 'Жрідло: оголошіня міста (по словацькы)',
     'ballot.obvod': 'вольбовый обвод',
     'ballot.circleMax': 'Закружкуйте найвеце',
     'ballot.circleOne': 'Закружкуйте 1 кандідата',
@@ -739,7 +795,7 @@ export const ui = {
     'photo.note': 'Указуєме фотографії з вольнов ліценціёв, хоснованы з дозволіньом або з уведенём жрідла. Хыбуюча фотка не є оцінков кандідата.',
     'cand.title': 'Кандідаты',
     'cand.intro':
-      'Список вшыткых зареґістрованых кандідатів про Братіславу подля офіціалного реґістра МВ СР. Выберте свою містьску часть і увидите точно тоты голосовачі листкы, якы достанете. Дані о кандідатах суть по словацькы, як были офіціално зверейнены.',
+      'Список вшыткых зареґістрованых кандідатів про Братіславу і Ступаву подля офіціалного реґістра МВ СР. Выберте місто (в Братіславі і містьску часть) і увидите точно тоты голосовачі листкы, якы достанете. Дані о кандідатах суть по словацькы, як были офіціално зверейнены.',
     'cand.mzNote':
       'Кандідаты до містного заступительства ту указуєме лем про Старе Місто (Staré Mesto). Про іншы містьскы часті позерайте сторінку містьской части:',
     'cand.mzOkrsok': 'Свій окрсок найдете гляданём уліці в фільтрі выше або на оголошіню, котре достала ваша домакня.',

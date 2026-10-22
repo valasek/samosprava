@@ -1,5 +1,6 @@
 ---
-import { districts } from '../lib/data';
+import DistrictPicker from './DistrictPicker.astro';
+import { districtById } from '../lib/data';
 import polling from '../data/polling.json';
 import { t, type Lang } from '../i18n/ui';
 
@@ -8,7 +9,9 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const sorted = [...districts].sort((a, b) => a.name.localeCompare(b.name, 'sk'));
+const data = Object.fromEntries(
+  Object.entries(polling).map(([id, d]) => [id, { ...d, mapCity: districtById[id].city === 'stupava' ? 'Stupava' : 'Bratislava' }]),
+);
 const i18n = {
   pickHouse: t(lang, 'where.pickHouse'),
   noHouse: t(lang, 'where.noHouse'),
@@ -17,17 +20,12 @@ const i18n = {
   other: t(lang, 'where.other'),
   map: t(lang, 'where.map'),
   source: t(lang, 'where.source'),
+  sourceTown: t(lang, 'where.sourceTown'),
 };
 ---
 
 <form id="where" class="filters where-form card" role="search">
-  <label>
-    {t(lang, 'filter.district')}
-    <select name="mc">
-      <option value="">{t(lang, 'where.pick')}</option>
-      {sorted.map((d) => <option value={d.id}>{d.name}</option>)}
-    </select>
-  </label>
+  <DistrictPicker lang={lang} allLabel={t(lang, 'where.pick')} />
   <fieldset class="street-lookup" hidden disabled>
     <legend>{t(lang, 'where.legend')}</legend>
     <div class="combo">
@@ -58,17 +56,17 @@ const i18n = {
   <div class="where-result" aria-live="polite"></div>
 </form>
 
-<script type="application/json" id="polling-data" set:html={JSON.stringify(polling)} />
+<script type="application/json" id="polling-data" set:html={JSON.stringify(data)} />
 <script type="application/json" id="polling-i18n" set:html={JSON.stringify(i18n)} />
 
 <script>
-  import { norm, setupCombo } from '../lib/combo';
+  import { houseMatches, norm, setupCombo } from '../lib/combo';
+  import { loadPlace, onPlaceChange, savePlace, syncPicker, writePlace } from '../lib/place';
 
-  type District = { places: string[]; streets: [string, string | null, number][]; source: string };
+  type District = { places: string[]; streets: [string, string | null, number][]; source: string; mapCity: string };
   const data: Record<string, District> = JSON.parse(document.getElementById('polling-data')!.textContent!);
   const i18n: Record<string, string> = JSON.parse(document.getElementById('polling-i18n')!.textContent!);
   const form = document.getElementById('where') as HTMLFormElement;
-  const select = form.elements.namedItem('mc') as HTMLSelectElement;
   const lookup = form.querySelector<HTMLFieldSetElement>('.street-lookup')!;
   const street = form.elements.namedItem('ul') as HTMLInputElement;
   const house = form.elements.namedItem('cd') as HTMLInputElement;
@@ -76,26 +74,12 @@ const i18n = {
   const combo = setupCombo(form.querySelector<HTMLElement>('.combo')!, []);
   let comboFor = '';
 
-  // House number specs look like "1, 3, 5A" or "1-29", "4-62 párne", "nepárne 1-29".
-  function houseMatches(spec: string, cd: string): boolean {
-    const n = parseInt(cd, 10);
-    return spec.split(',').some((raw) => {
-      const tok = raw.trim().toUpperCase();
-      if (tok.replace(/[\s/]/g, '') === cd) return true;
-      const m = tok.match(/(\d+)\s*-\s*(\d+)/);
-      if (!m || Number.isNaN(n) || n < +m[1] || n > +m[2]) return false;
-      if (/NEPÁRNE/.test(tok)) return n % 2 === 1;
-      if (/PÁRNE/.test(tok)) return n % 2 === 0;
-      return true;
-    });
-  }
-
   function placeEl(d: District, idx: number, note?: string): HTMLElement {
     const place = d.places[idx];
     const box = Object.assign(document.createElement('div'), { className: 'where-place' });
     const name = Object.assign(document.createElement('p'), { textContent: place });
     const link = Object.assign(document.createElement('a'), {
-      href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.replace(/\s*\(.*?\)/g, '')}, Bratislava`)}`,
+      href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.replace(/\s*\(.*?\)/g, '')}, ${d.mapCity}`)}`,
       target: '_blank',
       rel: 'noopener',
       textContent: `${i18n.map} ↗`,
@@ -106,8 +90,7 @@ const i18n = {
     return box;
   }
 
-  function render() {
-    const mc = select.value;
+  function render(mc: string) {
     const d = data[mc];
     const hasStreets = !!d && d.streets.length > 0;
     lookup.hidden = lookup.disabled = !hasStreets;
@@ -136,18 +119,26 @@ const i18n = {
       for (const r of match) out.push(placeEl(d, r[2], showNote ? (r[1] ? `${i18n.houses}: ${r[1]}` : i18n.other) : undefined));
     }
     if (d) {
-      const src = Object.assign(document.createElement('a'), { href: d.source, target: '_blank', rel: 'noopener', textContent: `${i18n.source} ↗` });
+      const src = Object.assign(document.createElement('a'), {
+        href: d.source,
+        target: '_blank',
+        rel: 'noopener',
+        textContent: `${mc === 'stupava' ? i18n.sourceTown : i18n.source} ↗`,
+      });
       const p = Object.assign(document.createElement('p'), { className: 'muted small' });
       p.append(src);
       out.push(p);
     }
     result.replaceChildren(...out);
-    if (mc) localStorage.setItem('mc', mc);
   }
 
-  form.addEventListener('input', render);
+  form.addEventListener('input', (e) => {
+    const name = (e.target as HTMLInputElement).name;
+    render((name === 'city' || name === 'mc' ? savePlace(form) : syncPicker(form)).place);
+  });
   form.addEventListener('submit', (e) => e.preventDefault());
-  const saved = localStorage.getItem('mc');
-  if (saved && data[saved]) select.value = saved;
-  render();
+  onPlaceChange((p, source) => {
+    if (source !== form) render(writePlace(form, p).place);
+  });
+  render(writePlace(form, loadPlace()).place);
 </script>

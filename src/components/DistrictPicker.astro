@@ -1,19 +1,33 @@
 ---
-import { districts } from '../lib/data';
+import { cities, districts } from '../lib/data';
 import { t, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  allLabel?: string;
 }
 
-const { lang } = Astro.props;
-const sorted = [...districts].sort((a, b) => a.name.localeCompare(b.name, 'sk'));
+const { lang, allLabel } = Astro.props;
+const sorted = districts.filter((d) => d.city === 'bratislava').sort((a, b) => a.name.localeCompare(b.name, 'sk'));
 ---
 
+<fieldset class="city-switch">
+  <legend>{t(lang, 'filter.city')}</legend>
+  <div class="segmented">
+    {
+      cities.map((c) => (
+        <label>
+          <input type="radio" name="city" value={c} />
+          <span>{t(lang, `city.${c}`)}</span>
+        </label>
+      ))
+    }
+  </div>
+</fieldset>
 <label>
   {t(lang, 'filter.district')}
   <select name="mc">
-    <option value="">{t(lang, 'filter.allDistricts')}</option>
+    <option value="">{allLabel ?? t(lang, 'filter.allDistricts')}</option>
     {sorted.map((d) => <option value={d.id}>{d.name}</option>)}
   </select>
 </label>
