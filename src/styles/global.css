@@ -493,76 +493,6 @@ select {
   margin-top: var(--space);
 }
 
-.city-switch {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  min-width: 0;
-}
-
-.city-switch legend {
-  font-weight: 600;
-  padding: 0;
-  margin-bottom: 0.25rem;
-}
-
-.filters .city-switch legend {
-  font-size: 0.85rem;
-}
-
-.cta .city-switch legend {
-  font-size: 1.1rem;
-  color: var(--accent);
-}
-
-.segmented {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  border: 1px solid var(--accent);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--bg);
-}
-
-.segmented label {
-  display: block;
-  position: relative;
-  font-size: 1rem;
-  color: var(--accent);
-}
-
-.segmented label + label {
-  border-left: 1px solid var(--accent);
-}
-
-.segmented input {
-  position: absolute;
-  opacity: 0;
-  inset: 0;
-  margin: 0;
-  cursor: pointer;
-}
-
-.segmented span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 0.6rem 0.5rem;
-  text-align: center;
-}
-
-.segmented input:checked + span {
-  background: var(--accent);
-  color: var(--accent-fg);
-}
-
-.segmented input:focus-visible + span {
-  outline: 3px solid #f2a900;
-  outline-offset: -3px;
-}
-
 .street-lookup {
   grid-column: 1 / -1;
   display: grid;
@@ -817,18 +747,16 @@ select {
   }
   .where-form {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: auto auto auto 1fr;
     align-items: start;
     column-gap: 1.5rem;
   }
   .where-form > label,
-  .where-form > .city-switch,
   .where-form .street-lookup {
     grid-column: 1;
   }
   .where-form .where-result {
     grid-column: 2;
-    grid-row: 1 / span 4;
+    grid-row: 1 / span 2;
   }
   .where-form .where-place:first-child {
     margin-top: 0;
